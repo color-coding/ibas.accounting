@@ -45,6 +45,17 @@ namespace accounting {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_taxgroup_category"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "category",
+                                    type: new sap.extension.data.Enum({
+                                        enumType: bo.emTaxGroupCategory,
+                                        describe: true,
+                                    }),
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_taxgroup_activated"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
@@ -58,17 +69,6 @@ namespace accounting {
                                 }).bindProperty("bindingValue", {
                                     path: "validDate",
                                     type: new sap.extension.data.Date(),
-                                }),
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_taxgroup_category"),
-                                template: new sap.extension.m.Text("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "category",
-                                    type: new sap.extension.data.Enum({
-                                        enumType: bo.emTaxGroupCategory,
-                                        describe: true,
-                                    }),
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {

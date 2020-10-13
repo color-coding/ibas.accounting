@@ -84,6 +84,7 @@ namespace accounting {
             /** 初始化 */
             protected registers(): void {
                 this.register(new ProjectChooseServiceMapping());
+                this.register(new TaxGroupChooseServiceMapping());
             }
         }
     }

@@ -38,6 +38,12 @@ namespace accounting {
                                     maxLength: 100
                                 }),
                             }),
+                            new sap.extension.m.CheckBox("", {
+                                text: ibas.i18n.prop("bo_taxgroup_activated"),
+                            }).bindProperty("bindingValue", {
+                                path: "activated",
+                                type: new sap.extension.data.YesNo()
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_category") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: bo.emTaxGroupCategory
@@ -53,13 +59,6 @@ namespace accounting {
                             }).bindProperty("bindingValue", {
                                 path: "rate",
                                 type: new sap.extension.data.Rate(),
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_activated") }),
-                            new sap.extension.m.EnumSelect("", {
-                                enumType: ibas.emYesNo
-                            }).bindProperty("bindingValue", {
-                                path: "activated",
-                                type: new sap.extension.data.YesNo(),
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_validdate") }),
                             new sap.extension.m.DatePicker("", {

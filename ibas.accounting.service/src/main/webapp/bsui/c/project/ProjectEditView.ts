@@ -58,9 +58,8 @@ namespace accounting {
                                     maxLength: 100
                                 })
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_activated") }),
-                            new sap.extension.m.EnumSelect("", {
-                                enumType: ibas.emYesNo
+                            new sap.extension.m.CheckBox("", {
+                                text: ibas.i18n.prop("bo_project_activated"),
                             }).bindProperty("bindingValue", {
                                 path: "activated",
                                 type: new sap.extension.data.YesNo()

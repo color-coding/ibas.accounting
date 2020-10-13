@@ -7,6 +7,7 @@
  */
 /// <reference path="../../index.d.ts" />
 /// <reference path="./project/index.ts" />
+/// <reference path="./taxgroup/index.ts" />
 namespace accounting {
     export namespace ui {
         /** 视图导航 */
@@ -20,6 +21,9 @@ namespace accounting {
                 switch (id) {
                     case app.ProjectChooseApp.APPLICATION_ID:
                         view = new m.ProjectChooseView();
+                        break;
+                    case app.TaxGroupChooseApp.APPLICATION_ID:
+                        view = new m.TaxGroupChooseView();
                         break;
                     default:
                         break;
