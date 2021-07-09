@@ -61,6 +61,30 @@ namespace accounting {
                     if (property === bo.TaxGroup.PROPERTY_CATEGORY_NAME) {
                         return ibas.enums.toString(emTaxGroupCategory, value);
                     }
+                } else if (boName === bo.CostStructure.name) {
+                    if (property === bo.CostStructure.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.toString(emCostStatus, value);
+                    } else if (property === bo.CostStructure.PROPERTY_ENTITYTYPE_NAME) {
+                        return ibas.enums.toString(emEntityType, value);
+                    }
+                } else if (boName === bo.CostStructureNode.name) {
+                    if (property === bo.CostStructureNode.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.toString(emCostStatus, value);
+                    } else if (property === bo.CostStructureNode.PROPERTY_PREVENTOVER_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.CostStructureNode.PROPERTY_RESTRICTEDITEM_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.CostStructureNodeItem.name) {
+                    if (property === bo.CostStructureNodeItem.PROPERTY_PREVENTOVER_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.CostStructureNodeItem.PROPERTY_ADDITIONAL_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Project.name) {
+                    if (property === bo.Project.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.toString(ibas.emDocumentStatus, value);
+                    }
                 }
                 return super.convertData(boName, property, value);
             }
@@ -92,6 +116,30 @@ namespace accounting {
                 } else if (boName === bo.TaxGroup.name) {
                     if (property === bo.TaxGroup.PROPERTY_CATEGORY_NAME) {
                         return ibas.enums.valueOf(emTaxGroupCategory, value);
+                    }
+                } else if (boName === bo.CostStructure.name) {
+                    if (property === bo.CostStructure.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.valueOf(emCostStatus, value);
+                    } else if (property === bo.CostStructure.PROPERTY_ENTITYTYPE_NAME) {
+                        return ibas.enums.valueOf(emEntityType, value);
+                    }
+                } else if (boName === bo.CostStructureNode.name) {
+                    if (property === bo.CostStructureNode.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.valueOf(emCostStatus, value);
+                    } else if (property === bo.CostStructureNode.PROPERTY_PREVENTOVER_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.CostStructureNode.PROPERTY_RESTRICTEDITEM_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.CostStructureNodeItem.name) {
+                    if (property === bo.CostStructureNodeItem.PROPERTY_PREVENTOVER_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.CostStructureNodeItem.PROPERTY_ADDITIONAL_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Project.name) {
+                    if (property === bo.Project.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.valueOf(ibas.emDocumentStatus, value);
                     }
                 }
                 return super.parsingData(boName, property, value);

@@ -81,11 +81,11 @@ namespace accounting {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    return new sap.extension.m.Dialog("", {
+                    return new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
-                        stretchOnPhone: true,
+                        stretch: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? true : false,
                         horizontalScrolling: true,
                         verticalScrolling: true,
                         content: [this.table],
@@ -113,7 +113,7 @@ namespace accounting {
                                 }
                             }),
                         ],
-                    });
+                    }).addStyleClass("sapUiNoContentPadding");
                 }
                 private table: sap.extension.table.Table;
                 /** 显示数据 */

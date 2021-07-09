@@ -46,11 +46,19 @@ namespace accounting {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_project_activated"),
+                                label: ibas.i18n.prop("bo_project_canceled"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
-                                    path: "activated",
+                                    path: "canceled",
                                     type: new sap.extension.data.YesNo(true)
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_project_status"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "status",
+                                    type: new sap.extension.data.DocumentStatus(true)
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
@@ -86,6 +94,23 @@ namespace accounting {
                                 }),
                             }),
                         ],
+                        rowSettingsTemplate: new sap.ui.table.RowSettings("", {
+                            highlight: {
+                                parts: [
+                                    {
+                                        path: "canceled",
+                                        type: new sap.extension.data.YesNo(),
+                                    },
+                                    {
+                                        path: "status",
+                                        type: new sap.extension.data.DocumentStatus()
+                                    }
+                                ],
+                                formatter(canceled: ibas.emYesNo, status: ibas.emDocumentStatus): sap.ui.core.ValueState {
+                                    return sap.extension.data.status(status, undefined, canceled);
+                                }
+                            }
+                        }),
                         nextDataSet(event: sap.ui.base.Event): void {
                             // 查询下一个数据集
                             let data: any = event.getParameter("data");
@@ -146,23 +171,37 @@ namespace accounting {
                                                 if (ibas.objects.isNull(services) || services.length === 0) {
                                                     return;
                                                 }
-                                                let popover: sap.m.Popover = new sap.m.Popover("", {
-                                                    showHeader: false,
+                                                let actionSheet: sap.m.ActionSheet = new sap.m.ActionSheet("", {
                                                     placement: sap.m.PlacementType.Bottom,
+                                                    buttons: {
+                                                        path: "/",
+                                                        template: new sap.m.Button("", {
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            text: {
+                                                                path: "name",
+                                                                type: new sap.extension.data.Alphanumeric(),
+                                                                formatter(data: string): string {
+                                                                    return data ? ibas.i18n.prop(data) : "";
+                                                                }
+                                                            },
+                                                            icon: {
+                                                                path: "icon",
+                                                                type: new sap.extension.data.Alphanumeric(),
+                                                                formatter(data: string): string {
+                                                                    return data ? data : "sap-icon://e-care";
+                                                                }
+                                                            },
+                                                            press(this: sap.m.Button): void {
+                                                                let service: ibas.IServiceAgent = this.getBindingContext().getObject();
+                                                                if (service) {
+                                                                    service.run();
+                                                                }
+                                                            }
+                                                        })
+                                                    }
                                                 });
-                                                for (let service of services) {
-                                                    popover.addContent(new sap.m.Button("", {
-                                                        text: ibas.i18n.prop(service.name),
-                                                        type: sap.m.ButtonType.Transparent,
-                                                        icon: service.icon,
-                                                        press: function (): void {
-                                                            service.run();
-                                                            popover.close();
-                                                        }
-                                                    }));
-                                                }
-                                                popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                                                popover.openBy(event.getSource(), true);
+                                                actionSheet.setModel(new sap.extension.model.JSONModel(services));
+                                                actionSheet.openBy(event.getSource());
                                             }
                                         });
                                     }

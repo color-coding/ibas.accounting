@@ -58,12 +58,177 @@ namespace accounting {
                                 path: "/endDate",
                                 type: new sap.extension.data.Date(),
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_periodcategory_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "/remarks",
+                                type: new sap.extension.data.Alphanumeric(),
+                            }),
                         ]
                     });
                     this.rightList = new sap.extension.m.List("", {
                         chooseType: ibas.emChooseType.NONE,
                         mode: sap.m.ListMode.None,
                         growing: false,
+                        items: {
+                            path: "/rows",
+                            template: new sap.m.CustomListItem("", {
+                                content: [
+                                    new sap.m.Panel("", {
+                                        expandable: true,
+                                        expanded: false,
+                                        backgroundDesign: sap.m.BackgroundDesign.Translucent,
+                                        accessibleRole: sap.m.PanelAccessibleRole.Form,
+                                        headerToolbar: new sap.m.Toolbar("", {
+                                            content: [
+                                                new sap.extension.m.Input("", {
+                                                }).bindProperty("bindingValue", {
+                                                    path: "name",
+                                                    type: new sap.extension.data.Alphanumeric({
+                                                        maxLength: 10
+                                                    })
+                                                }),
+                                                new sap.m.ToolbarSpacer(""),
+                                                new sap.m.Button("", {
+                                                    type: sap.m.ButtonType.Transparent,
+                                                    icon: "sap-icon://delete",
+                                                    press: function (this: sap.m.Button, event: sap.ui.base.Event): void {
+                                                        let source: any = event.getSource();
+                                                        if (source instanceof sap.m.Button) {
+                                                            that.fireViewEvents(that.removePostingPeriodEvent, this.getBindingContext().getObject());
+                                                        }
+                                                    }
+                                                }),
+                                            ]
+                                        }),
+                                        content: [
+                                            new sap.m.FlexBox("", {
+                                                justifyContent: sap.m.FlexJustifyContent.Start,
+                                                renderType: sap.m.FlexRendertype.Bare,
+                                                items: [
+                                                    new sap.ui.layout.form.SimpleForm("", {
+                                                        editable: true,
+                                                        content: [
+                                                            new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_order") }),
+                                                            new sap.extension.m.Input("", {
+                                                                editable: false,
+                                                            }).bindProperty("bindingValue", {
+                                                                path: "order",
+                                                                type: new sap.extension.data.Numeric()
+                                                            }),
+                                                            new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_status") }),
+                                                            new sap.extension.m.EnumSelect("", {
+                                                                enumType: bo.emPeriodStatus
+                                                            }).bindProperty("bindingValue", {
+                                                                path: "status",
+                                                                type: new sap.extension.data.Enum({
+                                                                    enumType: bo.emPeriodStatus
+                                                                }),
+                                                            }),
+                                                            new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_startdate") }),
+                                                            new sap.extension.m.DatePicker("", {
+                                                            }).bindProperty("bindingValue", {
+                                                                path: "startDate",
+                                                                type: new sap.extension.data.Date()
+                                                            }),
+                                                            new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_enddate") }),
+                                                            new sap.extension.m.DatePicker("", {
+                                                            }).bindProperty("bindingValue", {
+                                                                path: "endDate",
+                                                                type: new sap.extension.data.Date()
+                                                            }),
+                                                            new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_remarks") }),
+                                                            new sap.extension.m.TextArea("", {
+                                                                rows: 3,
+                                                            }).bindProperty("bindingValue", {
+                                                                path: "remarks",
+                                                                type: new sap.extension.data.Alphanumeric(),
+                                                            }),
+                                                        ]
+                                                    }),
+                                                    new sap.ui.layout.form.SimpleForm("", {
+                                                        editable: true,
+                                                        content: [
+                                                            new sap.extension.table.Table("", {
+                                                                chooseType: ibas.emChooseType.NONE,
+                                                                visibleRowCount: 4,
+                                                                footer: new sap.m.Bar("", {
+                                                                    translucent: true,
+                                                                    design: sap.m.BarDesign.Footer,
+                                                                    contentMiddle: [
+                                                                        new sap.m.Button("", {
+                                                                            width: "100%",
+                                                                            icon: "sap-icon://add",
+                                                                            text: ibas.i18n.prop("shell_data_add"),
+                                                                            type: sap.m.ButtonType.Transparent,
+                                                                            press: function (this: sap.m.Button): void {
+                                                                                let table: any = this.getParent().getParent();
+                                                                                if (table instanceof sap.extension.table.Table) {
+                                                                                    that.fireViewEvents(that.addPostingPeriodItemEvent, this.getBindingContext().getObject());
+                                                                                }
+                                                                            }
+                                                                        }),
+                                                                    ]
+                                                                }),
+                                                                rowActionCount: 1,
+                                                                rowActionTemplate: new sap.ui.table.RowAction("", {
+                                                                    items: [
+                                                                        new sap.ui.table.RowActionItem("", {
+                                                                            icon: "sap-icon://delete",
+                                                                            press: function (oEvent: any): void {
+                                                                                that.fireViewEvents(that.removePostingPeriodItemEvent, this.getBindingContext().getObject());
+                                                                            },
+                                                                        }),
+                                                                    ]
+                                                                }),
+                                                                rows: {
+                                                                    path: "postingPeriodItems",
+                                                                    filters: [
+                                                                        new sap.ui.model.Filter("isDeleted", sap.ui.model.FilterOperator.NE, true)
+                                                                    ]
+                                                                },
+                                                                columns: [
+                                                                    new sap.extension.table.Column("", {
+                                                                        label: ibas.i18n.prop("bo_postingperioditem_documenttype"),
+                                                                        template: new sap.extension.m.RepositoryText("", {
+                                                                            repository: initialfantasy.bo.BORepositoryInitialFantasy,
+                                                                            dataInfo: {
+                                                                                type: initialfantasy.bo.BOInformation,
+                                                                                key: initialfantasy.bo.BOInformation.PROPERTY_CODE_NAME,
+                                                                                text: initialfantasy.bo.BOInformation.PROPERTY_DESCRIPTION_NAME
+                                                                            },
+                                                                        }).bindProperty("bindingValue", {
+                                                                            path: "documentType",
+                                                                            type: new sap.extension.data.Alphanumeric({
+                                                                                maxLength: 30
+                                                                            }),
+                                                                        }),
+                                                                        width: "100%",
+                                                                    }),
+                                                                    new sap.extension.table.Column("", {
+                                                                        label: ibas.i18n.prop("bo_postingperioditem_status"),
+                                                                        template: new sap.extension.m.EnumSelect("", {
+                                                                            enumType: bo.emPeriodStatus
+                                                                        }).bindProperty("bindingValue", {
+                                                                            path: "status",
+                                                                            type: new sap.extension.data.Enum({
+                                                                                enumType: bo.emPeriodStatus
+                                                                            }),
+                                                                        }),
+                                                                    }),
+                                                                ],
+                                                            })
+                                                        ]
+                                                    }),
+                                                ]
+                                            })
+                                        ],
+                                    })
+                                ],
+                                type: sap.m.ListType.Inactive
+                            })
+                        }
                     });
                     return new sap.extension.m.Page("", {
                         showHeader: false,
@@ -84,33 +249,6 @@ namespace accounting {
                                     press: function (): void {
                                         that.fireViewEvents(that.deleteDataEvent);
                                     }
-                                }),
-                                new sap.m.ToolbarSeparator(""),
-                                new sap.m.MenuButton("", {
-                                    text: ibas.strings.format("{0}/{1}",
-                                        ibas.i18n.prop("shell_data_new"), ibas.i18n.prop("shell_data_clone")),
-                                    icon: "sap-icon://create",
-                                    type: sap.m.ButtonType.Transparent,
-                                    menu: new sap.m.Menu("", {
-                                        items: [
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.i18n.prop("shell_data_new"),
-                                                icon: "sap-icon://create",
-                                                press: function (): void {
-                                                    // 创建新的对象
-                                                    that.fireViewEvents(that.createDataEvent, false);
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.i18n.prop("shell_data_clone"),
-                                                icon: "sap-icon://copy",
-                                                press: function (): void {
-                                                    // 复制当前对象
-                                                    that.fireViewEvents(that.createDataEvent, true);
-                                                }
-                                            }),
-                                        ],
-                                    })
                                 }),
                             ]
                         }),
@@ -225,173 +363,13 @@ namespace accounting {
                 }
                 /** 显示过账期间 */
                 showPostingPeriods(datas: bo.PostingPeriod[]): void {
-                    this.rightList.setBusy(true);
-                    this.rightList.destroyItems();
-                    let that: this = this;
-                    for (let data of datas) {
-                        let listItem: sap.m.CustomListItem = new sap.m.CustomListItem("", {
-                            content: [
-                                new sap.m.Panel("", {
-                                    expandable: true,
-                                    expanded: false,
-                                    backgroundDesign: sap.m.BackgroundDesign.Translucent,
-                                    accessibleRole: sap.m.PanelAccessibleRole.Form,
-                                    headerToolbar: new sap.m.Toolbar("", {
-                                        content: [
-                                            new sap.extension.m.Input("", {
-                                            }).bindProperty("bindingValue", {
-                                                path: "/name",
-                                                type: new sap.extension.data.Alphanumeric({
-                                                    maxLength: 10
-                                                })
-                                            }),
-                                            new sap.m.ToolbarSpacer(""),
-                                            new sap.extension.m.EnumSelect("", {
-                                                enumType: bo.emPeriodStatus
-                                            }).bindProperty("bindingValue", {
-                                                path: "/status",
-                                                type: new sap.extension.data.Enum({
-                                                    enumType: bo.emPeriodStatus
-                                                }),
-                                            }),
-                                            new sap.m.ToolbarSpacer(""),
-                                            new sap.m.ToolbarSeparator(""),
-                                            new sap.m.Button("", {
-                                                type: sap.m.ButtonType.Transparent,
-                                                icon: "sap-icon://delete",
-                                                press: function (event: sap.ui.base.Event): void {
-                                                    let source: any = event.getSource();
-                                                    if (source instanceof sap.m.Button) {
-                                                        that.fireViewEvents(that.removePostingPeriodEvent, data);
-                                                    }
-                                                }
-                                            }),
-                                        ]
-                                    }),
-                                    content: [
-                                        new sap.ui.layout.cssgrid.CSSGrid("", {
-                                            gridTemplateRows: "1fr",
-                                            gridTemplateColumns: "40% 60%",
-                                            gridGap: "1rem",
-                                            items: [
-                                                new sap.ui.layout.form.SimpleForm("", {
-                                                    editable: true,
-                                                    content: [
-                                                        new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_order") }),
-                                                        new sap.extension.m.Input("", {
-                                                            editable: false,
-                                                        }).bindProperty("bindingValue", {
-                                                            path: "/order",
-                                                            type: new sap.extension.data.Numeric()
-                                                        }),
-                                                        new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_startdate") }),
-                                                        new sap.extension.m.DatePicker("", {
-                                                        }).bindProperty("bindingValue", {
-                                                            path: "/startDate",
-                                                            type: new sap.extension.data.Date()
-                                                        }),
-                                                        new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_enddate") }),
-                                                        new sap.extension.m.DatePicker("", {
-                                                        }).bindProperty("bindingValue", {
-                                                            path: "/endDate",
-                                                            type: new sap.extension.data.Date()
-                                                        }),
-                                                    ]
-                                                }),
-                                                new sap.ui.layout.form.SimpleForm("", {
-                                                    editable: true,
-                                                    content: [
-                                                        new sap.extension.table.DataTable("", {
-                                                            toolbar: new sap.m.Toolbar("", {
-                                                                content: [
-                                                                    new sap.m.ToolbarSpacer(""),
-                                                                    new sap.m.Button("", {
-                                                                        text: ibas.i18n.prop("shell_data_add"),
-                                                                        type: sap.m.ButtonType.Transparent,
-                                                                        icon: "sap-icon://add",
-                                                                        press: function (): void {
-                                                                            let table: any = this.getParent().getParent();
-                                                                            if (table instanceof sap.extension.table.DataTable) {
-                                                                                that.fireViewEvents(that.addPostingPeriodItemEvent, data);
-                                                                            }
-                                                                        }
-                                                                    }),
-                                                                    new sap.m.Button("", {
-                                                                        text: ibas.i18n.prop("shell_data_remove"),
-                                                                        type: sap.m.ButtonType.Transparent,
-                                                                        icon: "sap-icon://less",
-                                                                        press: function (): void {
-                                                                            let table: any = this.getParent().getParent();
-                                                                            if (table instanceof sap.extension.table.DataTable) {
-                                                                                that.fireViewEvents(that.removePostingPeriodItemEvent, table.getSelecteds());
-                                                                            }
-                                                                        }
-                                                                    })
-                                                                ]
-                                                            }),
-                                                            visibleRowCount: sap.extension.table.visibleRowCount(4),
-                                                            rows: {
-                                                                path: "/postingPeriodItems",
-                                                                filters: [
-                                                                    new sap.ui.model.Filter("isDeleted", sap.ui.model.FilterOperator.NE, true)
-                                                                ]
-                                                            },
-                                                            columns: [
-                                                                new sap.extension.table.DataColumn("", {
-                                                                    label: ibas.i18n.prop("bo_postingperioditem_documenttype"),
-                                                                    template: new sap.extension.m.RepositoryInput("", {
-                                                                        repository: initialfantasy.bo.BORepositoryInitialFantasy,
-                                                                        dataInfo: {
-                                                                            type: initialfantasy.bo.BOInformation,
-                                                                            key: initialfantasy.bo.BOInformation.PROPERTY_CODE_NAME,
-                                                                            text: initialfantasy.bo.BOInformation.PROPERTY_DESCRIPTION_NAME
-                                                                        },
-                                                                        editable: false,
-                                                                    }).bindProperty("bindingValue", {
-                                                                        path: "documentType",
-                                                                        type: new sap.extension.data.Alphanumeric({
-                                                                            maxLength: 30
-                                                                        }),
-                                                                    }),
-                                                                    width: "20rem",
-                                                                }),
-                                                                new sap.extension.table.DataColumn("", {
-                                                                    label: ibas.i18n.prop("bo_postingperioditem_status"),
-                                                                    template: new sap.extension.m.EnumSelect("", {
-                                                                        enumType: bo.emPeriodStatus
-                                                                    }).bindProperty("bindingValue", {
-                                                                        path: "status",
-                                                                        type: new sap.extension.data.Enum({
-                                                                            enumType: bo.emPeriodStatus
-                                                                        }),
-                                                                    }),
-                                                                }),
-                                                            ],
-                                                        })
-                                                    ]
-                                                }),
-                                            ]
-                                        }),
-                                    ],
-                                })
-                            ],
-                            type: sap.m.ListType.Inactive
-                        });
-                        listItem.setModel(new sap.extension.model.JSONModel(data));
-                        this.rightList.addItem(listItem);
-                    }
-                    this.rightList.setBusy(false);
+                    this.rightList.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
                 /** 显示过账期间项目 */
                 showPostingPeriodItems(data: bo.PostingPeriod): void {
-                    for (let item of this.rightList.getItems()) {
-                        let model: any = item.getModel();
-                        if (model instanceof sap.extension.model.JSONModel) {
-                            if (model.getData() === data) {
-                                model.refresh(true);
-                                break;
-                            }
-                        }
+                    let model: any = this.rightList.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        model.refresh(true);
                     }
                 }
             }

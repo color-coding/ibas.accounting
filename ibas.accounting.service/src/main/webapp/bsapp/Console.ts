@@ -10,6 +10,8 @@
 /// <reference path="./project/index.ts" />
 /// <reference path="./dimension/index.ts" />
 /// <reference path="./taxgroup/index.ts" />
+/// <reference path="./coststructure/index.ts" />
+/// <reference path="./costitem/index.ts" />
 namespace accounting {
     export namespace app {
         /** 属性-导航 */
@@ -32,15 +34,20 @@ namespace accounting {
             protected registers(): void {
                 // 注册功能
                 this.register(new ProjectFunc());
+                this.register(new CostStructureFunc());
+                this.register(new PostingPeriodFunc());
+                this.register(new CostItemFunc());
                 this.register(new DimensionFunc());
                 this.register(new TaxGroupFunc());
-                this.register(new PostingPeriodFunc());
                 // 注册服务应用
                 this.register(new PostingPeriodChooseServiceMapping());
                 this.register(new ProjectChooseServiceMapping());
                 this.register(new DimensionChooseServiceMapping());
                 this.register(new DimensionDataServiceMapping());
                 this.register(new TaxGroupChooseServiceMapping());
+                this.register(new CostStructureChooseServiceMapping());
+                this.register(new CostStructureNodeChooseServiceMapping());
+                this.register(new CostItemChooseServiceMapping());
                 // 注册常驻应用
 
             }
@@ -85,6 +92,9 @@ namespace accounting {
             protected registers(): void {
                 this.register(new ProjectChooseServiceMapping());
                 this.register(new TaxGroupChooseServiceMapping());
+                this.register(new CostStructureChooseServiceMapping());
+                this.register(new CostStructureNodeChooseServiceMapping());
+                this.register(new CostItemChooseServiceMapping());
             }
         }
     }

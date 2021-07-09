@@ -1,5 +1,8 @@
 package org.colorcoding.ibas.accounting.repository;
 
+import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
+import org.colorcoding.ibas.accounting.bo.costitem.ICostItem;
+import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPostingPeriod;
@@ -97,6 +100,58 @@ public interface IBORepositoryAccountingApp extends IBORepositoryApplication {
 	 * @return 操作结果
 	 */
 	IOperationResult<ITaxGroup> saveTaxGroup(ITaxGroup bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用结构
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ICostStructure> fetchCostStructure(ICriteria criteria);
+
+	/**
+	 * 保存-费用结构
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ICostStructure> saveCostStructure(ICostStructure bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用项目
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ICostItem> fetchCostItem(ICriteria criteria);
+
+	/**
+	 * 保存-费用项目
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ICostItem> saveCostItem(ICostItem bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用项目-日记账
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ICostItemJournal> fetchCostItemJournal(ICriteria criteria);
+
+	/**
+	 * 保存-费用项目-日记账
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ICostItemJournal> saveCostItemJournal(ICostItemJournal bo);
+
 	// --------------------------------------------------------------------------------------------//
 
 }

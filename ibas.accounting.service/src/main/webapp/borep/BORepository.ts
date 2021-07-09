@@ -109,6 +109,35 @@ namespace accounting {
             saveTaxGroup(saver: ibas.ISaveCaller<bo.TaxGroup>): void {
                 super.save(bo.TaxGroup.name, saver);
             }
+            /**
+             * 查询 费用项目
+             * @param fetcher 查询者
+             */
+            fetchCostItem(fetcher: ibas.IFetchCaller<bo.CostItem>): void {
+                super.fetch(bo.CostItem.name, fetcher);
+            }
+            /**
+             * 保存 费用项目
+             * @param saver 保存者
+             */
+            saveCostItem(saver: ibas.ISaveCaller<bo.CostItem>): void {
+                super.save(bo.CostItem.name, saver);
+            }
+
+            /**
+             * 查询 费用结构
+             * @param fetcher 查询者
+             */
+            fetchCostStructure(fetcher: ibas.IFetchCaller<bo.CostStructure>): void {
+                super.fetch(bo.CostStructure.name, fetcher);
+            }
+            /**
+             * 保存 费用结构
+             * @param saver 保存者
+             */
+            saveCostStructure(saver: ibas.ISaveCaller<bo.CostStructure>): void {
+                super.save(bo.CostStructure.name, saver);
+            }
 
         }
     }

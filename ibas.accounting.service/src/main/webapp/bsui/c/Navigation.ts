@@ -10,6 +10,8 @@
 /// <reference path="./project/index.ts" />
 /// <reference path="./dimension/index.ts" />
 /// <reference path="./taxgroup/index.ts" />
+/// <reference path="./coststructure/index.ts" />
+/// <reference path="./costitem/index.ts" />
 namespace accounting {
     export namespace ui {
         /** 视图导航 */
@@ -62,6 +64,27 @@ namespace accounting {
                         break;
                     case app.TaxGroupEditApp.APPLICATION_ID:
                         view = new c.TaxGroupEditView();
+                        break;
+                    case app.CostStructureListApp.APPLICATION_ID:
+                        view = new c.CostStructureListView();
+                        break;
+                    case app.CostStructureChooseApp.APPLICATION_ID:
+                        view = new c.CostStructureChooseView();
+                        break;
+                    case app.CostStructureNodeChooseApp.APPLICATION_ID:
+                        view = new c.CostStructureNodeChooseView();
+                        break;
+                    case app.CostItemListApp.APPLICATION_ID:
+                        view = new c.CostItemListView();
+                        break;
+                    case app.CostItemChooseApp.APPLICATION_ID:
+                        view = new c.CostItemChooseView();
+                        break;
+                    case app.CostItemEditApp.APPLICATION_ID:
+                        view = new c.CostItemEditView();
+                        break;
+                    case app.CostStructureEditApp.APPLICATION_ID:
+                        view = new c.CostStructureEditView();
                         break;
                     default:
                         break;

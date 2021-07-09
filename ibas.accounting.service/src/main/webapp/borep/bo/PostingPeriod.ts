@@ -224,6 +224,16 @@ namespace accounting {
                 this.setProperty(PostingPeriod.PROPERTY_UPDATEACTIONID_NAME, value);
             }
 
+            /** 映射的属性名称-备注 */
+            static PROPERTY_REMARKS_NAME: string = "Remarks";
+            /** 获取-备注 */
+            get remarks(): string {
+                return this.getProperty<string>(PostingPeriod.PROPERTY_REMARKS_NAME);
+            }
+            /** 设置-备注 */
+            set remarks(value: string) {
+                this.setProperty(PostingPeriod.PROPERTY_REMARKS_NAME, value);
+            }
 
             /** 映射的属性名称-过账期间-项目集合 */
             static PROPERTY_POSTINGPERIODITEMS_NAME: string = "PostingPeriodItems";

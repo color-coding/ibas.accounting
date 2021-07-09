@@ -7,6 +7,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
+import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
@@ -175,6 +177,69 @@ public class DataService extends BORepositoryAccounting {
 	public OperationResult<TaxGroup> saveTaxGroup(TaxGroup bo, @QueryParam("token") String token) {
 		return super.saveTaxGroup(bo, token);
 	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用结构
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchCostStructure")
+	public OperationResult<CostStructure> fetchCostStructure(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchCostStructure(criteria, token);
+	}
+
+	/**
+	 * 保存-费用结构
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveCostStructure")
+	public OperationResult<CostStructure> saveCostStructure(CostStructure bo, @QueryParam("token") String token) {
+		return super.saveCostStructure(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用项目
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchCostItem")
+	public OperationResult<CostItem> fetchCostItem(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchCostItem(criteria, token);
+	}
+
+	/**
+	 * 保存-费用项目
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveCostItem")
+	public OperationResult<CostItem> saveCostItem(CostItem bo, @QueryParam("token") String token) {
+		return super.saveCostItem(bo, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 
 }

@@ -13,14 +13,18 @@ namespace accounting {
             code: string;
             /** 名称 */
             name: string;
-            /** 激活 */
-            activated: ibas.emYesNo;
+            /** 取消 */
+            canceled: ibas.emYesNo;
+            /** 状态 */
+            status: ibas.emDocumentStatus;
             /** 项目经理 */
             manager: number;
             /** 数据所有者 */
             dataOwner: number;
             /** 数据所属组织 */
             organization: string;
+            /** 团队成员 */
+            teamMembers: string;
             /** 已引用 */
             referenced: ibas.emYesNo;
             /** 删除的 */

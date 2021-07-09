@@ -11,6 +11,8 @@
 /// <reference path="./bo/Project.ts" />
 /// <reference path="./bo/Dimension.ts" />
 /// <reference path="./bo/TaxGroup.ts" />
+/// <reference path="./bo/CostItem.ts" />
+/// <reference path="./bo/CostStructure.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 namespace accounting {
@@ -23,5 +25,8 @@ namespace accounting {
         boFactory.register(Project.BUSINESS_OBJECT_CODE, Project);
         boFactory.register(Dimension.BUSINESS_OBJECT_CODE, Dimension);
         boFactory.register(TaxGroup.BUSINESS_OBJECT_CODE, TaxGroup);
+        boFactory.register(CostItem.BUSINESS_OBJECT_CODE, CostItem);
+        boFactory.register(CostStructure.BUSINESS_OBJECT_CODE, CostStructure);
+        boFactory.register(bo.BO_CODE_COSTSTRUCTURE_NODE, CostStructure);
     }
 }

@@ -41,11 +41,19 @@ namespace accounting {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_project_activated"),
+                                label: ibas.i18n.prop("bo_project_canceled"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
-                                    path: "activated",
+                                    path: "canceled",
                                     type: new sap.extension.data.YesNo(true)
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_project_status"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "status",
+                                    type: new sap.extension.data.DocumentStatus(true)
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
@@ -98,7 +106,7 @@ namespace accounting {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    return new sap.extension.m.Dialog("", {
+                    return new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
@@ -131,7 +139,7 @@ namespace accounting {
                                 }
                             }),
                         ],
-                    });
+                    }).addStyleClass("sapUiNoContentPadding");
                 }
                 private table: sap.extension.table.Table;
                 /** 显示数据 */

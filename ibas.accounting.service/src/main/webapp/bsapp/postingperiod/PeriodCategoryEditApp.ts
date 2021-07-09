@@ -12,7 +12,7 @@ namespace accounting {
             /** 应用标识 */
             static APPLICATION_ID: string = "881a6e57-7c0e-4d72-8f90-32ae68393df9";
             /** 应用名称 */
-            static APPLICATION_NAME: string = "accounting_app_periodcategory_edit";
+            static APPLICATION_NAME: string = "accounting_app_postingperiod_edit";
             /** 业务对象编码 */
             static BUSINESS_OBJECT_CODE: string = bo.PeriodCategory.BUSINESS_OBJECT_CODE;
             /** 构造函数 */
@@ -335,11 +335,14 @@ namespace accounting {
                 }
             }
             private addPostingPeriodItem(data: bo.PostingPeriod): void {
+                let criteria: ibas.Criteria = new ibas.Criteria();
+                criteria.noChilds = true;
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = initialfantasy.bo.BOInformation.PROPERTY_OBJECTTYPE_NAME;
+                condition.value = "Document";
                 ibas.servicesManager.runChooseService<initialfantasy.bo.BOInformation>({
                     boCode: initialfantasy.bo.BOInformation.BUSINESS_OBJECT_CODE,
-                    criteria: [
-                        new ibas.Condition(initialfantasy.bo.BOInformation.PROPERTY_OBJECTTYPE_NAME, ibas.emConditionOperation.EQUAL, "Document")
-                    ],
+                    criteria: criteria,
                     onCompleted: (selecteds) => {
                         for (let selected of selecteds) {
                             let item: bo.PostingPeriodItem = data.postingPeriodItems.create();

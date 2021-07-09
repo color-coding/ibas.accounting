@@ -12,7 +12,7 @@ namespace accounting {
             /** 应用标识 */
             static APPLICATION_ID: string = "b31ad335-57a0-440d-b94a-1129ecd87424";
             /** 应用名称 */
-            static APPLICATION_NAME: string = "accounting_app_periodcategory_list";
+            static APPLICATION_NAME: string = "accounting_app_postingperiod_list";
             /** 业务对象编码 */
             static BUSINESS_OBJECT_CODE: string = bo.PeriodCategory.BUSINESS_OBJECT_CODE;
             /** 构造函数 */
