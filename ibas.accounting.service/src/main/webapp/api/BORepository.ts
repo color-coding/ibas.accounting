@@ -69,7 +69,26 @@ namespace accounting {
              * @param saver 保存者
              */
             saveTaxGroup(saver: ibas.ISaveCaller<bo.ITaxGroup>): void;
-
+            /**
+             * 查询 费用项目
+             * @param fetcher 查询者
+             */
+            fetchCostItem(fetcher: ibas.IFetchCaller<bo.ICostItem>): void;
+            /**
+             * 保存 费用项目
+             * @param saver 保存者
+             */
+            saveCostItem(saver: ibas.ISaveCaller<bo.ICostItem>): void;
+            /**
+             * 查询 费用结构
+             * @param fetcher 查询者
+             */
+            fetchCostStructure(fetcher: ibas.IFetchCaller<bo.ICostStructure>): void;
+            /**
+             * 保存 费用结构
+             * @param saver 保存者
+             */
+            saveCostStructure(saver: ibas.ISaveCaller<bo.ICostStructure>): void;
         }
     }
 }

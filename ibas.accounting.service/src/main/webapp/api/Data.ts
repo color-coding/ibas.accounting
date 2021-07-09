@@ -36,6 +36,12 @@ namespace accounting {
         export const BO_CODE_DIMENSION: string = "${Company}_AC_DIMENSION";
         /** 业务对象编码-税收组 */
         export const BO_CODE_TAXGROUP: string = "${Company}_AC_TAXGROUP";
+        /** 业务对象编码-费用结构 */
+        export const BO_CODE_COSTSTRUCTURE: string = "${Company}_AC_COSTSTRU";
+        /** 业务对象编码-费用项目 */
+        export const BO_CODE_COSTITEM: string = "${Company}_AC_COSTITEM";
+        /** 业务对象编码-费用结构节点 */
+        export const BO_CODE_COSTSTRUCTURE_NODE: string = "${Company}_AC_COSTSTRUNODE";
         /**
          * 期间状态
          */
@@ -64,6 +70,23 @@ namespace accounting {
             OUTPUT,
             /** 进项税 */
             INPUT
+        }
+        /**
+         * 费用状态
+         */
+        export enum emCostStatus {
+            /** 打开 */
+            OPEN,
+            /** 冻结 */
+            FROZEN,
+            /** 关闭 */
+            CLOSED
+        }
+        export enum emEntityType {
+            /** 组织/部门 */
+            ORGANIZATION,
+            /** 项目 */
+            PROJECT
         }
     }
     export namespace app {
@@ -125,6 +148,81 @@ namespace accounting {
                     condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
                     condition.value = today;
                     conditions.add(condition);
+                    return conditions;
+                }
+            }
+            export namespace coststructurenode {
+                export function create(type: bo.emEntityType, entity: string, date?: Date | string): ibas.IList<ibas.ICondition> {
+                    let today: string = ibas.dates.toString(ibas.dates.today(), "yyyy-MM-dd");
+                    let condition: ibas.ICondition;
+                    let conditions: ibas.IList<ibas.ICondition> = new ibas.ArrayList<ibas.ICondition>();
+                    // 类型
+                    condition = new ibas.Condition();
+                    condition.alias = bo.CostStructure.PROPERTY_ENTITYTYPE_NAME;
+                    condition.operation = ibas.emConditionOperation.EQUAL;
+                    condition.value = type.toString();
+                    conditions.add(condition);
+                    // 未取消的
+                    condition = new ibas.Condition();
+                    condition.alias = bo.CostStructure.PROPERTY_CANCELED_NAME;
+                    condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                    condition.value = ibas.emYesNo.YES.toString();
+                    conditions.add(condition);
+                    // 有效的
+                    condition = new ibas.Condition();
+                    condition.alias = bo.CostStructure.PROPERTY_STATUS_NAME;
+                    condition.operation = ibas.emConditionOperation.EQUAL;
+                    condition.value = bo.emCostStatus.OPEN.toString();
+                    conditions.add(condition);
+                    // 编码
+                    if (!ibas.strings.isEmpty(entity)) {
+                        condition = new ibas.Condition();
+                        condition.alias = bo.CostStructure.PROPERTY_ENTITYCODE_NAME;
+                        condition.operation = ibas.emConditionOperation.EQUAL;
+                        condition.value = entity;
+                        conditions.add(condition);
+                    }
+                    // 有效日期
+                    if (typeof date === "string") {
+                        date = ibas.dates.valueOf(date);
+                    }
+                    if (date instanceof Date) {
+                        condition = new ibas.Condition();
+                        condition.bracketOpen = 1;
+                        condition.alias = bo.CostStructure.PROPERTY_STARTDATE_NAME;
+                        condition.operation = ibas.emConditionOperation.IS_NULL;
+                        conditions.add(condition);
+                        condition = new ibas.Condition();
+                        condition.relationship = ibas.emConditionRelationship.OR;
+                        condition.bracketOpen = 1;
+                        condition.alias = bo.CostStructure.PROPERTY_STARTDATE_NAME;
+                        condition.operation = ibas.emConditionOperation.NOT_NULL;
+                        conditions.add(condition);
+                        condition = new ibas.Condition();
+                        condition.bracketClose = 2;
+                        condition.alias = bo.CostStructure.PROPERTY_STARTDATE_NAME;
+                        condition.operation = ibas.emConditionOperation.LESS_EQUAL;
+                        condition.value = today;
+                        conditions.add(condition);
+                        // 失效日期
+                        condition = new ibas.Condition();
+                        condition.bracketOpen = 1;
+                        condition.alias = bo.CostStructure.PROPERTY_ENDDATE_NAME;
+                        condition.operation = ibas.emConditionOperation.IS_NULL;
+                        conditions.add(condition);
+                        condition = new ibas.Condition();
+                        condition.relationship = ibas.emConditionRelationship.OR;
+                        condition.bracketOpen = 1;
+                        condition.alias = bo.CostStructure.PROPERTY_ENDDATE_NAME;
+                        condition.operation = ibas.emConditionOperation.NOT_NULL;
+                        conditions.add(condition);
+                        condition = new ibas.Condition();
+                        condition.bracketClose = 2;
+                        condition.alias = bo.CostStructure.PROPERTY_ENDDATE_NAME;
+                        condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                        condition.value = today;
+                        conditions.add(condition);
+                    }
                     return conditions;
                 }
             }

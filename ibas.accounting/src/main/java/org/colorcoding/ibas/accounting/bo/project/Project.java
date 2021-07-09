@@ -6,12 +6,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOSeriesKey;
 import org.colorcoding.ibas.bobas.bo.IBOTagDeleted;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
@@ -19,7 +21,6 @@ import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
-import org.colorcoding.ibas.accounting.MyConfiguration;
 
 /**
  * 项目
@@ -120,34 +121,65 @@ public class Project extends BusinessObject<Project>
 	}
 
 	/**
-	 * 属性名称-激活
+	 * 属性名称-取消
 	 */
-	private static final String PROPERTY_ACTIVATED_NAME = "Activated";
+	private static final String PROPERTY_CANCELED_NAME = "Canceled";
 
 	/**
-	 * 激活 属性
+	 * 取消 属性
 	 */
-	@DbField(name = "Activated", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emYesNo> PROPERTY_ACTIVATED = registerProperty(PROPERTY_ACTIVATED_NAME,
+	@DbField(name = "Canceled", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_CANCELED = registerProperty(PROPERTY_CANCELED_NAME,
 			emYesNo.class, MY_CLASS);
 
 	/**
-	 * 获取-激活
+	 * 获取-取消
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_ACTIVATED_NAME)
-	public final emYesNo getActivated() {
-		return this.getProperty(PROPERTY_ACTIVATED);
+	@XmlElement(name = PROPERTY_CANCELED_NAME)
+	public final emYesNo getCanceled() {
+		return this.getProperty(PROPERTY_CANCELED);
 	}
 
 	/**
-	 * 设置-激活
+	 * 设置-取消
 	 * 
 	 * @param value 值
 	 */
-	public final void setActivated(emYesNo value) {
-		this.setProperty(PROPERTY_ACTIVATED, value);
+	public final void setCanceled(emYesNo value) {
+		this.setProperty(PROPERTY_CANCELED, value);
+	}
+
+	/**
+	 * 属性名称-状态
+	 */
+	private static final String PROPERTY_STATUS_NAME = "Status";
+
+	/**
+	 * 状态 属性
+	 */
+	@DbField(name = "Status", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emDocumentStatus> PROPERTY_STATUS = registerProperty(PROPERTY_STATUS_NAME,
+			emDocumentStatus.class, MY_CLASS);
+
+	/**
+	 * 获取-状态
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_STATUS_NAME)
+	public final emDocumentStatus getStatus() {
+		return this.getProperty(PROPERTY_STATUS);
+	}
+
+	/**
+	 * 设置-状态
+	 * 
+	 * @param value 值
+	 */
+	public final void setStatus(emDocumentStatus value) {
+		this.setProperty(PROPERTY_STATUS, value);
 	}
 
 	/**
@@ -241,6 +273,37 @@ public class Project extends BusinessObject<Project>
 	 */
 	public final void setOrganization(String value) {
 		this.setProperty(PROPERTY_ORGANIZATION, value);
+	}
+
+	/**
+	 * 属性名称-团队成员
+	 */
+	private static final String PROPERTY_TEAMMEMBERS_NAME = "TeamMembers";
+
+	/**
+	 * 团队成员 属性
+	 */
+	@DbField(name = "TeamMembers", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_TEAMMEMBERS = registerProperty(PROPERTY_TEAMMEMBERS_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	 * 获取-团队成员
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_TEAMMEMBERS_NAME)
+	public final String getTeamMembers() {
+		return this.getProperty(PROPERTY_TEAMMEMBERS);
+	}
+
+	/**
+	 * 设置-团队成员
+	 * 
+	 * @param value 值
+	 */
+	public final void setTeamMembers(String value) {
+		this.setProperty(PROPERTY_TEAMMEMBERS, value);
 	}
 
 	/**
@@ -782,7 +845,7 @@ public class Project extends BusinessObject<Project>
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-		this.setActivated(emYesNo.YES);
+		this.setStatus(emDocumentStatus.RELEASED);
 
 	}
 

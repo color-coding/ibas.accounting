@@ -1,5 +1,8 @@
 package org.colorcoding.ibas.accounting.repository;
 
+import org.colorcoding.ibas.accounting.bo.costiemjournal.CostItemJournal;
+import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
+import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
@@ -107,6 +110,64 @@ public interface IBORepositoryAccountingSvc extends IBORepositorySmartService {
 	 * @return 操作结果
 	 */
 	OperationResult<TaxGroup> saveTaxGroup(TaxGroup bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用结构
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<CostStructure> fetchCostStructure(ICriteria criteria, String token);
+
+	/**
+	 * 保存-费用结构
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<CostStructure> saveCostStructure(CostStructure bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用项目
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<CostItem> fetchCostItem(ICriteria criteria, String token);
+
+	/**
+	 * 保存-费用项目
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<CostItem> saveCostItem(CostItem bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用项目-日记账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<CostItemJournal> fetchCostItemJournal(ICriteria criteria, String token);
+
+	/**
+	 * 保存-费用项目-日记账
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<CostItemJournal> saveCostItemJournal(CostItemJournal bo, String token);
+
 	// --------------------------------------------------------------------------------------------//
 
 }

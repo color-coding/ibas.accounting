@@ -37,15 +37,26 @@ namespace accounting {
                 this.setProperty(Project.PROPERTY_NAME_NAME, value);
             }
 
-            /** 映射的属性名称-激活 */
-            static PROPERTY_ACTIVATED_NAME: string = "Activated";
-            /** 获取-激活 */
-            get activated(): ibas.emYesNo {
-                return this.getProperty<ibas.emYesNo>(Project.PROPERTY_ACTIVATED_NAME);
+            /** 映射的属性名称-取消 */
+            static PROPERTY_CANCELED_NAME: string = "Canceled";
+            /** 获取-取消 */
+            get canceled(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Project.PROPERTY_CANCELED_NAME);
             }
-            /** 设置-激活 */
-            set activated(value: ibas.emYesNo) {
-                this.setProperty(Project.PROPERTY_ACTIVATED_NAME, value);
+            /** 设置-取消 */
+            set canceled(value: ibas.emYesNo) {
+                this.setProperty(Project.PROPERTY_CANCELED_NAME, value);
+            }
+
+            /** 映射的属性名称-状态 */
+            static PROPERTY_STATUS_NAME: string = "Status";
+            /** 获取-状态 */
+            get status(): ibas.emDocumentStatus {
+                return this.getProperty<ibas.emDocumentStatus>(Project.PROPERTY_STATUS_NAME);
+            }
+            /** 设置-状态 */
+            set status(value: ibas.emDocumentStatus) {
+                this.setProperty(Project.PROPERTY_STATUS_NAME, value);
             }
 
             /** 映射的属性名称-项目经理 */
@@ -79,6 +90,16 @@ namespace accounting {
             /** 设置-数据所属组织 */
             set organization(value: string) {
                 this.setProperty(Project.PROPERTY_ORGANIZATION_NAME, value);
+            }
+            /** 映射的属性名称-团队成员 */
+            static PROPERTY_TEAMMEMBERS_NAME: string = "TeamMembers";
+            /** 获取-团队成员 */
+            get teamMembers(): string {
+                return this.getProperty<string>(Project.PROPERTY_TEAMMEMBERS_NAME);
+            }
+            /** 设置-团队成员 */
+            set teamMembers(value: string) {
+                this.setProperty(Project.PROPERTY_TEAMMEMBERS_NAME, value);
             }
 
             /** 映射的属性名称-已引用 */
@@ -271,7 +292,7 @@ namespace accounting {
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(Project.BUSINESS_OBJECT_CODE);
-                this.activated = ibas.emYesNo.YES;
+                this.status = ibas.emDocumentStatus.RELEASED;
             }
         }
 

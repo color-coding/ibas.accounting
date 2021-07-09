@@ -44,10 +44,10 @@ namespace accounting {
                             }).bindProperty("bindingValue", {
                                 path: "series",
                                 type: new sap.extension.data.Numeric()
-                            }).bindProperty("enabled", {
+                            }).bindProperty("editable", {
                                 path: "isNew",
                                 formatter(data: any): any {
-                                    return !!data ? true : false;
+                                    return data === false ? false : true;
                                 }
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_project_name") }),
@@ -58,16 +58,23 @@ namespace accounting {
                                     maxLength: 100
                                 })
                             }),
-                            new sap.extension.m.CheckBox("", {
-                                text: ibas.i18n.prop("bo_project_activated"),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_status") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emDocumentStatus,
                             }).bindProperty("bindingValue", {
-                                path: "activated",
+                                path: "status",
+                                type: new sap.extension.data.DocumentStatus()
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_canceled") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo,
+                            }).bindProperty("bindingValue", {
+                                path: "canceled",
                                 type: new sap.extension.data.YesNo()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_project_manager") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
-                                type: sap.m.InputType.Number,
                                 repository: initialfantasy.bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: initialfantasy.bo.User,
@@ -98,6 +105,23 @@ namespace accounting {
                                 type: new sap.extension.data.Alphanumeric({
                                     maxLength: 8
                                 })
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_teammembers") }),
+                            new sap.extension.m.SelectionInput("", {
+                                showValueHelp: true,
+                                chooseType: ibas.emChooseType.MULTIPLE,
+                                repository: initialfantasy.bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: initialfantasy.bo.User,
+                                    key: initialfantasy.bo.User.PROPERTY_DOCENTRY_NAME,
+                                    text: initialfantasy.bo.User.PROPERTY_NAME_NAME
+                                },
+                                criteria: [
+                                    new ibas.Condition(initialfantasy.bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                                ]
+                            }).bindProperty("bindingValue", {
+                                path: "teamMembers",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference1") }),
                             new sap.extension.m.Input("", {

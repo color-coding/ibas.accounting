@@ -11,4 +11,6 @@
 /// <reference path="./bo/Project.ts" />
 /// <reference path="./bo/Dimension.ts" />
 /// <reference path="./bo/TaxGroup.ts" />
+/// <reference path="./bo/CostItem.ts" />
+/// <reference path="./bo/CostStructure.ts" />
 /// <reference path="./BORepository.ts" />

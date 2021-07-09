@@ -1,5 +1,11 @@
 package org.colorcoding.ibas.accounting.repository;
 
+import org.colorcoding.ibas.accounting.bo.costiemjournal.CostItemJournal;
+import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
+import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
+import org.colorcoding.ibas.accounting.bo.costitem.ICostItem;
+import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
+import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
@@ -232,6 +238,136 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<ITaxGroup> saveTaxGroup(ITaxGroup bo) {
 		return new OperationResult<ITaxGroup>(this.saveTaxGroup((TaxGroup) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用结构
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CostStructure> fetchCostStructure(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, CostStructure.class);
+	}
+
+	/**
+	 * 查询-费用结构（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICostStructure> fetchCostStructure(ICriteria criteria) {
+		return new OperationResult<ICostStructure>(this.fetchCostStructure(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-费用结构
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CostStructure> saveCostStructure(CostStructure bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-费用结构（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICostStructure> saveCostStructure(ICostStructure bo) {
+		return new OperationResult<ICostStructure>(this.saveCostStructure((CostStructure) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用项目
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CostItem> fetchCostItem(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, CostItem.class);
+	}
+
+	/**
+	 * 查询-费用项目（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICostItem> fetchCostItem(ICriteria criteria) {
+		return new OperationResult<ICostItem>(this.fetchCostItem(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-费用项目
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CostItem> saveCostItem(CostItem bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-费用项目（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICostItem> saveCostItem(ICostItem bo) {
+		return new OperationResult<ICostItem>(this.saveCostItem((CostItem) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-费用项目-日记账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CostItemJournal> fetchCostItemJournal(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, CostItemJournal.class);
+	}
+
+	/**
+	 * 查询-费用项目-日记账（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICostItemJournal> fetchCostItemJournal(ICriteria criteria) {
+		return new OperationResult<ICostItemJournal>(this.fetchCostItemJournal(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-费用项目-日记账
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CostItemJournal> saveCostItemJournal(CostItemJournal bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-费用项目-日记账（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICostItemJournal> saveCostItemJournal(ICostItemJournal bo) {
+		return new OperationResult<ICostItemJournal>(
+				this.saveCostItemJournal((CostItemJournal) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

@@ -19,11 +19,12 @@
     <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
     <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
     <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
   </Model>
   <BusinessObject MappedModel="PeriodCategory" ShortName="${Company}_AC_CATEGORY"/>
   <Model Name="PostingPeriod" Description="过账期间" ModelType="Simple" Mapped="${Company}_AC_OPPD">
     <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="10" Mapped="Name" UniqueKey="Yes"/>
-    <Property Name="Category" Description="类别"  DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Category"/>
+    <Property Name="Category" Description="类别" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Category"/>
     <Property Name="Order" Description="序号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Order"/>
     <Property Name="Status" Description="状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emPeriodStatus" Mapped="Status"/>
     <Property Name="StartDate" Description="起始日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="StartDate"/>
@@ -41,6 +42,7 @@
     <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
     <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
     <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
   </Model>
   <Model Name="PostingPeriodItem" Description="过账期间-项目" ModelType="SimpleLine" Mapped="${Company}_AC_PPD1">
     <Property Name="DocumentType" Description="单据类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="DocType"/>

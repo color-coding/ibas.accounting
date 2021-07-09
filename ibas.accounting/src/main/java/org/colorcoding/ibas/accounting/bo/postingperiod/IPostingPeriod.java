@@ -277,6 +277,20 @@ public interface IPostingPeriod extends IBOSimple {
 	void setUpdateActionId(String value);
 
 	/**
+	 * 获取-备注
+	 * 
+	 * @return 值
+	 */
+	String getRemarks();
+
+	/**
+	 * 设置-备注
+	 * 
+	 * @param value 值
+	 */
+	void setRemarks(String value);
+
+	/**
 	 * 获取-过账期间-项目集合
 	 * 
 	 * @return 值
