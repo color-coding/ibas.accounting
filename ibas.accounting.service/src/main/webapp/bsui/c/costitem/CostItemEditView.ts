@@ -85,6 +85,45 @@ namespace accounting {
                                 type: new sap.extension.data.Alphanumeric(),
                             }),
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_others") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_phantom") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo
+                            }).bindProperty("bindingValue", {
+                                path: "phantom",
+                                type: new sap.extension.data.YesNo(),
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_parents") }),
+                            new sap.extension.m.SelectionInput("", {
+                                showValueHelp: true,
+                                chooseType: ibas.emChooseType.MULTIPLE,
+                                repository: bo.BORepositoryAccounting,
+                                dataInfo: {
+                                    type: bo.CostItem,
+                                    key: bo.CostItem.PROPERTY_CODE_NAME,
+                                    text: bo.CostItem.PROPERTY_NAME_NAME
+                                },
+                                criteria: [
+                                    new ibas.Condition(bo.CostItem.PROPERTY_PHANTOM_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                                ]
+                            }).bindProperty("bindingValue", {
+                                path: "parents",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 60
+                                })
+                            }).bindProperty("editable", {
+                                path: "phantom",
+                                formatter(data: ibas.emYesNo): boolean {
+                                    return data === ibas.emYesNo.YES ? false : true;
+                                }
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_sorts") }),
+                            new sap.extension.m.Input("", {
+                            }).bindProperty("bindingValue", {
+                                path: "sorts",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 16
+                                })
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_invoicecontent") }),
                             new sap.extension.m.TextArea("", {
                                 rows: 6,

@@ -117,7 +117,7 @@ namespace accounting {
                                     }).bindProperty("bindingValue", {
                                         path: "entityCode",
                                         type: new sap.extension.data.Alphanumeric(),
-                                    }), ,
+                                    }),
                                     new sap.extension.m.ObjectAttribute("", {
                                         title: ibas.i18n.prop("bo_coststructure_startdate"),
                                         visible: {
@@ -326,11 +326,16 @@ namespace accounting {
                                                                     new sap.m.ToolbarSpacer(),
                                                                     new sap.m.GenericTag("", {
                                                                         design: sap.m.GenericTagDesign.StatusIconHidden,
-                                                                        text: ibas.i18n.prop("bo_coststructurenode_budget"),
+                                                                        text: ibas.i18n.prop("bo_coststructurenode_available"),
                                                                         value: new sap.m.ObjectNumber("", {
                                                                             number: {
-                                                                                path: "budget",
-                                                                                type: new sap.extension.data.Sum()
+                                                                                path: "",
+                                                                                formatter(data: any): number {
+                                                                                    if (data instanceof bo.CostStructureNode) {
+                                                                                        return new sap.extension.data.Sum().formatValue(data.available(), "string");
+                                                                                    }
+                                                                                    return NaN;
+                                                                                }
                                                                             },
                                                                             unit: {
                                                                                 path: "currency",
@@ -477,14 +482,34 @@ namespace accounting {
                         floatingFooter: true,
                         footer: new sap.m.Toolbar("", {
                             content: [
+                                new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructure_budget") }),
+                                new sap.extension.m.Text("", {
+                                    text: {
+                                        parts: [
+                                            {
+                                                path: "/budget",
+                                                type: new sap.extension.data.Sum()
+                                            },
+                                            {
+                                                path: "/currency",
+                                                type: new sap.extension.data.Alphanumeric()
+                                            }
+                                        ]
+                                    }
+                                }),
                                 new sap.m.ToolbarSpacer(),
                                 new sap.m.GenericTag("", {
                                     design: sap.m.GenericTagDesign.StatusIconHidden,
-                                    text: ibas.i18n.prop("bo_coststructure_budget"),
+                                    text: ibas.i18n.prop("bo_coststructure_available"),
                                     value: new sap.m.ObjectNumber("", {
                                         number: {
-                                            path: "/budget",
-                                            type: new sap.extension.data.Sum()
+                                            path: "/",
+                                            formatter(data: any): number {
+                                                if (data instanceof bo.CostStructure) {
+                                                    return new sap.extension.data.Sum().formatValue(data.available(), "string");
+                                                }
+                                                return NaN;
+                                            }
                                         },
                                         unit: {
                                             path: "/currency",
@@ -925,7 +950,7 @@ namespace accounting {
                     }
                     let toolbar: any = this.budgetPage.getFooter();
                     if (toolbar instanceof sap.m.Toolbar) {
-                        this.showCostItems(nodes, toolbar.getContent()[1]);
+                        this.showCostItems(nodes, toolbar.getContent()[3]);
                     }
                 }
                 showCostItemsLocked(datas: bo.CostStructureNodeItem[]): void {
@@ -943,7 +968,7 @@ namespace accounting {
                     }
                     let toolbar: any = this.budgetPage.getFooter();
                     if (toolbar instanceof sap.m.Toolbar) {
-                        this.showCostItems(nodes, toolbar.getContent()[2]);
+                        this.showCostItems(nodes, toolbar.getContent()[4]);
                     }
                 }
                 showCostItemsIncurred(datas: bo.CostStructureNodeItem[]): void {
@@ -961,7 +986,7 @@ namespace accounting {
                     }
                     let toolbar: any = this.budgetPage.getFooter();
                     if (toolbar instanceof sap.m.Toolbar) {
-                        this.showCostItems(nodes, toolbar.getContent()[3]);
+                        this.showCostItems(nodes, toolbar.getContent()[5]);
                     }
                 }
                 showCostItems(nodes: Node[], pos: any): void {

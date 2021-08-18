@@ -150,6 +150,99 @@ public class CostItem extends BusinessObject<CostItem>
 	}
 
 	/**
+	 * 属性名称-虚拟的
+	 */
+	private static final String PROPERTY_PHANTOM_NAME = "Phantom";
+
+	/**
+	 * 虚拟的 属性
+	 */
+	@DbField(name = "Phantom", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_PHANTOM = registerProperty(PROPERTY_PHANTOM_NAME, emYesNo.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-虚拟的
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_PHANTOM_NAME)
+	public final emYesNo getPhantom() {
+		return this.getProperty(PROPERTY_PHANTOM);
+	}
+
+	/**
+	 * 设置-虚拟的
+	 * 
+	 * @param value 值
+	 */
+	public final void setPhantom(emYesNo value) {
+		this.setProperty(PROPERTY_PHANTOM, value);
+	}
+
+	/**
+	 * 属性名称-父项
+	 */
+	private static final String PROPERTY_PARENTS_NAME = "Parents";
+
+	/**
+	 * 父项 属性
+	 */
+	@DbField(name = "Parents", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_PARENTS = registerProperty(PROPERTY_PARENTS_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-父项
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_PARENTS_NAME)
+	public final String getParents() {
+		return this.getProperty(PROPERTY_PARENTS);
+	}
+
+	/**
+	 * 设置-父项
+	 * 
+	 * @param value 值
+	 */
+	public final void setParents(String value) {
+		this.setProperty(PROPERTY_PARENTS, value);
+	}
+
+	/**
+	 * 属性名称-排序码
+	 */
+	private static final String PROPERTY_SORTS_NAME = "Sorts";
+
+	/**
+	 * 排序码 属性
+	 */
+	@DbField(name = "Sorts", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_SORTS = registerProperty(PROPERTY_SORTS_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-排序码
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_SORTS_NAME)
+	public final String getSorts() {
+		return this.getProperty(PROPERTY_SORTS);
+	}
+
+	/**
+	 * 设置-排序码
+	 * 
+	 * @param value 值
+	 */
+	public final void setSorts(String value) {
+		this.setProperty(PROPERTY_SORTS, value);
+	}
+
+	/**
 	 * 属性名称-已引用
 	 */
 	private static final String PROPERTY_REFERENCED_NAME = "Referenced";

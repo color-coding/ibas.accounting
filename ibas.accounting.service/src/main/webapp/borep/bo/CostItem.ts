@@ -48,6 +48,39 @@ namespace accounting {
                 this.setProperty(CostItem.PROPERTY_ACTIVATED_NAME, value);
             }
 
+            /** 映射的属性名称-虚拟的 */
+            static PROPERTY_PHANTOM_NAME: string = "Phantom";
+            /** 获取-虚拟的 */
+            get phantom(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(CostItem.PROPERTY_PHANTOM_NAME);
+            }
+            /** 设置-虚拟的 */
+            set phantom(value: ibas.emYesNo) {
+                this.setProperty(CostItem.PROPERTY_PHANTOM_NAME, value);
+            }
+
+            /** 映射的属性名称-父项 */
+            static PROPERTY_PARENTS_NAME: string = "Parents";
+            /** 获取-父项 */
+            get parents(): string {
+                return this.getProperty<string>(CostItem.PROPERTY_PARENTS_NAME);
+            }
+            /** 设置-父项 */
+            set parents(value: string) {
+                this.setProperty(CostItem.PROPERTY_PARENTS_NAME, value);
+            }
+
+            /** 映射的属性名称-排序码 */
+            static PROPERTY_SORTS_NAME: string = "Sorts";
+            /** 获取-排序码 */
+            get sorts(): string {
+                return this.getProperty<string>(CostItem.PROPERTY_SORTS_NAME);
+            }
+            /** 设置-排序码 */
+            set sorts(value: string) {
+                this.setProperty(CostItem.PROPERTY_SORTS_NAME, value);
+            }
+
             /** 映射的属性名称-已引用 */
             static PROPERTY_REFERENCED_NAME: string = "Referenced";
             /** 获取-已引用 */

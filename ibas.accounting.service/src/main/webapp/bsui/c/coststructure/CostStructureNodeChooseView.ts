@@ -46,7 +46,23 @@ namespace accounting {
                                                 numberOfExpandedLevels: 9,
                                             },
                                             filters: [
-                                                new sap.ui.model.Filter("status", sap.ui.model.FilterOperator.EQ, bo.emCostStatus.OPEN)
+                                                new sap.ui.model.Filter({
+                                                    path: "",
+                                                    test(value: any): boolean {
+                                                        if (value instanceof bo.CostStructureNode) {
+                                                            if (value.status !== bo.emCostStatus.OPEN) {
+                                                                return false;
+                                                            }
+                                                            if (value.preventOver === ibas.emYesNo.YES) {
+                                                                if (value.budget <= (value.incurred + value.locked)) {
+                                                                    return false;
+                                                                }
+                                                            }
+                                                            return true;
+                                                        }
+                                                        return false;
+                                                    }
+                                                }),
                                             ],
                                             templateShareable: false,
                                             template: new sap.m.CustomTreeItem("", {
@@ -71,7 +87,7 @@ namespace accounting {
                                                                     }
                                                                 },
                                                                 selected: {
-                                                                    path: "preventOver",
+                                                                    path: "dataSource",
                                                                     type: new sap.extension.data.YesNo()
                                                                 },
                                                             }),

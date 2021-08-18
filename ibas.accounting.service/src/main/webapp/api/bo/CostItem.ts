@@ -15,6 +15,12 @@ namespace accounting {
             name: string;
             /** 激活 */
             activated: ibas.emYesNo;
+            /** 虚拟的 */
+            phantom: ibas.emYesNo;
+            /** 父项 */
+            parents: string;
+            /** 排序码 */
+            sorts: string;
             /** 已引用 */
             referenced: ibas.emYesNo;
             /** 删除的 */

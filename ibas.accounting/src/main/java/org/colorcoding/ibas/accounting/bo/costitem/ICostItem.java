@@ -53,6 +53,48 @@ public interface ICostItem extends IBOMasterData {
 	void setActivated(emYesNo value);
 
 	/**
+	 * 获取-虚拟的
+	 * 
+	 * @return 值
+	 */
+	emYesNo getPhantom();
+
+	/**
+	 * 设置-虚拟的
+	 * 
+	 * @param value 值
+	 */
+	void setPhantom(emYesNo value);
+
+	/**
+	 * 获取-父项
+	 * 
+	 * @return 值
+	 */
+	String getParents();
+
+	/**
+	 * 设置-父项
+	 * 
+	 * @param value 值
+	 */
+	void setParents(String value);
+
+	/**
+	 * 获取-排序码
+	 * 
+	 * @return 值
+	 */
+	String getSorts();
+
+	/**
+	 * 设置-排序码
+	 * 
+	 * @param value 值
+	 */
+	void setSorts(String value);
+
+	/**
 	 * 获取-已引用
 	 * 
 	 * @return 值

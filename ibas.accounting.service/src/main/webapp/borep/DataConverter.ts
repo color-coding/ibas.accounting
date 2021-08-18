@@ -85,6 +85,10 @@ namespace accounting {
                     if (property === bo.Project.PROPERTY_STATUS_NAME) {
                         return ibas.enums.toString(ibas.emDocumentStatus, value);
                     }
+                } else if (boName === bo.CostItem.name) {
+                    if (property === bo.CostItem.PROPERTY_PHANTOM_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
                 }
                 return super.convertData(boName, property, value);
             }
@@ -140,6 +144,10 @@ namespace accounting {
                 } else if (boName === bo.Project.name) {
                     if (property === bo.Project.PROPERTY_STATUS_NAME) {
                         return ibas.enums.valueOf(ibas.emDocumentStatus, value);
+                    }
+                } else if (boName === bo.CostItem.name) {
+                    if (property === bo.CostItem.PROPERTY_PHANTOM_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
                     }
                 }
                 return super.parsingData(boName, property, value);
