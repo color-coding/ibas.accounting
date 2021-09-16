@@ -17,7 +17,7 @@
     <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
     <Property Name="Structure" Description="结构" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Structure"/>
     <Property Name="StructureNode" Description="结构节点" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="StruNode"/>
-    <Property Name="Item" Description="项目" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Item"/>
+    <Property Name="Item" Description="项目" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Item" UniqueKey="Yes"/>
     <Property Name="Amount" Description="金额" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="Amount"/>
     <Property Name="Currency" Description="货币" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Currency"/>
     <Property Name="Category" Description="类别" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emJournalCategory" Mapped="Category"/>

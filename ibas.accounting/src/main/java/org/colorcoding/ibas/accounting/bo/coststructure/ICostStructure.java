@@ -267,6 +267,20 @@ public interface ICostStructure extends IBOSimple, ICostStructureNodeParent {
 	void setCanceled(emYesNo value);
 
 	/**
+	 * 获取-预算可结转
+	 * 
+	 * @return 值
+	 */
+	emYesNo getTransferable();
+
+	/**
+	 * 设置-预算可结转
+	 * 
+	 * @param value 值
+	 */
+	void setTransferable(emYesNo value);
+
+	/**
 	 * 获取-起始日期
 	 * 
 	 * @return 值

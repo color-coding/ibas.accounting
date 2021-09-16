@@ -138,7 +138,60 @@ namespace accounting {
             saveCostStructure(saver: ibas.ISaveCaller<bo.CostStructure>): void {
                 super.save(bo.CostStructure.name, saver);
             }
+            /**
+             * 结算 费用结构
+             * @param closer 结算者
+             */
+            closeCostStructure(closer: ICostStructureCloser): void {
+                let boRepository: ibas.BORepositoryAjax = new ibas.BORepositoryAjax();
+                boRepository.address = this.address;
+                boRepository.token = this.token;
+                boRepository.converter = this.createConverter();
+                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                builder.map(null, "");
+                builder.map(undefined, "");
+                builder.append("closeCostStructure");
+                builder.append("?");
+                builder.append("structure");
+                builder.append("=");
+                builder.append(closer.structure);
+                if (!ibas.strings.isEmpty(closer.node)) {
+                    builder.append("&");
+                    builder.append("node");
+                    builder.append("=");
+                    builder.append(closer.node);
+                }
+                if (!ibas.strings.isEmpty(closer.action)) {
+                    builder.append("&");
+                    builder.append("action");
+                    builder.append("=");
+                    builder.append(ibas.enums.toString(bo.emCostStatus, closer.action));
+                }
+                builder.append("&");
+                builder.append("token");
+                builder.append("=");
+                builder.append(this.token);
+                boRepository.callRemoteMethod(builder.toString(), undefined, (opRslt) => {
+                    closer.onCompleted.call(ibas.objects.isNull(closer.caller) ? closer : closer.caller, opRslt);
+                });
+            }
 
+        }
+        /**
+         * 费用结束者
+         */
+        export interface ICostStructureCloser extends ibas.IMethodCaller<CostStructure> {
+            /** 费用结构 */
+            structure: number;
+            /** 费用节点 */
+            node?: number;
+            /** 动作 */
+            action?: emCostStatus;
+            /**
+             * 调用完成
+             * @param opRslt 结果
+             */
+            onCompleted(opRslt: ibas.IOperationResult<CostStructure>): void;
         }
     }
 }

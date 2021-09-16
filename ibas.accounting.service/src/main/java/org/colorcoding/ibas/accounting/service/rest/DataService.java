@@ -14,9 +14,11 @@ import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.accounting.bo.project.Project;
 import org.colorcoding.ibas.accounting.bo.taxgroup.TaxGroup;
+import org.colorcoding.ibas.accounting.data.emCostStatus;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationResult;
+import org.colorcoding.ibas.bobas.data.DataConvert;
 
 /**
  * Accounting 数据服务JSON
@@ -207,6 +209,28 @@ public class DataService extends BORepositoryAccounting {
 	@Path("saveCostStructure")
 	public OperationResult<CostStructure> saveCostStructure(CostStructure bo, @QueryParam("token") String token) {
 		return super.saveCostStructure(bo, token);
+	}
+
+	/**
+	 * 结算-费用结构
+	 * 
+	 * @param structure 费用结构
+	 * @param node      费用节点
+	 * @param action    操作
+	 * @param token     口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("closeCostStructure")
+	public OperationResult<CostStructure> closeCostStructure(@QueryParam("structure") String structure,
+			@QueryParam("node") String node, @QueryParam("action") String action, @QueryParam("token") String token) {
+		return super.closeCostStructure(DataConvert.isNullOrEmpty(structure) ? -1 : Integer.valueOf(structure),
+				DataConvert.isNullOrEmpty(node) ? -1 : Integer.valueOf(node),
+				DataConvert.isNullOrEmpty(action) ? emCostStatus.CLOSED
+						: DataConvert.convert(emCostStatus.class, action),
+				token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

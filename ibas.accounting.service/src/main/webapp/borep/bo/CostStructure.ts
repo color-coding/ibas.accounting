@@ -213,6 +213,18 @@ namespace accounting {
                 this.setProperty(CostStructure.PROPERTY_CANCELED_NAME, value);
             }
 
+
+            /** 映射的属性名称-预算可结转 */
+            static PROPERTY_TRANSFERABLE_NAME: string = "Transferable";
+            /** 获取-预算可结转 */
+            get transferable(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(CostStructure.PROPERTY_TRANSFERABLE_NAME);
+            }
+            /** 设置-预算可结转 */
+            set transferable(value: ibas.emYesNo) {
+                this.setProperty(CostStructure.PROPERTY_TRANSFERABLE_NAME, value);
+            }
+
             /** 映射的属性名称-起始日期 */
             static PROPERTY_STARTDATE_NAME: string = "StartDate";
             /** 获取-起始日期 */
@@ -336,6 +348,7 @@ namespace accounting {
                 this.objectCode = ibas.config.applyVariables(CostStructure.BUSINESS_OBJECT_CODE);
                 this.entityType = emEntityType.PROJECT;
                 this.status = bo.emCostStatus.OPEN;
+                this.transferable = ibas.emYesNo.NO;
                 this.currency = ibas.config.get(ibas.CONFIG_ITEM_DEFAULT_CURRENCY);
                 this.budget = 0;
                 this.locked = 0;

@@ -66,6 +66,8 @@ namespace accounting {
                         return ibas.enums.toString(emCostStatus, value);
                     } else if (property === bo.CostStructure.PROPERTY_ENTITYTYPE_NAME) {
                         return ibas.enums.toString(emEntityType, value);
+                    } else if (property === bo.CostStructure.PROPERTY_TRANSFERABLE_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
                     }
                 } else if (boName === bo.CostStructureNode.name) {
                     if (property === bo.CostStructureNode.PROPERTY_STATUS_NAME) {
@@ -126,6 +128,8 @@ namespace accounting {
                         return ibas.enums.valueOf(emCostStatus, value);
                     } else if (property === bo.CostStructure.PROPERTY_ENTITYTYPE_NAME) {
                         return ibas.enums.valueOf(emEntityType, value);
+                    } else if (property === bo.CostStructure.PROPERTY_TRANSFERABLE_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
                     }
                 } else if (boName === bo.CostStructureNode.name) {
                     if (property === bo.CostStructureNode.PROPERTY_STATUS_NAME) {

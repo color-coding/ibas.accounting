@@ -17,6 +17,8 @@ namespace accounting {
                 createDataEvent: Function;
                 /** 选择主体 */
                 chooseEntityEvent: Function;
+                /** 结算费用 */
+                closeCostStructureEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -29,13 +31,25 @@ namespace accounting {
                                 showValueHelp: true,
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseEntityEvent);
+                                },
+                                editable: {
+                                    path: "isNew",
+                                    formatter(data: any): boolean {
+                                        return data === false ? false : true;
+                                    }
                                 }
                             }).bindProperty("bindingValue", {
                                 path: "entityCode",
                                 type: new sap.extension.data.Alphanumeric(),
                             }),
                             new sap.extension.m.EnumSelect("", {
-                                enumType: bo.emEntityType
+                                enumType: bo.emEntityType,
+                                editable: {
+                                    path: "isNew",
+                                    formatter(data: any): boolean {
+                                        return data === false ? false : true;
+                                    }
+                                }
                             }).bindProperty("bindingValue", {
                                 path: "entityType",
                                 type: new sap.extension.data.Enum({
@@ -52,18 +66,60 @@ namespace accounting {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructure_status") }),
                             new sap.extension.m.EnumSelect("", {
-                                enumType: bo.emCostStatus
+                                enumType: bo.emCostStatus,
+                                items: [
+                                    new sap.extension.m.SelectItem("", {
+                                        key: bo.emCostStatus.OPEN,
+                                        text: ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.OPEN),
+                                    }),
+                                    new sap.extension.m.SelectItem("", {
+                                        key: bo.emCostStatus.FROZEN,
+                                        text: ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.FROZEN),
+                                    }),
+                                    new sap.extension.m.SelectItem("", {
+                                        enabled: false,
+                                        key: bo.emCostStatus.CLOSED,
+                                        text: ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.CLOSED),
+                                    })
+                                ],
+                                editable: {
+                                    path: "/status",
+                                    formatter(data: any): boolean {
+                                        return data === bo.emCostStatus.CLOSED ? false : true;
+                                    }
+                                }
                             }).bindProperty("bindingValue", {
                                 path: "status",
                                 type: new sap.extension.data.Enum({
                                     enumType: bo.emCostStatus
                                 }),
                             }),
+                            new sap.m.Button("", {
+                                icon: "sap-icon://paid-leave",
+                                type: sap.m.ButtonType.Negative,
+                                text: ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.CLOSED),
+                                press(this: sap.m.Button): void {
+                                    that.fireViewEvents(that.closeCostStructureEvent);
+                                },
+                                enabled: {
+                                    path: "/status",
+                                    formatter(data: any): boolean {
+                                        return data === bo.emCostStatus.CLOSED ? false : true;
+                                    }
+                                }
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructure_canceled") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emYesNo
                             }).bindProperty("bindingValue", {
                                 path: "canceled",
+                                type: new sap.extension.data.YesNo(),
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructure_transferable") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo
+                            }).bindProperty("bindingValue", {
+                                path: "transferable",
                                 type: new sap.extension.data.YesNo(),
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructure_startdate") }),

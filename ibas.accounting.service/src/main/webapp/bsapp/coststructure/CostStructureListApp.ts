@@ -447,6 +447,29 @@ namespace accounting {
                         if (result !== ibas.emMessageAction.YES) {
                             return;
                         }
+                        this.busy(true);
+                        let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                        boRepository.closeCostStructure({
+                            structure: node.objectKey,
+                            node: node.lineId,
+                            onCompleted: (opRslt) => {
+                                try {
+                                    this.busy(false);
+                                    if (opRslt.resultCode !== 0) {
+                                        throw new Error(opRslt.message);
+                                    }
+                                    if (opRslt.resultObjects.length > 0) {
+                                        this.currentBudget = opRslt.resultObjects.firstOrDefault();
+                                        this.view.showCostStructure(this.currentBudget);
+                                        this.view.showCostStructureNodes(this.currentBudget.costStructureNodes);
+                                    }
+                                    this.messages(ibas.emMessageType.SUCCESS,
+                                        ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.CLOSED) + ibas.i18n.prop("shell_sucessful"));
+                                } catch (error) {
+                                    this.messages(error);
+                                }
+                            }
+                        });
                     }
                 });
             }

@@ -45,6 +45,8 @@ namespace accounting {
             status: emCostStatus;
             /** 取消 */
             canceled: ibas.emYesNo;
+            /** 预算可结转 */
+            transferable: ibas.emYesNo;
             /** 起始日期 */
             startDate: Date;
             /** 结束日期 */

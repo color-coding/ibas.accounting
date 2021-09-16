@@ -20,6 +20,7 @@
     <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Name"/>
     <Property Name="Status" Description="状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emBudgetStatus" Mapped="Status"/>
     <Property Name="Canceled" Description="取消" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Canceled"/>
+    <Property Name="Transferable" Description="预算可结转" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Transferable"/>
     <Property Name="StartDate" Description="起始日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="StartDate"/>
     <Property Name="EndDate" Description="结束日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="EndDate"/>
     <Property Name="Budget" Description="预算总计" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="Budget"/>

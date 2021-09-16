@@ -8,6 +8,7 @@ import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.accounting.bo.project.Project;
 import org.colorcoding.ibas.accounting.bo.taxgroup.TaxGroup;
+import org.colorcoding.ibas.accounting.data.emCostStatus;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.repository.IBORepositorySmartService;
@@ -129,6 +130,18 @@ public interface IBORepositoryAccountingSvc extends IBORepositorySmartService {
 	 * @return 操作结果
 	 */
 	OperationResult<CostStructure> saveCostStructure(CostStructure bo, String token);
+
+	/**
+	 * 结算-费用结构
+	 * 
+	 * @param structure 费用结构
+	 * @param node      费用节点
+	 * @param action    操作
+	 * @param token     口令
+	 * @return 操作结果
+	 */
+	OperationResult<CostStructure> closeCostStructure(Integer structure, Integer node, emCostStatus action,
+			String token);
 
 	// --------------------------------------------------------------------------------------------//
 	/**

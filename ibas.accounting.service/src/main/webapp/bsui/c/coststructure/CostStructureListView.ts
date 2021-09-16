@@ -203,6 +203,27 @@ namespace accounting {
                                 }),
                                 new sap.extension.m.EnumSelect("", {
                                     enumType: bo.emCostStatus,
+                                    items: [
+                                        new sap.extension.m.SelectItem("", {
+                                            key: bo.emCostStatus.OPEN,
+                                            text: ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.OPEN),
+                                        }),
+                                        new sap.extension.m.SelectItem("", {
+                                            key: bo.emCostStatus.FROZEN,
+                                            text: ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.FROZEN),
+                                        }),
+                                        new sap.extension.m.SelectItem("", {
+                                            enabled: false,
+                                            key: bo.emCostStatus.CLOSED,
+                                            text: ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.CLOSED),
+                                        })
+                                    ],
+                                    editable: {
+                                        path: "/status",
+                                        formatter(data: any): boolean {
+                                            return data === bo.emCostStatus.CLOSED ? false : true;
+                                        }
+                                    }
                                 }).bindProperty("bindingValue", {
                                     path: "/status",
                                     type: new sap.extension.data.Enum({
@@ -250,6 +271,12 @@ namespace accounting {
                                             })
                                         ],
                                     }),
+                                    enabled: {
+                                        path: "/status",
+                                        formatter(data: any): boolean {
+                                            return data === bo.emCostStatus.CLOSED ? false : true;
+                                        }
+                                    },
                                     defaultAction(this: sap.m.MenuButton): void {
                                         that.fireViewEvents(that.addCostStructureNodeEvent);
                                     }
@@ -441,6 +468,12 @@ namespace accounting {
                                                                                                     table
                                                                                                 ]
                                                                                             }));
+                                                                                            if (data.status === bo.emCostStatus.CLOSED) {
+                                                                                                let footer: any = table.getFooter();
+                                                                                                if (footer instanceof sap.m.FlexBox) {
+                                                                                                    footer.setVisible(false);
+                                                                                                }
+                                                                                            }
                                                                                             that.nodes.set(data, box);
                                                                                             this.setIcon("sap-icon://collapse");
                                                                                         }

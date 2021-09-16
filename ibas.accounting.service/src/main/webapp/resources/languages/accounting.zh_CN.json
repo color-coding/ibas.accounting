@@ -55,6 +55,6 @@
   "accounting_new_node": "新建的节点",
   "accounting_copy_other_structure": "复制从其他结构",
   "accounting_save_changed_data": "数据已修改，是否保存？",
-  "accounting_continue_to_close_node": "结算[{0}]不可撤销，是否继续？",
+  "accounting_continue_to_close_node": "结算[{0}]，操作后不可撤销，是否继续？",
   "accounting_closing_delimiter": "----结束----"
 }

@@ -528,7 +528,7 @@ public class CostItemJournal extends BusinessObject<CostItemJournal> implements 
 	/**
 	 * 项目 属性
 	 */
-	@DbField(name = "Item", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Item", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_ITEM = registerProperty(PROPERTY_ITEM_NAME, String.class,
 			MY_CLASS);
 

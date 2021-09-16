@@ -161,6 +161,7 @@
         "bo_coststructure_name": "名称",
         "bo_coststructure_status": "状态",
         "bo_coststructure_canceled": "取消",
+        "bo_coststructure_transferable": "预算结转（仅同级）",
         "bo_coststructure_startdate": "起始日期",
         "bo_coststructure_enddate": "结束日期",
         "bo_coststructure_budget": "预算总计",

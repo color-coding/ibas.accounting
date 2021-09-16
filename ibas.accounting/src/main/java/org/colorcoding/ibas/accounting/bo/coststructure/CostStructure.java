@@ -617,6 +617,37 @@ public class CostStructure extends BusinessObject<CostStructure> implements ICos
 	}
 
 	/**
+	 * 属性名称-预算可结转
+	 */
+	private static final String PROPERTY_TRANSFERABLE_NAME = "Transferable";
+
+	/**
+	 * 预算可结转 属性
+	 */
+	@DbField(name = "Transferable", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<emYesNo> PROPERTY_TRANSFERABLE = registerProperty(PROPERTY_TRANSFERABLE_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-预算可结转
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_TRANSFERABLE_NAME)
+	public final emYesNo getTransferable() {
+		return this.getProperty(PROPERTY_TRANSFERABLE);
+	}
+
+	/**
+	 * 设置-预算可结转
+	 * 
+	 * @param value 值
+	 */
+	public final void setTransferable(emYesNo value) {
+		this.setProperty(PROPERTY_TRANSFERABLE, value);
+	}
+
+	/**
 	 * 属性名称-起始日期
 	 */
 	private static final String PROPERTY_STARTDATE_NAME = "StartDate";
@@ -941,6 +972,7 @@ public class CostStructure extends BusinessObject<CostStructure> implements ICos
 		this.setCostStructureNodes(new CostStructureNodes(this));
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setStatus(emCostStatus.OPEN);
+		this.setTransferable(emYesNo.NO);
 	}
 
 	@Override

@@ -29,6 +29,7 @@ namespace accounting {
                 // 其他事件
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.chooseEntityEvent = this.chooseEntity;
+                this.view.closeCostStructureEvent = this.closeCostStructure;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -129,6 +130,42 @@ namespace accounting {
                     });
                 }
             }
+            private closeCostStructure(): void {
+                this.messages({
+                    type: ibas.emMessageType.QUESTION,
+                    message: ibas.i18n.prop("accounting_continue_to_close_node", this.editData.name),
+                    actions: [
+                        ibas.emMessageAction.YES,
+                        ibas.emMessageAction.NO
+                    ],
+                    onCompleted: (result) => {
+                        if (result !== ibas.emMessageAction.YES) {
+                            return;
+                        }
+                        this.busy(true);
+                        let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                        boRepository.closeCostStructure({
+                            structure: this.editData.objectKey,
+                            onCompleted: (opRslt) => {
+                                try {
+                                    this.busy(false);
+                                    if (opRslt.resultCode !== 0) {
+                                        throw new Error(opRslt.message);
+                                    }
+                                    if (opRslt.resultObjects.length > 0) {
+                                        this.editData = opRslt.resultObjects.firstOrDefault();
+                                        this.view.showCostStructure(this.editData);
+                                    }
+                                    this.messages(ibas.emMessageType.SUCCESS,
+                                        ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.CLOSED) + ibas.i18n.prop("shell_sucessful"));
+                                } catch (error) {
+                                    this.messages(error);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
             public close(): void {
                 super.close();
                 if (this.onCompleted instanceof Function) {
@@ -144,6 +181,8 @@ namespace accounting {
             deleteDataEvent: Function;
             /** 选择主体 */
             chooseEntityEvent: Function;
+            /** 结算费用 */
+            closeCostStructureEvent: Function;
         }
     }
 }
