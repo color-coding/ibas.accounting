@@ -12,6 +12,7 @@ import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.data.emCostStatus;
 import org.colorcoding.ibas.accounting.rule.BusinessRulePreventOver;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.Decimal;
@@ -28,7 +29,7 @@ import org.colorcoding.ibas.bobas.rule.common.BusinessRuleSummation;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = CostStructureNode.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class CostStructureNode extends BusinessObject<CostStructureNode> implements ICostStructureNode {
+public class CostStructureNode extends BusinessObject<CostStructureNode> implements ICostStructureNode, IBOUserFields {
 
 	/**
 	 * 序列化版本标记
@@ -911,7 +912,6 @@ public class CostStructureNode extends BusinessObject<CostStructureNode> impleme
 		this.setStatus(emCostStatus.OPEN);
 
 	}
-	
 
 	/**
 	 * 属性名称-项目的行总计-预算
@@ -1090,6 +1090,10 @@ public class CostStructureNode extends BusinessObject<CostStructureNode> impleme
 	@Override
 	public void reset() {
 		super.reset();
+		this.setStatus(emCostStatus.OPEN);
+		this.setBudget(Decimal.ZERO);
+		this.setIncurred(Decimal.ZERO);
+		this.setLocked(Decimal.ZERO);
 		this.setBudgetItemTotal(Decimal.ZERO);
 		this.setBudgetNodeTotal(Decimal.ZERO);
 		this.setLockedItemTotal(Decimal.ZERO);
@@ -1103,35 +1107,35 @@ public class CostStructureNode extends BusinessObject<CostStructureNode> impleme
 		// 注册的业务规则
 		return new IBusinessRule[] {
 				// 计算项目-行总计-预算
-				new BusinessRuleSumElements(PROPERTY_BUDGETITEMTOTAL , PROPERTY_COSTSTRUCTURENODEITEMS,
+				new BusinessRuleSumElements(PROPERTY_BUDGETITEMTOTAL, PROPERTY_COSTSTRUCTURENODEITEMS,
 						CostStructureNodeItem.PROPERTY_BUDGET),
 				// 计算节点-行总计-预算
-				new BusinessRuleSumElements(PROPERTY_BUDGETNODETOTAL , PROPERTY_COSTSTRUCTURENODES,
+				new BusinessRuleSumElements(PROPERTY_BUDGETNODETOTAL, PROPERTY_COSTSTRUCTURENODES,
 						CostStructureNode.PROPERTY_BUDGET),
 				// 计算合计 预算
-				new BusinessRuleSummation(CostStructureNode.PROPERTY_BUDGET,
-						 CostStructureNode.PROPERTY_BUDGETNODETOTAL,CostStructureNode.PROPERTY_BUDGETITEMTOTAL),
+				new BusinessRuleSummation(CostStructureNode.PROPERTY_BUDGET, CostStructureNode.PROPERTY_BUDGETNODETOTAL,
+						CostStructureNode.PROPERTY_BUDGETITEMTOTAL),
 
 				// 计算项目-行总计-锁定
-				new BusinessRuleSumElements(PROPERTY_LOCKEDITEMTOTAL , PROPERTY_COSTSTRUCTURENODEITEMS,
+				new BusinessRuleSumElements(PROPERTY_LOCKEDITEMTOTAL, PROPERTY_COSTSTRUCTURENODEITEMS,
 						CostStructureNodeItem.PROPERTY_LOCKED),
 				// 计算节点-行总计-锁定
-				new BusinessRuleSumElements(PROPERTY_LOCKEDNODETOTAL , PROPERTY_COSTSTRUCTURENODES,
+				new BusinessRuleSumElements(PROPERTY_LOCKEDNODETOTAL, PROPERTY_COSTSTRUCTURENODES,
 						CostStructureNode.PROPERTY_LOCKED),
 				// 计算合计 锁定
-				new BusinessRuleSummation(CostStructureNode.PROPERTY_LOCKED,
-						 CostStructureNode.PROPERTY_LOCKEDNODETOTAL,CostStructureNode.PROPERTY_LOCKEDITEMTOTAL),
-				
+				new BusinessRuleSummation(CostStructureNode.PROPERTY_LOCKED, CostStructureNode.PROPERTY_LOCKEDNODETOTAL,
+						CostStructureNode.PROPERTY_LOCKEDITEMTOTAL),
+
 				// 计算项目-行总计-消耗
-				new BusinessRuleSumElements(PROPERTY_INCURREDITEMTOTAL , PROPERTY_COSTSTRUCTURENODEITEMS,
+				new BusinessRuleSumElements(PROPERTY_INCURREDITEMTOTAL, PROPERTY_COSTSTRUCTURENODEITEMS,
 						CostStructureNodeItem.PROPERTY_INCURRED),
 				// 计算节点-行总计-消耗
-				new BusinessRuleSumElements(PROPERTY_INCURREDNODETOTAL , PROPERTY_COSTSTRUCTURENODES,
+				new BusinessRuleSumElements(PROPERTY_INCURREDNODETOTAL, PROPERTY_COSTSTRUCTURENODES,
 						CostStructureNode.PROPERTY_INCURRED),
 				// 计算合计 消耗
 				new BusinessRuleSummation(CostStructureNode.PROPERTY_INCURRED,
-						 CostStructureNode.PROPERTY_INCURREDNODETOTAL,CostStructureNode.PROPERTY_INCURREDITEMTOTAL),
-				
+						CostStructureNode.PROPERTY_INCURREDNODETOTAL, CostStructureNode.PROPERTY_INCURREDITEMTOTAL),
+
 				// 超出检查
 				new BusinessRulePreventOver(CostStructureNode.PROPERTY_PREVENTOVER, CostStructureNode.PROPERTY_BUDGET,
 						CostStructureNode.PROPERTY_LOCKED, CostStructureNode.PROPERTY_INCURRED,

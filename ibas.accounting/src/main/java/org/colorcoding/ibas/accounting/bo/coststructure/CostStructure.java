@@ -13,8 +13,10 @@ import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.data.emCostStatus;
 import org.colorcoding.ibas.accounting.data.emEntityType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
@@ -31,7 +33,8 @@ import org.colorcoding.ibas.bobas.rule.common.BusinessRuleSumElements;
 @XmlType(name = CostStructure.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = CostStructure.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = CostStructure.BUSINESS_OBJECT_CODE)
-public class CostStructure extends BusinessObject<CostStructure> implements ICostStructure, IDataOwnership {
+public class CostStructure extends BusinessObject<CostStructure>
+		implements ICostStructure, IDataOwnership, IBOUserFields {
 
 	/**
 	 * 序列化版本标记
@@ -990,5 +993,14 @@ public class CostStructure extends BusinessObject<CostStructure> implements ICos
 						CostStructureNodeItem.PROPERTY_INCURRED),
 
 		};
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+		this.setStatus(emCostStatus.OPEN);
+		this.setBudget(Decimal.ZERO);
+		this.setIncurred(Decimal.ZERO);
+		this.setLocked(Decimal.ZERO);
 	}
 }

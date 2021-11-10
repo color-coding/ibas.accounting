@@ -313,22 +313,54 @@ namespace accounting {
                     }
                 });
             }
-            private addCostStructureNode(parent: bo.CostStructureNode): void {
+            private addCostStructureNode(parent: bo.CostStructureNode, type?: emNodeType): void {
                 if (ibas.objects.isNull(this.currentBudget)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
                         ibas.i18n.prop("shell_data_view")
                     ));
                     return;
                 }
-                let that: this = this;
-                if (ibas.objects.isNull(parent)) {
-                    let node: bo.CostStructureNode = this.currentBudget.costStructureNodes.create();
-                    node.name = ibas.i18n.prop("accounting_new_node");
-                    this.view.showCostStructureNodes(this.currentBudget.costStructureNodes.filterDeleted());
+                if (type === emNodeType.ORGANIZATION) {
+                    let that: this = this;
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = initialfantasy.bo.Organization.PROPERTY_ACTIVATED_NAME;
+                    condition.value = String(ibas.emYesNo.YES);
+                    condition.operation = ibas.emConditionOperation.EQUAL;
+                    // 调用选择服务
+                    ibas.servicesManager.runChooseService<initialfantasy.bo.Organization>({
+                        boCode: initialfantasy.bo.Organization.BUSINESS_OBJECT_CODE,
+                        criteria: criteria,
+                        chooseType: ibas.emChooseType.MULTIPLE,
+                        onCompleted(selecteds: ibas.IList<initialfantasy.bo.Organization>): void {
+                            // 获取触发的对象
+                            if (ibas.objects.isNull(parent)) {
+                                for (let selected of selecteds) {
+                                    let node: bo.CostStructureNode = that.currentBudget.costStructureNodes.create();
+                                    node.name = selected.name;
+                                    node.sign = selected.code;
+                                }
+                                that.view.showCostStructureNodes(that.currentBudget.costStructureNodes.filterDeleted());
+                            } else {
+                                for (let selected of selecteds) {
+                                    let node: bo.CostStructureNode = parent.costStructureNodes.create();
+                                    node.name = selected.name;
+                                    node.sign = selected.code;
+                                }
+                                that.view.showCostStructureNodes(parent);
+                            }
+                        }
+                    });
                 } else {
-                    let node: bo.CostStructureNode = parent.costStructureNodes.create();
-                    node.name = ibas.i18n.prop("accounting_new_node");
-                    this.view.showCostStructureNodes(parent);
+                    if (ibas.objects.isNull(parent)) {
+                        let node: bo.CostStructureNode = this.currentBudget.costStructureNodes.create();
+                        node.name = ibas.i18n.prop("accounting_new_node");
+                        this.view.showCostStructureNodes(this.currentBudget.costStructureNodes.filterDeleted());
+                    } else {
+                        let node: bo.CostStructureNode = parent.costStructureNodes.create();
+                        node.name = ibas.i18n.prop("accounting_new_node");
+                        this.view.showCostStructureNodes(parent);
+                    }
                 }
             }
             private removeCostStructureNode(node: bo.CostStructureNode): void {
@@ -473,6 +505,10 @@ namespace accounting {
                     }
                 });
             }
+        }
+        export enum emNodeType {
+            ORGANIZATION,
+
         }
         /** 视图-费用结构 */
         export interface ICostStructureListView extends ibas.IBOListView {

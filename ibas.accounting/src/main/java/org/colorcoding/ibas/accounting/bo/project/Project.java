@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
+import org.colorcoding.ibas.accounting.rule.BusinessRuleStatusDate;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOSeriesKey;
 import org.colorcoding.ibas.bobas.bo.IBOTagDeleted;
@@ -121,6 +122,37 @@ public class Project extends BusinessObject<Project>
 	}
 
 	/**
+	 * 属性名称-激活
+	 */
+	private static final String PROPERTY_ACTIVATED_NAME = "Activated";
+
+	/**
+	 * 激活 属性
+	 */
+	@DbField(name = "Activated", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<emYesNo> PROPERTY_ACTIVATED = registerProperty(PROPERTY_ACTIVATED_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-激活
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_ACTIVATED_NAME)
+	public final emYesNo getActivated() {
+		return this.getProperty(PROPERTY_ACTIVATED);
+	}
+
+	/**
+	 * 设置-激活
+	 * 
+	 * @param value 值
+	 */
+	public final void setActivated(emYesNo value) {
+		this.setProperty(PROPERTY_ACTIVATED, value);
+	}
+
+	/**
 	 * 属性名称-取消
 	 */
 	private static final String PROPERTY_CANCELED_NAME = "Canceled";
@@ -180,6 +212,68 @@ public class Project extends BusinessObject<Project>
 	 */
 	public final void setStatus(emDocumentStatus value) {
 		this.setProperty(PROPERTY_STATUS, value);
+	}
+
+	/**
+	 * 属性名称-开始日期
+	 */
+	private static final String PROPERTY_STARTDATE_NAME = "StartDate";
+
+	/**
+	 * 开始日期 属性
+	 */
+	@DbField(name = "StartDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<DateTime> PROPERTY_STARTDATE = registerProperty(PROPERTY_STARTDATE_NAME,
+			DateTime.class, MY_CLASS);
+
+	/**
+	 * 获取-开始日期
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_STARTDATE_NAME)
+	public final DateTime getStartDate() {
+		return this.getProperty(PROPERTY_STARTDATE);
+	}
+
+	/**
+	 * 设置-开始日期
+	 * 
+	 * @param value 值
+	 */
+	public final void setStartDate(DateTime value) {
+		this.setProperty(PROPERTY_STARTDATE, value);
+	}
+
+	/**
+	 * 属性名称-结束日期
+	 */
+	private static final String PROPERTY_CLOSEDATE_NAME = "CloseDate";
+
+	/**
+	 * 结束日期 属性
+	 */
+	@DbField(name = "CloseDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<DateTime> PROPERTY_CLOSEDATE = registerProperty(PROPERTY_CLOSEDATE_NAME,
+			DateTime.class, MY_CLASS);
+
+	/**
+	 * 获取-结束日期
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_CLOSEDATE_NAME)
+	public final DateTime getCloseDate() {
+		return this.getProperty(PROPERTY_CLOSEDATE);
+	}
+
+	/**
+	 * 设置-结束日期
+	 * 
+	 * @param value 值
+	 */
+	public final void setCloseDate(DateTime value) {
+		this.setProperty(PROPERTY_CLOSEDATE, value);
 	}
 
 	/**
@@ -845,6 +939,7 @@ public class Project extends BusinessObject<Project>
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setActivated(emYesNo.YES);
 		this.setStatus(emDocumentStatus.RELEASED);
 
 	}
@@ -853,6 +948,7 @@ public class Project extends BusinessObject<Project>
 	protected IBusinessRule[] registerRules() {
 		return new IBusinessRule[] { // 注册的业务规则
 				new BusinessRuleRequired(PROPERTY_CODE), // 要求有值
+				new BusinessRuleStatusDate(PROPERTY_STATUS, PROPERTY_STARTDATE, PROPERTY_CLOSEDATE) // 状态时间
 		};
 	}
 

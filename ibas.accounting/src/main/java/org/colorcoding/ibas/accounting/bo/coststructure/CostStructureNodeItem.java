@@ -10,8 +10,10 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.rule.BusinessRulePreventOver;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -23,7 +25,8 @@ import org.colorcoding.ibas.bobas.rule.IBusinessRule;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = CostStructureNodeItem.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class CostStructureNodeItem extends BusinessObject<CostStructureNodeItem> implements ICostStructureNodeItem {
+public class CostStructureNodeItem extends BusinessObject<CostStructureNodeItem>
+		implements ICostStructureNodeItem, IBOUserFields {
 
 	/**
 	 * 序列化版本标记
@@ -783,5 +786,13 @@ public class CostStructureNodeItem extends BusinessObject<CostStructureNodeItem>
 						CostStructureNodeItem.PROPERTY_INCURRED, CostStructureNodeItem.PROPERTY_NAME)
 
 		};
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+		this.setBudget(Decimal.ZERO);
+		this.setIncurred(Decimal.ZERO);
+		this.setLocked(Decimal.ZERO);
 	}
 }

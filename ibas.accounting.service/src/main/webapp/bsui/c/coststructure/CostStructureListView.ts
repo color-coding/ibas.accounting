@@ -264,6 +264,12 @@ namespace accounting {
                                     menu: new sap.m.Menu("", {
                                         items: [
                                             new sap.m.MenuItem("", {
+                                                text: ibas.i18n.prop("accounting_add_node_by_organization"),
+                                                press(): void {
+                                                    that.fireViewEvents(that.addCostStructureNodeEvent, undefined, app.emNodeType.ORGANIZATION);
+                                                }
+                                            }),
+                                            new sap.m.MenuItem("", {
                                                 text: ibas.i18n.prop("accounting_copy_other_structure"),
                                                 press(): void {
                                                     that.fireViewEvents(that.copyCostStructureNodesEvent);

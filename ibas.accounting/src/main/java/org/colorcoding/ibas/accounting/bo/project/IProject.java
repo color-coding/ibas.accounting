@@ -40,6 +40,20 @@ public interface IProject extends IBOMasterData {
 	void setName(String value);
 
 	/**
+	 * 获取-激活
+	 * 
+	 * @return 值
+	 */
+	emYesNo getActivated();
+
+	/**
+	 * 设置-激活
+	 * 
+	 * @param value 值
+	 */
+	void setActivated(emYesNo value);
+
+	/**
 	 * 获取-取消
 	 * 
 	 * @return 值
@@ -66,6 +80,34 @@ public interface IProject extends IBOMasterData {
 	 * @param value 值
 	 */
 	void setStatus(emDocumentStatus value);
+
+	/**
+	 * 获取-开始日期
+	 * 
+	 * @return 值
+	 */
+	DateTime getStartDate();
+
+	/**
+	 * 设置-开始日期
+	 * 
+	 * @param value 值
+	 */
+	void setStartDate(DateTime value);
+
+	/**
+	 * 获取-结束日期
+	 * 
+	 * @return 值
+	 */
+	DateTime getCloseDate();
+
+	/**
+	 * 设置-结束日期
+	 * 
+	 * @param value 值
+	 */
+	void setCloseDate(DateTime value);
 
 	/**
 	 * 获取-项目经理

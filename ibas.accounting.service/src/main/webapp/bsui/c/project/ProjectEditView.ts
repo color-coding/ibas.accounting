@@ -58,20 +58,6 @@ namespace accounting {
                                     maxLength: 100
                                 })
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_status") }),
-                            new sap.extension.m.EnumSelect("", {
-                                enumType: ibas.emDocumentStatus,
-                            }).bindProperty("bindingValue", {
-                                path: "status",
-                                type: new sap.extension.data.DocumentStatus()
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_canceled") }),
-                            new sap.extension.m.EnumSelect("", {
-                                enumType: ibas.emYesNo,
-                            }).bindProperty("bindingValue", {
-                                path: "canceled",
-                                type: new sap.extension.data.YesNo()
-                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_project_manager") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
@@ -123,6 +109,53 @@ namespace accounting {
                                 path: "teamMembers",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric(),
+                            }),
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_others") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_status") }),
+                            new sap.m.FlexBox("", {
+                                width: "100%",
+                                justifyContent: sap.m.FlexJustifyContent.Start,
+                                renderType: sap.m.FlexRendertype.Bare,
+                                items: [
+                                    new sap.extension.m.EnumSelect("", {
+                                        enumType: ibas.emDocumentStatus,
+                                        width: "100%",
+                                    }).bindProperty("bindingValue", {
+                                        path: "status",
+                                        type: new sap.extension.data.DocumentStatus()
+                                    }),
+                                    new sap.extension.m.CheckBox("", {
+                                        text: ibas.i18n.prop("bo_project_activated")
+                                    }).bindProperty("bindingValue", {
+                                        path: "activated",
+                                        type: new sap.extension.data.YesNo()
+                                    }).addStyleClass("sapUiLargeMarginBegin"),
+                                    new sap.extension.m.CheckBox("", {
+                                        text: ibas.i18n.prop("bo_project_canceled")
+                                    }).bindProperty("bindingValue", {
+                                        path: "canceled",
+                                        type: new sap.extension.data.YesNo()
+                                    }).addStyleClass("sapUiLargeMarginBegin sapUiSmallMarginEnd"),
+                                ]
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_startdate") }),
+                            new sap.extension.m.DatePicker("", {
+                            }).bindProperty("bindingValue", {
+                                path: "startDate",
+                                type: new sap.extension.data.Date(),
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_closedate") }),
+                            new sap.extension.m.DatePicker("", {
+                            }).bindProperty("bindingValue", {
+                                path: "closeDate",
+                                type: new sap.extension.data.Date(),
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference1") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -139,7 +172,6 @@ namespace accounting {
                                     maxLength: 200
                                 })
                             }),
-                            new sap.ui.core.Title("", {}),
                         ]
                     });
                     let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {

@@ -174,7 +174,7 @@ namespace accounting {
                 let that: this = this;
                 ibas.servicesManager.runChooseService<initialfantasy.bo.IOrganization>({
                     boCode: initialfantasy.bo.BO_CODE_ORGANIZATION,
-                    chooseType: ibas.emChooseType.MULTIPLE,
+                    chooseType: ibas.emChooseType.SINGLE,
                     criteria: [
                         new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
                     ],

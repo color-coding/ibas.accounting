@@ -37,6 +37,17 @@ namespace accounting {
                 this.setProperty(Project.PROPERTY_NAME_NAME, value);
             }
 
+            /** 映射的属性名称-激活 */
+            static PROPERTY_ACTIVATED_NAME: string = "Activated";
+            /** 获取-激活 */
+            get activated(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Project.PROPERTY_ACTIVATED_NAME);
+            }
+            /** 设置-激活 */
+            set activated(value: ibas.emYesNo) {
+                this.setProperty(Project.PROPERTY_ACTIVATED_NAME, value);
+            }
+
             /** 映射的属性名称-取消 */
             static PROPERTY_CANCELED_NAME: string = "Canceled";
             /** 获取-取消 */
@@ -57,6 +68,28 @@ namespace accounting {
             /** 设置-状态 */
             set status(value: ibas.emDocumentStatus) {
                 this.setProperty(Project.PROPERTY_STATUS_NAME, value);
+            }
+
+            /** 映射的属性名称-开始日期 */
+            static PROPERTY_STARTDATE_NAME: string = "StartDate";
+            /** 获取-开始日期 */
+            get startDate(): Date {
+                return this.getProperty<Date>(Project.PROPERTY_STARTDATE_NAME);
+            }
+            /** 设置-开始日期 */
+            set startDate(value: Date) {
+                this.setProperty(Project.PROPERTY_STARTDATE_NAME, value);
+            }
+
+            /** 映射的属性名称-结束日期 */
+            static PROPERTY_CLOSEDATE_NAME: string = "CloseDate";
+            /** 获取-结束日期 */
+            get closeDate(): Date {
+                return this.getProperty<Date>(Project.PROPERTY_CLOSEDATE_NAME);
+            }
+            /** 设置-结束日期 */
+            set closeDate(value: Date) {
+                this.setProperty(Project.PROPERTY_CLOSEDATE_NAME, value);
             }
 
             /** 映射的属性名称-项目经理 */
@@ -292,6 +325,7 @@ namespace accounting {
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(Project.BUSINESS_OBJECT_CODE);
+                this.activated = ibas.emYesNo.YES;
                 this.status = ibas.emDocumentStatus.RELEASED;
             }
         }

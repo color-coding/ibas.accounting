@@ -13,10 +13,16 @@ namespace accounting {
             code: string;
             /** 名称 */
             name: string;
+            /** 激活 */
+            activated: ibas.emYesNo;
             /** 取消 */
             canceled: ibas.emYesNo;
             /** 状态 */
             status: ibas.emDocumentStatus;
+            /** 开始日期 */
+            startDate: Date;
+            /** 结束日期 */
+            closeDate: Date;
             /** 项目经理 */
             manager: number;
             /** 数据所有者 */
