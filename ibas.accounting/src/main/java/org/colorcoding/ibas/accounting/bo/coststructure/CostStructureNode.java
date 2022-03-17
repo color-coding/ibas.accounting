@@ -801,6 +801,37 @@ public class CostStructureNode extends BusinessObject<CostStructureNode> impleme
 	}
 
 	/**
+	 * 属性名称-团队成员
+	 */
+	private static final String PROPERTY_TEAMMEMBERS_NAME = "TeamMembers";
+
+	/**
+	 * 团队成员 属性
+	 */
+	@DbField(name = "TeamMembers", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_TEAMMEMBERS = registerProperty(PROPERTY_TEAMMEMBERS_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	 * 获取-团队成员
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_TEAMMEMBERS_NAME)
+	public final String getTeamMembers() {
+		return this.getProperty(PROPERTY_TEAMMEMBERS);
+	}
+
+	/**
+	 * 设置-团队成员
+	 * 
+	 * @param value 值
+	 */
+	public final void setTeamMembers(String value) {
+		this.setProperty(PROPERTY_TEAMMEMBERS, value);
+	}
+
+	/**
 	 * 属性名称-备注
 	 */
 	private static final String PROPERTY_REMARKS_NAME = "Remarks";

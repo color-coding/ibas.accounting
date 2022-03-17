@@ -127,6 +127,8 @@ namespace accounting {
             preventOver: ibas.emYesNo;
             /** 限制费用项目 */
             restrictedItem: ibas.emYesNo;
+            /** 团队成员 */
+            teamMembers: string;
             /** 备注 */
             remarks: string;
 

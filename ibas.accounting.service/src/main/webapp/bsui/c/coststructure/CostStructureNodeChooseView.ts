@@ -58,6 +58,14 @@ namespace accounting {
                                                                     return false;
                                                                 }
                                                             }
+                                                            // 团队成员过滤
+                                                            if (!ibas.strings.isEmpty(value.teamMembers)) {
+                                                                if (ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) !== true) {
+                                                                    if (value.teamMembers.indexOf(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_ID)) < 0) {
+                                                                        return false;
+                                                                    }
+                                                                }
+                                                            }
                                                             return true;
                                                         }
                                                         return false;

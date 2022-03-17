@@ -203,6 +203,7 @@
         "bo_coststructurenode_available": "可用金额",
         "bo_coststructurenode_preventover": "阻止超预算",
         "bo_coststructurenode_restricteditem": "限制费用项目",
+        "bo_coststructurenode_teammembers": "团队成员",
         "bo_coststructurenode_remarks": "备注",
         "bo_coststructurenode_coststructurenodeitems": "费用结构-节点项目集合",
         "bo_coststructurenodeitem": "费用结构-节点项目",

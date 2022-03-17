@@ -56,6 +56,7 @@
     <Property Name="Locked" Description="已锁定金额" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="Locked"/>
     <Property Name="PreventOver" Description="阻止超预算" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="PreventOver"/>
     <Property Name="RestrictedItem" Description="限制费用项目" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Restricted"/>
+    <Property Name="TeamMembers" Description="团队成员" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="TeamMembers"/>
     <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
   </Model>
   <Model Name="CostStructureNodeItem" Description="费用结构-节点项目" ModelType="SimpleLine" Mapped="${Company}_AC_CST11">

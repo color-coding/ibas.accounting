@@ -350,6 +350,20 @@ public interface ICostStructureNode extends IBOSimpleLine, ICostStructureNodePar
 	void setRestrictedItem(emYesNo value);
 
 	/**
+	 * 获取-团队成员
+	 * 
+	 * @return 值
+	 */
+	String getTeamMembers();
+
+	/**
+	 * 设置-团队成员
+	 * 
+	 * @param value 值
+	 */
+	void setTeamMembers(String value);
+
+	/**
 	 * 获取-备注
 	 * 
 	 * @return 值

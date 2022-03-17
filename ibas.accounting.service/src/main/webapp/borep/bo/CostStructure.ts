@@ -677,6 +677,17 @@ namespace accounting {
                 this.setProperty(CostStructureNode.PROPERTY_RESTRICTEDITEM_NAME, value);
             }
 
+            /** 映射的属性名称-团队成员 */
+            static PROPERTY_TEAMMEMBERS_NAME: string = "TeamMembers";
+            /** 获取-团队成员 */
+            get teamMembers(): string {
+                return this.getProperty<string>(Project.PROPERTY_TEAMMEMBERS_NAME);
+            }
+            /** 设置-团队成员 */
+            set teamMembers(value: string) {
+                this.setProperty(Project.PROPERTY_TEAMMEMBERS_NAME, value);
+            }
+
             /** 映射的属性名称-备注 */
             static PROPERTY_REMARKS_NAME: string = "Remarks";
             /** 获取-备注 */

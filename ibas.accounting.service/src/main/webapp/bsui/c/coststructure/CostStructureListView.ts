@@ -365,7 +365,7 @@ namespace accounting {
                                                                                 path: "",
                                                                                 formatter(data: any): number {
                                                                                     if (data instanceof bo.CostStructureNode) {
-                                                                                        return new sap.extension.data.Sum().formatValue(data.available(), "string");
+                                                                                        return sap.extension.data.formatValue(sap.extension.data.Sum, data.available(), "string");
                                                                                     }
                                                                                     return NaN;
                                                                                 }
@@ -545,7 +545,7 @@ namespace accounting {
                                             path: "/",
                                             formatter(data: any): number {
                                                 if (data instanceof bo.CostStructure) {
-                                                    return new sap.extension.data.Sum().formatValue(data.available(), "string");
+                                                    return sap.extension.data.formatValue(sap.extension.data.Sum, data.available(), "string");
                                                 }
                                                 return NaN;
                                             }
@@ -753,13 +753,30 @@ namespace accounting {
                                 path: "/incurred",
                                 type: new sap.extension.data.Sum(),
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructurenode_teammembers") }),
+                            new sap.extension.m.SelectionInput("", {
+                                showValueHelp: true,
+                                chooseType: ibas.emChooseType.MULTIPLE,
+                                repository: initialfantasy.bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: initialfantasy.bo.User,
+                                    key: initialfantasy.bo.User.PROPERTY_DOCENTRY_NAME,
+                                    text: initialfantasy.bo.User.PROPERTY_NAME_NAME
+                                },
+                                criteria: [
+                                    new ibas.Condition(initialfantasy.bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                                ]
+                            }).bindProperty("bindingValue", {
+                                path: "/teamMembers",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
                         ]
                     });
                 }
                 private nodeItemTable(): sap.extension.table.Table {
                     let that: this = this;
                     return new sap.extension.table.Table("", {
-                        visibleRowCount: 4,
+                        visibleRowCount: 5,
                         rowActionCount: 1,
                         selectionMode: sap.ui.table.SelectionMode.None,
                         rowActionTemplate: [
