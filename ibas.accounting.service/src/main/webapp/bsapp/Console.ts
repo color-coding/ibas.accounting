@@ -42,6 +42,7 @@ namespace accounting {
                 // 注册服务应用
                 this.register(new PostingPeriodChooseServiceMapping());
                 this.register(new ProjectChooseServiceMapping());
+                this.register(new ProjectLinkServiceMapping());
                 this.register(new DimensionChooseServiceMapping());
                 this.register(new DimensionDataServiceMapping());
                 this.register(new TaxGroupChooseServiceMapping());
@@ -91,6 +92,7 @@ namespace accounting {
             /** 初始化 */
             protected registers(): void {
                 this.register(new ProjectChooseServiceMapping());
+                this.register(new ProjectLinkServiceMapping());
                 this.register(new TaxGroupChooseServiceMapping());
                 this.register(new CostStructureChooseServiceMapping());
                 this.register(new CostStructureNodeChooseServiceMapping());

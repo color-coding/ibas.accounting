@@ -30,7 +30,8 @@ namespace accounting {
                         columns: [
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_project_code"),
-                                template: new sap.extension.m.Text("", {
+                                template: new sap.extension.m.DataLink("", {
+                                    objectCode: bo.Project.BUSINESS_OBJECT_CODE
                                 }).bindProperty("bindingValue", {
                                     path: "code",
                                     type: new sap.extension.data.Alphanumeric()

@@ -44,6 +44,9 @@ namespace accounting {
                     case app.ProjectEditApp.APPLICATION_ID:
                         view = new c.ProjectEditView();
                         break;
+                    case app.ProjectViewApp.APPLICATION_ID:
+                        view = new c.ProjectViewView();
+                        break;
                     case app.DimensionListApp.APPLICATION_ID:
                         view = new c.DimensionListView();
                         break;

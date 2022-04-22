@@ -731,7 +731,7 @@ namespace accounting {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructurenode_budget") }),
                             new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Number,
+
                                 editable: false,
                             }).bindProperty("bindingValue", {
                                 path: "/budget",
@@ -739,7 +739,7 @@ namespace accounting {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructurenode_locked") }),
                             new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Number,
+
                                 editable: false,
                             }).bindProperty("bindingValue", {
                                 path: "/locked",
@@ -747,7 +747,7 @@ namespace accounting {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructurenode_incurred") }),
                             new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Number,
+
                                 editable: false,
                             }).bindProperty("bindingValue", {
                                 path: "/incurred",

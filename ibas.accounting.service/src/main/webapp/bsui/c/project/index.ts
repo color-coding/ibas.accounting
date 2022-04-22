@@ -8,3 +8,4 @@
 /// <reference path="./ProjectListView.ts" />
 /// <reference path="./ProjectChooseView.ts" />
 /// <reference path="./ProjectEditView.ts" />
+/// <reference path="./ProjectViewView.ts" />

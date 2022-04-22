@@ -55,7 +55,7 @@ namespace accounting {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_rate") }),
                             new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("bindingValue", {
                                 path: "rate",
                                 type: new sap.extension.data.Rate(),

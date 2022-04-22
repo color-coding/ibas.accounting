@@ -118,7 +118,7 @@ namespace accounting {
                         if (action !== ibas.emMessageAction.YES) {
                             return;
                         }
-                        let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting;
+                        let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
                         ibas.queues.execute(beDeleteds, (data, next) => {
                             // 处理数据
                             boRepository.savePeriodCategory({

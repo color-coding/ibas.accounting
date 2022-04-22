@@ -24,6 +24,9 @@ namespace accounting {
                     case app.ProjectChooseApp.APPLICATION_ID:
                         view = new m.ProjectChooseView();
                         break;
+                    case app.ProjectViewApp.APPLICATION_ID:
+                        view = new m.ProjectViewView();
+                        break;
                     case app.TaxGroupChooseApp.APPLICATION_ID:
                         view = new m.TaxGroupChooseView();
                         break;
