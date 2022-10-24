@@ -9,6 +9,7 @@
 /// <reference path="./project/index.ts" />
 /// <reference path="./taxgroup/index.ts" />
 /// <reference path="./coststructure/index.ts" />
+/// <reference path="./currency/index.ts" />
 /// <reference path="./costitem/index.ts" />
 namespace accounting {
     export namespace ui {
@@ -38,6 +39,9 @@ namespace accounting {
                         break;
                     case app.CostItemChooseApp.APPLICATION_ID:
                         view = new m.CostItemChooseView();
+                        break;
+                    case app.CurrencyChooseApp.APPLICATION_ID:
+                        view = new m.CurrencyChooseView();
                         break;
                     default:
                         break;

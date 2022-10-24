@@ -11,6 +11,7 @@
 /// <reference path="./dimension/index.ts" />
 /// <reference path="./taxgroup/index.ts" />
 /// <reference path="./coststructure/index.ts" />
+/// <reference path="./currency/index.ts" />
 /// <reference path="./costitem/index.ts" />
 namespace accounting {
     export namespace app {
@@ -39,6 +40,7 @@ namespace accounting {
                 this.register(new CostItemFunc());
                 this.register(new DimensionFunc());
                 this.register(new TaxGroupFunc());
+                this.register(new CurrencyFunc());
                 // 注册服务应用
                 this.register(new PostingPeriodChooseServiceMapping());
                 this.register(new ProjectChooseServiceMapping());
@@ -49,6 +51,7 @@ namespace accounting {
                 this.register(new CostStructureChooseServiceMapping());
                 this.register(new CostStructureNodeChooseServiceMapping());
                 this.register(new CostItemChooseServiceMapping());
+                this.register(new CurrencyChooseServiceMapping());
                 // 注册常驻应用
 
             }

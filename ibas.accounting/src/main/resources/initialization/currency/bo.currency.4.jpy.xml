@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE Currency>
+<ns2:Currency xmlns:ns2="http://colorcoding.org/ibas/accounting/bo">
+	<Code>JPY</Code>
+	<Name>日元</Name>
+	<ForeignName>Jananese Yen</ForeignName>
+	<Activated>YES</Activated>
+	<ISO>JPY</ISO>
+</ns2:Currency>

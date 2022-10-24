@@ -89,6 +89,16 @@ namespace accounting {
              * @param saver 保存者
              */
             saveCostStructure(saver: ibas.ISaveCaller<bo.ICostStructure>): void;
+            /**
+             * 查询 货币
+             * @param fetcher 查询者
+             */
+            fetchCurrency(fetcher: ibas.IFetchCaller<bo.ICurrency>): void;
+            /**
+             * 保存 货币
+             * @param saver 保存者
+             */
+            saveCurrency(saver: ibas.ISaveCaller<bo.ICurrency>): void;
         }
     }
 }

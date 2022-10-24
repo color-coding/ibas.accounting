@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE Currency>
+<ns2:Currency xmlns:ns2="http://colorcoding.org/ibas/accounting/bo">
+	<Code>CNY</Code>
+	<Name>人民币</Name>
+	<ForeignName>Chinese Yuan</ForeignName>
+	<Activated>YES</Activated>
+	<ISO>CNY</ISO>
+</ns2:Currency>

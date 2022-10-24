@@ -3,6 +3,7 @@ package org.colorcoding.ibas.accounting.repository;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.ICostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
+import org.colorcoding.ibas.accounting.bo.currency.ICurrency;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPostingPeriod;
@@ -162,6 +163,23 @@ public interface IBORepositoryAccountingApp extends IBORepositoryApplication {
 	 * @return 操作结果
 	 */
 	IOperationResult<ICostItemJournal> saveCostItemJournal(ICostItemJournal bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-货币
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ICurrency> fetchCurrency(ICriteria criteria);
+
+	/**
+	 * 保存-货币
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ICurrency> saveCurrency(ICurrency bo);
 
 	// --------------------------------------------------------------------------------------------//
 

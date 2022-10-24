@@ -13,4 +13,5 @@
 /// <reference path="./bo/TaxGroup.ts" />
 /// <reference path="./bo/CostItem.ts" />
 /// <reference path="./bo/CostStructure.ts" />
+/// <reference path="./bo/Currency.ts" />
 /// <reference path="./BORepository.ts" />

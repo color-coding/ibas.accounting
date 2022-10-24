@@ -265,6 +265,29 @@
         "bo_costitem_closing_delimiter": "----结束----"
     },
     {
+        "bo_currency": "货币",
+        "bo_currency_code": "编码",
+        "bo_currency_name": "名称",
+        "bo_currency_activated": "激活",
+        "bo_currency_iso": "ISO代码",
+        "bo_currency_foreignname": "外文名称",
+        "bo_currency_docentry": "对象编号",
+        "bo_currency_objectcode": "对象类型",
+        "bo_currency_createdate": "创建日期",
+        "bo_currency_createtime": "创建时间",
+        "bo_currency_updatedate": "修改日期",
+        "bo_currency_updatetime": "修改时间",
+        "bo_currency_datasource": "数据源",
+        "bo_currency_loginst": "实例号（版本）",
+        "bo_currency_series": "服务系列",
+        "bo_currency_createusersign": "创建用户",
+        "bo_currency_updateusersign": "修改用户",
+        "bo_currency_createactionid": "创建动作标识",
+        "bo_currency_updateactionid": "更新动作标识",
+        "bo_currency_remarks": "备注",
+        "bo_currency_closing_delimiter": "----结束----"
+    },
+    {
         "em_periodstatus_open": "打开",
         "em_periodstatus_locked": "关闭",
         "em_periodstatus_closed": "结算"

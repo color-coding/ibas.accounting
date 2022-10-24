@@ -175,6 +175,20 @@ namespace accounting {
                     closer.onCompleted.call(ibas.objects.isNull(closer.caller) ? closer : closer.caller, opRslt);
                 });
             }
+            /**
+             * 查询 货币
+             * @param fetcher 查询者
+             */
+            fetchCurrency(fetcher: ibas.IFetchCaller<bo.Currency>): void {
+                super.fetch(bo.Currency.name, fetcher);
+            }
+            /**
+             * 保存 货币
+             * @param saver 保存者
+             */
+            saveCurrency(saver: ibas.ISaveCaller<bo.Currency>): void {
+                super.save(bo.Currency.name, saver);
+            }
 
         }
         /**

@@ -12,6 +12,8 @@ import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructureNode;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructureNodeItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructureNodes;
+import org.colorcoding.ibas.accounting.bo.currency.Currency;
+import org.colorcoding.ibas.accounting.bo.currency.ICurrency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
@@ -579,6 +581,49 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	public IOperationResult<ICostItemJournal> saveCostItemJournal(ICostItemJournal bo) {
 		return new OperationResult<ICostItemJournal>(
 				this.saveCostItemJournal((CostItemJournal) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-货币
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Currency> fetchCurrency(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, Currency.class);
+	}
+
+	/**
+	 * 查询-货币（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICurrency> fetchCurrency(ICriteria criteria) {
+		return new OperationResult<ICurrency>(this.fetchCurrency(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-货币
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Currency> saveCurrency(Currency bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-货币（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICurrency> saveCurrency(ICurrency bo) {
+		return new OperationResult<ICurrency>(this.saveCurrency((Currency) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

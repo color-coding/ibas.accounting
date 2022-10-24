@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE Currency>
+<ns2:Currency xmlns:ns2="http://colorcoding.org/ibas/accounting/bo">
+	<Code>USD</Code>
+	<Name>美元</Name>
+	<ForeignName>US Dollar</ForeignName>
+	<Activated>YES</Activated>
+	<ISO>USD</ISO>
+</ns2:Currency>

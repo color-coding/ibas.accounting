@@ -42,6 +42,8 @@ namespace accounting {
         export const BO_CODE_COSTITEM: string = "${Company}_AC_COSTITEM";
         /** 业务对象编码-费用结构节点 */
         export const BO_CODE_COSTSTRUCTURE_NODE: string = "${Company}_AC_COSTSTRUNODE";
+        /** 业务对象编码-货币 */
+        export const BO_CODE_CURRENCY: string = "${Company}_AC_CURRENCY";
         /**
          * 期间状态
          */

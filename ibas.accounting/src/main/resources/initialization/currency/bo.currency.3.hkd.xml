@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE Currency>
+<ns2:Currency xmlns:ns2="http://colorcoding.org/ibas/accounting/bo">
+	<Code>HKD</Code>
+	<Name>港币</Name>
+	<ForeignName>Hongkong Dollar</ForeignName>
+	<Activated>YES</Activated>
+	<ISO>HKD</ISO>
+</ns2:Currency>

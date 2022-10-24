@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
+import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
@@ -264,6 +265,36 @@ public class DataService extends BORepositoryAccounting {
 		return super.saveCostItem(bo, token);
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-货币
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchCurrency")
+	public OperationResult<Currency> fetchCurrency(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchCurrency(criteria, token);
+	}
+
+	/**
+	 * 保存-货币
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveCurrency")
+	public OperationResult<Currency> saveCurrency(Currency bo, @QueryParam("token") String token) {
+		return super.saveCurrency(bo, token);
+	}
 	// --------------------------------------------------------------------------------------------//
 
 }

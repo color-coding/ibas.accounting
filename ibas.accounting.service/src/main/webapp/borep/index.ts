@@ -13,6 +13,7 @@
 /// <reference path="./bo/TaxGroup.ts" />
 /// <reference path="./bo/CostItem.ts" />
 /// <reference path="./bo/CostStructure.ts" />
+/// <reference path="./bo/Currency.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 namespace accounting {
@@ -28,5 +29,6 @@ namespace accounting {
         boFactory.register(CostItem.BUSINESS_OBJECT_CODE, CostItem);
         boFactory.register(CostStructure.BUSINESS_OBJECT_CODE, CostStructure);
         boFactory.register(bo.BO_CODE_COSTSTRUCTURE_NODE, CostStructure);
+        boFactory.register(Currency.BUSINESS_OBJECT_CODE, Currency);
     }
 }
