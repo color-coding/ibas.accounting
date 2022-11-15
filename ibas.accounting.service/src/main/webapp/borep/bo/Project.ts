@@ -322,6 +322,17 @@ namespace accounting {
                 this.setProperty(Project.PROPERTY_UPDATEACTIONID_NAME, value);
             }
 
+            /** 映射的属性名称-备注 */
+            static PROPERTY_REMARKS_NAME: string = "Remarks";
+            /** 获取-备注 */
+            get remarks(): string {
+                return this.getProperty<string>(Project.PROPERTY_REMARKS_NAME);
+            }
+            /** 设置-备注 */
+            set remarks(value: string) {
+                this.setProperty(Project.PROPERTY_REMARKS_NAME, value);
+            }
+
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(Project.BUSINESS_OBJECT_CODE);

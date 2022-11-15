@@ -65,6 +65,9 @@ namespace accounting {
             createActionId: string;
             /** 更新动作标识 */
             updateActionId: string;
+            /** 备注 */
+            remarks: string;
+
 
         }
 

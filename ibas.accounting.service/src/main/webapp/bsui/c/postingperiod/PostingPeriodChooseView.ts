@@ -41,7 +41,13 @@ namespace accounting {
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_postingperiod_category"),
-                                template: new sap.extension.m.Text("", {
+                                template: new sap.extension.m.RepositoryText("", {
+                                    repository: bo.BORepositoryAccounting,
+                                    dataInfo: {
+                                        type: bo.PeriodCategory,
+                                        key: bo.PeriodCategory.PROPERTY_OBJECTKEY_NAME,
+                                        text: bo.PeriodCategory.PROPERTY_NAME_NAME
+                                    },
                                 }).bindProperty("bindingValue", {
                                     path: "category",
                                     type: new sap.extension.data.Alphanumeric()
