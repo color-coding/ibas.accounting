@@ -33,12 +33,12 @@ namespace accounting {
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_project_name"),
-                                width: "16rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "name",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "16rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_project_canceled"),
@@ -79,6 +79,7 @@ namespace accounting {
                                     path: "reference1",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "12rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_project_reference2"),
@@ -87,6 +88,7 @@ namespace accounting {
                                     path: "reference2",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "16rem",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

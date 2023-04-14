@@ -338,9 +338,11 @@ namespace accounting {
 
             /** 可用金额 = 预算金额 - 已发生金额 - 锁定金额 */
             available(): number {
-                return ibas.numbers.valueOf(this.budget)
+                return ibas.numbers.round(
+                    ibas.numbers.valueOf(this.budget)
                     - ibas.numbers.valueOf(this.incurred)
-                    - ibas.numbers.valueOf(this.locked);
+                    - ibas.numbers.valueOf(this.locked)
+                );
             }
             /** 初始化数据 */
             protected init(): void {
@@ -801,9 +803,11 @@ namespace accounting {
 
             /** 可用金额 = 预算金额 - 已发生金额 - 锁定金额 */
             available(): number {
-                return ibas.numbers.valueOf(this.budget)
+                return ibas.numbers.round(
+                    ibas.numbers.valueOf(this.budget)
                     - ibas.numbers.valueOf(this.incurred)
-                    - ibas.numbers.valueOf(this.locked);
+                    - ibas.numbers.valueOf(this.locked)
+                );
             }
             protected registerRules(): ibas.IBusinessRule[] {
                 return [

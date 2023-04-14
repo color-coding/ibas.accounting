@@ -43,6 +43,7 @@ namespace accounting {
                                     path: "name",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
+                                width: "14rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_taxgroup_category"),
@@ -62,22 +63,7 @@ namespace accounting {
                                     path: "activated",
                                     type: new sap.extension.data.YesNo(true),
                                 }),
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_taxgroup_validdate"),
-                                template: new sap.extension.m.Text("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "validDate",
-                                    type: new sap.extension.data.Date(),
-                                }),
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_taxgroup_rate"),
-                                template: new sap.extension.m.Text("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "rate",
-                                    type: new sap.extension.data.Rate(),
-                                }),
+                                width: "8rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_taxgroup_reference1"),
@@ -86,6 +72,7 @@ namespace accounting {
                                     path: "reference1",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
+                                width: "12rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_taxgroup_reference2"),
@@ -94,6 +81,7 @@ namespace accounting {
                                     path: "reference2",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
+                                width: "14rem",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

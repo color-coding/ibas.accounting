@@ -38,7 +38,7 @@ namespace accounting {
                                     path: "name",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
-                                width: "14rem",
+                                width: "16rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_costitem_activated"),
@@ -55,6 +55,7 @@ namespace accounting {
                                     path: "reference1",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
+                                width: "14rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_costitem_reference2"),
@@ -63,6 +64,7 @@ namespace accounting {
                                     path: "reference2",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
+                                width: "16rem",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

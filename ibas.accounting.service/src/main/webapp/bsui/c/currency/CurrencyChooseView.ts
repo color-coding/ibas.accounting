@@ -63,7 +63,7 @@ namespace accounting {
                                     path: "remarks",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
-                                width: "16rem",
+                                width: "18rem",
                             }),],
                         nextDataSet(event: sap.ui.base.Event): void {
                             // 查询下一个数据集

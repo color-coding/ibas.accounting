@@ -21,7 +21,7 @@ namespace accounting {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_code") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -38,12 +38,6 @@ namespace accounting {
                                     maxLength: 100
                                 }),
                             }),
-                            new sap.extension.m.CheckBox("", {
-                                text: ibas.i18n.prop("bo_taxgroup_activated"),
-                            }).bindProperty("bindingValue", {
-                                path: "activated",
-                                type: new sap.extension.data.YesNo()
-                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_category") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: bo.emTaxGroupCategory
@@ -53,12 +47,13 @@ namespace accounting {
                                     enumType: bo.emTaxGroupCategory
                                 }),
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_rate") }),
-                            new sap.extension.m.Input("", {
-
+                            new sap.m.Toolbar("", { visible: false }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_activated") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo
                             }).bindProperty("bindingValue", {
-                                path: "rate",
-                                type: new sap.extension.data.Rate(),
+                                path: "activated",
+                                type: new sap.extension.data.YesNo()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_validdate") }),
                             new sap.extension.m.DatePicker("", {
@@ -66,28 +61,52 @@ namespace accounting {
                                 path: "validDate",
                                 type: new sap.extension.data.Date(),
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_reference1") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference1",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 100
-                                }),
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_reference2") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference2",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 200
-                                }),
-                            }),
-                            new sap.ui.core.Title("", {}),
                         ]
                     });
                     let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
+                            new sap.m.IconTabBar("", {
+                                headerBackgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                backgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                expandable: false,
+                                items: [
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("accounting_title_general"),
+                                        content: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: true,
+                                                content: [
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_rate") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "rate",
+                                                        type: new sap.extension.data.Rate(),
+                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_reference1") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference1",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 100
+                                                        }),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_reference2") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference2",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 200
+                                                        }),
+                                                    }),
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                ]
+                            })
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {

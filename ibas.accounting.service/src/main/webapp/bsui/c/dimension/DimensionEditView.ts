@@ -20,7 +20,7 @@ namespace accounting {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_code") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -37,6 +37,7 @@ namespace accounting {
                                     maxLength: 100
                                 })
                             }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_activated") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emYesNo
@@ -44,46 +45,69 @@ namespace accounting {
                                 path: "activated",
                                 type: new sap.extension.data.YesNo()
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_reference1") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference1",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 100
-                                })
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_reference2") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference2",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 200
-                                })
-                            }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_others") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_sourcetype") }),
-                            new sap.extension.m.EnumSelect("", {
-                                enumType: bo.emDimensionSource
-                            }).bindProperty("bindingValue", {
-                                path: "sourceType",
-                                type: new sap.extension.data.Enum({
-                                    enumType: bo.emDimensionSource
-                                })
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_source") }),
-                            new sap.extension.m.TextArea("", {
-                                rows: 6,
-                            }).bindProperty("bindingValue", {
-                                path: "source",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
-                            new sap.m.Label("", {}),
-                            new sap.m.Button("", {
-                                text: ibas.i18n.prop("shell_data_edit"),
-                                press: function (): void {
-                                    that.fireViewEvents(that.editSourceEvent);
-                                }
-                            }),
+                        ]
+                    });
+                    let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.m.IconTabBar("", {
+                                headerBackgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                backgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                expandable: false,
+                                items: [
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("accounting_title_general"),
+                                        content: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: true,
+                                                content: [
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_sourcetype") }),
+                                                    new sap.extension.m.EnumSelect("", {
+                                                        enumType: bo.emDimensionSource
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "sourceType",
+                                                        type: new sap.extension.data.Enum({
+                                                            enumType: bo.emDimensionSource
+                                                        })
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_source") }),
+                                                    new sap.extension.m.TextArea("", {
+                                                        rows: 6,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "source",
+                                                        type: new sap.extension.data.Alphanumeric()
+                                                    }),
+                                                    new sap.m.Label("", {}),
+                                                    new sap.m.Button("", {
+                                                        text: ibas.i18n.prop("shell_data_edit"),
+                                                        press: function (): void {
+                                                            that.fireViewEvents(that.editSourceEvent);
+                                                        }
+                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_reference1") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference1",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 100
+                                                        })
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_dimension_reference2") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference2",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 200
+                                                        })
+                                                    }),
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                ]
+                            })
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {
@@ -115,6 +139,7 @@ namespace accounting {
                         }),
                         content: [
                             formTop,
+                            formBottom
                         ]
                     });
                 }

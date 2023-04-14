@@ -25,7 +25,7 @@ namespace accounting {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_project_code") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -58,22 +58,102 @@ namespace accounting {
                                     maxLength: 100
                                 })
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_manager") }),
-                            new sap.extension.m.RepositoryInput("", {
-                                showValueHelp: true,
-                                repository: initialfantasy.bo.BORepositoryInitialFantasy,
-                                dataInfo: {
-                                    type: initialfantasy.bo.User,
-                                    key: initialfantasy.bo.User.PROPERTY_DOCENTRY_NAME,
-                                    text: initialfantasy.bo.User.PROPERTY_NAME_NAME
-                                },
-                                valueHelpRequest: function (): void {
-                                    that.fireViewEvents(that.chooseManagerEvent);
-                                },
+                            new sap.m.Toolbar("", { visible: false }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_status") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emDocumentStatus,
+                                width: "100%",
                             }).bindProperty("bindingValue", {
-                                path: "manager",
-                                type: new sap.extension.data.Numeric()
+                                path: "status",
+                                type: new sap.extension.data.DocumentStatus()
+                            })
+                            , new sap.extension.m.CheckBox("", {
+                                text: ibas.i18n.prop("bo_project_canceled")
+                            }).bindProperty("bindingValue", {
+                                path: "canceled",
+                                type: new sap.extension.data.YesNo()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_activated") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo,
+                            }).bindProperty("bindingValue", {
+                                path: "activated",
+                                type: new sap.extension.data.YesNo()
+                            }),
+                        ],
+                    });
+                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.m.IconTabBar("", {
+                                headerBackgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                backgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                expandable: false,
+                                items: [
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("accounting_title_general"),
+                                        content: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: true,
+                                                content: [
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_project_manager") }),
+                                                    new sap.extension.m.RepositoryInput("", {
+                                                        showValueHelp: true,
+                                                        repository: initialfantasy.bo.BORepositoryInitialFantasy,
+                                                        dataInfo: {
+                                                            type: initialfantasy.bo.User,
+                                                            key: initialfantasy.bo.User.PROPERTY_DOCENTRY_NAME,
+                                                            text: initialfantasy.bo.User.PROPERTY_NAME_NAME
+                                                        },
+                                                        valueHelpRequest: function (): void {
+                                                            that.fireViewEvents(that.chooseManagerEvent);
+                                                        },
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "manager",
+                                                        type: new sap.extension.data.Numeric()
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_project_startdate") }),
+                                                    new sap.extension.m.DatePicker("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "startDate",
+                                                        type: new sap.extension.data.Date(),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_project_closedate") }),
+                                                    new sap.extension.m.DatePicker("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "closeDate",
+                                                        type: new sap.extension.data.Date(),
+                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference1") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference1",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 100
+                                                        })
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference2") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference2",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 200
+                                                        })
+                                                    }),
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                ]
+                            }),
+                        ]
+                    });
+                    let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_project_organization") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
@@ -116,67 +196,7 @@ namespace accounting {
                                 path: "remarks",
                                 type: new sap.extension.data.Alphanumeric(),
                             }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_others") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_status") }),
-                            new sap.m.FlexBox("", {
-                                width: "100%",
-                                justifyContent: sap.m.FlexJustifyContent.Start,
-                                renderType: sap.m.FlexRendertype.Bare,
-                                items: [
-                                    new sap.extension.m.EnumSelect("", {
-                                        enumType: ibas.emDocumentStatus,
-                                        width: "100%",
-                                    }).bindProperty("bindingValue", {
-                                        path: "status",
-                                        type: new sap.extension.data.DocumentStatus()
-                                    }),
-                                    new sap.extension.m.CheckBox("", {
-                                        text: ibas.i18n.prop("bo_project_activated")
-                                    }).bindProperty("bindingValue", {
-                                        path: "activated",
-                                        type: new sap.extension.data.YesNo()
-                                    }).addStyleClass("sapUiLargeMarginBegin"),
-                                    new sap.extension.m.CheckBox("", {
-                                        text: ibas.i18n.prop("bo_project_canceled")
-                                    }).bindProperty("bindingValue", {
-                                        path: "canceled",
-                                        type: new sap.extension.data.YesNo()
-                                    }).addStyleClass("sapUiLargeMarginBegin sapUiSmallMarginEnd"),
-                                ]
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_startdate") }),
-                            new sap.extension.m.DatePicker("", {
-                            }).bindProperty("bindingValue", {
-                                path: "startDate",
-                                type: new sap.extension.data.Date(),
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_closedate") }),
-                            new sap.extension.m.DatePicker("", {
-                            }).bindProperty("bindingValue", {
-                                path: "closeDate",
-                                type: new sap.extension.data.Date(),
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference1") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference1",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 100
-                                })
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference2") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference2",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 200
-                                })
-                            }),
-                        ]
-                    });
-                    let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
-                        editable: true,
-                        content: [
+                            new sap.m.Toolbar("", { visible: false }),
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {
@@ -229,10 +249,60 @@ namespace accounting {
                                         ],
                                     })
                                 }),
+                                new sap.m.ToolbarSpacer(""),
+                                new sap.m.Button("", {
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://action",
+                                    press: function (event: any): void {
+                                        ibas.servicesManager.showServices({
+                                            proxy: new ibas.BOServiceProxy({
+                                                data: that.page.getModel().getData(),
+                                                converter: new bo.DataConverter(),
+                                            }),
+                                            displayServices(services: ibas.IServiceAgent[]): void {
+                                                if (ibas.objects.isNull(services) || services.length === 0) {
+                                                    return;
+                                                }
+                                                let actionSheet: sap.m.ActionSheet = new sap.m.ActionSheet("", {
+                                                    placement: sap.m.PlacementType.Bottom,
+                                                    buttons: {
+                                                        path: "/",
+                                                        template: new sap.m.Button("", {
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            text: {
+                                                                path: "name",
+                                                                type: new sap.extension.data.Alphanumeric(),
+                                                                formatter(data: string): string {
+                                                                    return data ? ibas.i18n.prop(data) : "";
+                                                                }
+                                                            },
+                                                            icon: {
+                                                                path: "icon",
+                                                                type: new sap.extension.data.Alphanumeric(),
+                                                                formatter(data: string): string {
+                                                                    return data ? data : "sap-icon://e-care";
+                                                                }
+                                                            },
+                                                            press(this: sap.m.Button): void {
+                                                                let service: ibas.IServiceAgent = this.getBindingContext().getObject();
+                                                                if (service) {
+                                                                    service.run();
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                });
+                                                actionSheet.setModel(new sap.extension.model.JSONModel(services));
+                                                actionSheet.openBy(event.getSource());
+                                            }
+                                        });
+                                    }
+                                })
                             ]
                         }),
                         content: [
                             formTop,
+                            formMiddle,
                             formBottom,
                         ]
                     });

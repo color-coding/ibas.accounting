@@ -21,7 +21,7 @@ namespace accounting {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_code") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -54,6 +54,7 @@ namespace accounting {
                                     maxLength: 100
                                 })
                             }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_activated") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emYesNo
@@ -61,30 +62,6 @@ namespace accounting {
                                 path: "activated",
                                 type: new sap.extension.data.YesNo(),
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_reference1") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference1",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 100
-                                }),
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_reference2") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "reference2",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 200
-                                }),
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_remarks") }),
-                            new sap.extension.m.TextArea("", {
-                                rows: 3,
-                            }).bindProperty("bindingValue", {
-                                path: "remarks",
-                                type: new sap.extension.data.Alphanumeric(),
-                            }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("accounting_title_others") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_phantom") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emYesNo
@@ -92,50 +69,99 @@ namespace accounting {
                                 path: "phantom",
                                 type: new sap.extension.data.YesNo(),
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_parents") }),
-                            new sap.extension.m.SelectionInput("", {
-                                showValueHelp: true,
-                                chooseType: ibas.emChooseType.MULTIPLE,
-                                repository: bo.BORepositoryAccounting,
-                                dataInfo: {
-                                    type: bo.CostItem,
-                                    key: bo.CostItem.PROPERTY_CODE_NAME,
-                                    text: bo.CostItem.PROPERTY_NAME_NAME
-                                },
-                                criteria: [
-                                    new ibas.Condition(bo.CostItem.PROPERTY_PHANTOM_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                        ],
+                    });
+                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.m.IconTabBar("", {
+                                headerBackgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                backgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                expandable: false,
+                                items: [
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("accounting_title_general"),
+                                        content: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: true,
+                                                content: [
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_parents") }),
+                                                    new sap.extension.m.SelectionInput("", {
+                                                        showValueHelp: true,
+                                                        chooseType: ibas.emChooseType.MULTIPLE,
+                                                        repository: bo.BORepositoryAccounting,
+                                                        dataInfo: {
+                                                            type: bo.CostItem,
+                                                            key: bo.CostItem.PROPERTY_CODE_NAME,
+                                                            text: bo.CostItem.PROPERTY_NAME_NAME
+                                                        },
+                                                        criteria: [
+                                                            new ibas.Condition(bo.CostItem.PROPERTY_PHANTOM_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                                                        ]
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "parents",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 60
+                                                        })
+                                                    }).bindProperty("editable", {
+                                                        path: "phantom",
+                                                        formatter(data: ibas.emYesNo): boolean {
+                                                            return data === ibas.emYesNo.YES ? false : true;
+                                                        }
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_sorts") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "sorts",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 16
+                                                        })
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_invoicecontent") }),
+                                                    new sap.extension.m.TextArea("", {
+                                                        rows: 6,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "invoiceContent",
+                                                        type: new sap.extension.data.Alphanumeric(),
+                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_reference1") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference1",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 100
+                                                        }),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_reference2") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "reference2",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 200
+                                                        }),
+                                                    }),
+                                                ]
+                                            })
+                                        ]
+                                    }),
                                 ]
-                            }).bindProperty("bindingValue", {
-                                path: "parents",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 60
-                                })
-                            }).bindProperty("editable", {
-                                path: "phantom",
-                                formatter(data: ibas.emYesNo): boolean {
-                                    return data === ibas.emYesNo.YES ? false : true;
-                                }
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_sorts") }),
-                            new sap.extension.m.Input("", {
-                            }).bindProperty("bindingValue", {
-                                path: "sorts",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 16
-                                })
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_invoicecontent") }),
-                            new sap.extension.m.TextArea("", {
-                                rows: 6,
-                            }).bindProperty("bindingValue", {
-                                path: "invoiceContent",
-                                type: new sap.extension.data.Alphanumeric(),
                             }),
                         ]
                     });
                     let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
+                            new sap.m.Toolbar("", { visible: false }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_costitem_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric(),
+                            }),
+                            new sap.m.Toolbar("", { visible: false }),
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {
@@ -241,6 +267,7 @@ namespace accounting {
                         }),
                         content: [
                             formTop,
+                            formMiddle,
                             formBottom,
                         ]
                     });
