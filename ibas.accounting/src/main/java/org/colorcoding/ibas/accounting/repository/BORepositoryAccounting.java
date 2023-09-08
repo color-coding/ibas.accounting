@@ -361,6 +361,11 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 								if (action == emCostStatus.CLOSED && item.getStatus() != emCostStatus.CLOSED
 										&& costStructure.getTransferable() == emYesNo.YES) {
 									// 需要结转预算
+									if (item.getLocked().compareTo(Decimal.ZERO) > 0) {
+										// 自动结转时，结转节点存在锁定金额不许结转
+										throw new BusinessLogicException(I18N.prop(
+												"msg_ac_coststructurenode_closed_locked_greater_zero", item.getName()));
+									}
 									ICostItemJournal journal = null;
 									for (ICostStructureNodeItem nItem : item.getCostStructureNodeItems()) {
 										journal = new CostItemJournal();
@@ -383,10 +388,13 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 										journal.setAmount(nItem.getBudget().subtract(nItem.getLocked())
 												.subtract(nItem.getIncurred()));
 										journal.setCurrency(nItem.getCurrency());
+										// 结转后预算金额 = 已发生金额
+										nItem.setBudget(nItem.getIncurred());
 										if (journal.getAmount().compareTo(Decimal.ZERO) <= 0) {
 											// 跳过可用金额小于等于0
 											continue;
 										}
+										// 被结转节点，消耗预算金额
 										journals.add(journal);
 									}
 								} else if (action != emCostStatus.CLOSED && item.getStatus() == emCostStatus.CLOSED) {

@@ -147,7 +147,7 @@ namespace accounting {
                     condition = new ibas.Condition();
                     condition.bracketClose = 2;
                     condition.alias = bo.TaxGroup.PROPERTY_VALIDDATE_NAME;
-                    condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                    condition.operation = ibas.emConditionOperation.LESS_EQUAL;
                     condition.value = today;
                     conditions.add(condition);
                     return conditions;
