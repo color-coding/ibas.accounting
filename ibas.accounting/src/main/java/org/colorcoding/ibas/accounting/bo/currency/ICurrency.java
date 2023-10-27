@@ -53,6 +53,34 @@ public interface ICurrency extends IBOMasterData {
 	void setActivated(emYesNo value);
 
 	/**
+	 * 获取-系统币
+	 * 
+	 * @return 值
+	 */
+	emYesNo getSystem();
+
+	/**
+	 * 设置-系统币
+	 * 
+	 * @param value 值
+	 */
+	void setSystem(emYesNo value);
+
+	/**
+	 * 获取-本币
+	 * 
+	 * @return 值
+	 */
+	emYesNo getLocal();
+
+	/**
+	 * 设置-本币
+	 * 
+	 * @param value 值
+	 */
+	void setLocal(emYesNo value);
+
+	/**
 	 * 获取-ISO代码
 	 * 
 	 * @return 值

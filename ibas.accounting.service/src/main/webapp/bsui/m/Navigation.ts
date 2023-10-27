@@ -11,6 +11,9 @@
 /// <reference path="./coststructure/index.ts" />
 /// <reference path="./currency/index.ts" />
 /// <reference path="./costitem/index.ts" />
+/// <reference path="./account/index.ts" />
+/// <reference path="./branch/index.ts" />
+/// <reference path="./journalentry/index.ts" />
 namespace accounting {
     export namespace ui {
         /** 视图导航 */

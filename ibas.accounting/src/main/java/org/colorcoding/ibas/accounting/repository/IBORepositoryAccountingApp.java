@@ -1,10 +1,15 @@
 package org.colorcoding.ibas.accounting.repository;
 
+import org.colorcoding.ibas.accounting.bo.account.IAccount;
+import org.colorcoding.ibas.accounting.bo.branch.IBranch;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.ICostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
 import org.colorcoding.ibas.accounting.bo.currency.ICurrency;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
+import org.colorcoding.ibas.accounting.bo.journalentry.IJournalEntry;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.ILedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.IPeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPostingPeriod;
 import org.colorcoding.ibas.accounting.bo.project.IProject;
@@ -180,6 +185,91 @@ public interface IBORepositoryAccountingApp extends IBORepositoryApplication {
 	 * @return 操作结果
 	 */
 	IOperationResult<ICurrency> saveCurrency(ICurrency bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-科目
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IAccount> fetchAccount(ICriteria criteria);
+
+	/**
+	 * 保存-科目
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IAccount> saveAccount(IAccount bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分支
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IBranch> fetchBranch(ICriteria criteria);
+
+	/**
+	 * 保存-分支
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IBranch> saveBranch(IBranch bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-日记账分录
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IJournalEntry> fetchJournalEntry(ICriteria criteria);
+
+	/**
+	 * 保存-日记账分录
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IJournalEntry> saveJournalEntry(IJournalEntry bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分类账
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ILedgerAccount> fetchLedgerAccount(ICriteria criteria);
+
+	/**
+	 * 保存-分类账
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ILedgerAccount> saveLedgerAccount(ILedgerAccount bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-期间-分类账
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IPeriodLedgerAccount> fetchPeriodLedgerAccount(ICriteria criteria);
+
+	/**
+	 * 保存-期间-分类账
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IPeriodLedgerAccount> savePeriodLedgerAccount(IPeriodLedgerAccount bo);
 
 	// --------------------------------------------------------------------------------------------//
 

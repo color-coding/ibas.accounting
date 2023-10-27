@@ -109,6 +109,13 @@ namespace accounting {
                                                 items: [
                                                     new sap.ui.layout.form.SimpleForm("", {
                                                         editable: true,
+                                                        columnsM: 1,
+                                                        columnsL: 1,
+                                                        columnsXL: 1,
+                                                        labelSpanS: 3,
+                                                        labelSpanM: 3,
+                                                        labelSpanL: 3,
+                                                        layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
                                                         content: [
                                                             new sap.m.Label("", { text: ibas.i18n.prop("bo_postingperiod_order") }),
                                                             new sap.extension.m.Input("", {

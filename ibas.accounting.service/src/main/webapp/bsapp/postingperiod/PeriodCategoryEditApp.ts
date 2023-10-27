@@ -43,9 +43,9 @@ namespace accounting {
                     // 创建编辑对象实例
                     let year: string = ibas.dates.toString(ibas.dates.today(), "yyyy");
                     this.editData = new bo.PeriodCategory();
-                    this.editData.name = year;
-                    this.editData.startDate = ibas.dates.valueOf(ibas.strings.format("{0}-01-01", year));
-                    this.editData.endDate = ibas.dates.valueOf(ibas.strings.format("{0}-12-31", year));
+                    this.editData.name = ibas.dates.today().getFullYear().toString();
+                    this.editData.startDate = ibas.dates.valueOf(new Date(ibas.dates.today().getFullYear(), 1, 1));
+                    this.editData.endDate = ibas.dates.valueOf(new Date(ibas.dates.today().getFullYear(), 11, 31));
                     this.editData.status = bo.emPeriodStatus.OPEN;
                     this.editPostingPeriods = new ibas.ArrayList<bo.PostingPeriod>();
                     this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));

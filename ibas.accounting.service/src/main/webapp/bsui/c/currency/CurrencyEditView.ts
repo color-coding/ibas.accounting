@@ -75,7 +75,6 @@ namespace accounting {
                                                             maxLength: 8
                                                         })
                                                     }),
-                                                    new sap.m.Toolbar("", { visible: false }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_currency_foreignname") }),
                                                     new sap.extension.m.Input("", {
                                                     }).bindProperty("bindingValue", {
@@ -83,6 +82,21 @@ namespace accounting {
                                                         type: new sap.extension.data.Alphanumeric({
                                                             maxLength: 200
                                                         }),
+                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_currency_system") }),
+                                                    new sap.extension.m.EnumSelect("", {
+                                                        enumType: ibas.emYesNo
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "system",
+                                                        type: new sap.extension.data.YesNo(),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_currency_local") }),
+                                                    new sap.extension.m.EnumSelect("", {
+                                                        enumType: ibas.emYesNo
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "local",
+                                                        type: new sap.extension.data.YesNo(),
                                                     }),
                                                 ]
                                             })

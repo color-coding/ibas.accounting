@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Domain>
+<Domain Name="Accounting" ShortName="AC">
+  <Model Name="LedgerAccount" Description="分类账" ModelType="Simple" Mapped="${Company}_AC_OLDA">
+    <Property Name="Sign" Description="标识" DataType="Alphanumeric" DataSubType="Default" EditSize="10" Mapped="Sign" UniqueKey="Yes"/>
+    <Property Name="Group" Description="组" DataType="Alphanumeric" DataSubType="Default" EditSize="10" Mapped="Group"/>
+    <Property Name="Description" Description="描述" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Dscription"/>
+    <Property Name="Settings" Description="设置" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Settings"/>
+    <Property Name="ObjectKey" Description="编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Object"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="Series" Description="编号系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
+  </Model>
+  <BusinessObject MappedModel="LedgerAccount" ShortName="${Company}_AC_LACCOUNT"/>
+  <Model Name="PeriodLedgerAccount" Description="期间-分类账" ModelType="Simple" Mapped="${Company}_AC_OPLA">
+    <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Name" UniqueKey="Yes"/>
+    <Property Name="Period" Description="期间" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Period" UniqueKey="Yes"/>
+    <Property Name="Ledger" Description="分类" DataType="Alphanumeric" DataSubType="Default" EditSize="10" Mapped="Ledger" UniqueKey="Yes"/>
+    <Property Name="Order" Description="序号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Order"/>
+    <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
+    <Property Name="Account" Description="科目" DataType="Alphanumeric" DataSubType="Default" EditSize="15" Mapped="Account"/>
+    <Property Name="Settings" Description="设置" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Settings"/>
+    <Property Name="Conditions" Description="条件" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Conditions"/>
+    <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
+  </Model>
+  <BusinessObject MappedModel="PeriodLedgerAccount" ShortName="${Company}_AC_PERIODLACCOUNT"/>
+</Domain>

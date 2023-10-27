@@ -29,6 +29,7 @@ namespace accounting {
                 // 其他事件
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.createDataEvent = this.createData;
+                this.view.chooseAccountEvent = this.chooseAccount;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -167,6 +168,20 @@ namespace accounting {
                     createData();
                 }
             }
+            /** 选择科目事件 */
+            protected chooseAccount(): void {
+                let that: this = this;
+                let conditions: ibas.ICondition[] = app.conditions.account.create();
+                ibas.servicesManager.runChooseService<bo.Account>({
+                    boCode: bo.Account.BUSINESS_OBJECT_CODE,
+                    criteria: conditions,
+                    onCompleted(selecteds: ibas.IList<bo.Account>): void {
+                        for (let selected of selecteds) {
+                            that.editData.account = selected.code;
+                        }
+                    }
+                });
+            }
         }
         /** 视图-税收组 */
         export interface ITaxGroupEditView extends ibas.IBOEditView {
@@ -176,6 +191,8 @@ namespace accounting {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
+            /** 选择科目事件 */
+            chooseAccountEvent: Function;
         }
     }
 }

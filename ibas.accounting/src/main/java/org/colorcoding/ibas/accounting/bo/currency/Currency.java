@@ -144,6 +144,68 @@ public class Currency extends BusinessObject<Currency> implements ICurrency {
 	}
 
 	/**
+	 * 属性名称-系统币
+	 */
+	private static final String PROPERTY_SYSTEM_NAME = "System";
+
+	/**
+	 * 系统币 属性
+	 */
+	@DbField(name = "System", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<emYesNo> PROPERTY_SYSTEM = registerProperty(PROPERTY_SYSTEM_NAME, emYesNo.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-系统币
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_SYSTEM_NAME)
+	public final emYesNo getSystem() {
+		return this.getProperty(PROPERTY_SYSTEM);
+	}
+
+	/**
+	 * 设置-系统币
+	 * 
+	 * @param value 值
+	 */
+	public final void setSystem(emYesNo value) {
+		this.setProperty(PROPERTY_SYSTEM, value);
+	}
+
+	/**
+	 * 属性名称-本币
+	 */
+	private static final String PROPERTY_LOCAL_NAME = "Local";
+
+	/**
+	 * 本币 属性
+	 */
+	@DbField(name = "Local", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<emYesNo> PROPERTY_LOCAL = registerProperty(PROPERTY_LOCAL_NAME, emYesNo.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-本币
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_LOCAL_NAME)
+	public final emYesNo getLocal() {
+		return this.getProperty(PROPERTY_LOCAL);
+	}
+
+	/**
+	 * 设置-本币
+	 * 
+	 * @param value 值
+	 */
+	public final void setLocal(emYesNo value) {
+		this.setProperty(PROPERTY_LOCAL, value);
+	}
+
+	/**
 	 * 属性名称-ISO代码
 	 */
 	private static final String PROPERTY_ISO_NAME = "ISO";

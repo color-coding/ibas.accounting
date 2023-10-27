@@ -7,10 +7,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.colorcoding.ibas.accounting.bo.account.Account;
+import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
 import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
+import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.accounting.bo.project.Project;
@@ -295,6 +300,148 @@ public class DataService extends BORepositoryAccounting {
 	public OperationResult<Currency> saveCurrency(Currency bo, @QueryParam("token") String token) {
 		return super.saveCurrency(bo, token);
 	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-科目
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchAccount")
+	public OperationResult<Account> fetchAccount(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchAccount(criteria, token);
+	}
+
+	/**
+	 * 保存-科目
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveAccount")
+	public OperationResult<Account> saveAccount(Account bo, @QueryParam("token") String token) {
+		return super.saveAccount(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分支
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBranch")
+	public OperationResult<Branch> fetchBranch(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchBranch(criteria, token);
+	}
+
+	/**
+	 * 保存-分支
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveBranch")
+	public OperationResult<Branch> saveBranch(Branch bo, @QueryParam("token") String token) {
+		return super.saveBranch(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-日记账分录
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchJournalEntry")
+	public OperationResult<JournalEntry> fetchJournalEntry(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchJournalEntry(criteria, token);
+	}
+
+	/**
+	 * 保存-日记账分录
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveJournalEntry")
+	public OperationResult<JournalEntry> saveJournalEntry(JournalEntry bo, @QueryParam("token") String token) {
+		return super.saveJournalEntry(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分类账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchLedgerAccount")
+	public OperationResult<LedgerAccount> fetchLedgerAccount(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchLedgerAccount(criteria, token);
+	}
+
+	/**
+	 * 查询-期间-分类账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchPeriodLedgerAccount")
+	public OperationResult<PeriodLedgerAccount> fetchPeriodLedgerAccount(Criteria criteria,
+			@QueryParam("token") String token) {
+		return super.fetchPeriodLedgerAccount(criteria, token);
+	}
+
+	/**
+	 * 保存-期间-分类账
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("savePeriodLedgerAccount")
+	public OperationResult<PeriodLedgerAccount> savePeriodLedgerAccount(PeriodLedgerAccount bo,
+			@QueryParam("token") String token) {
+		return super.savePeriodLedgerAccount(bo, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 
 }

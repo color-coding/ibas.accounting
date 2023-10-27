@@ -119,6 +119,20 @@ public interface ITaxGroup extends IBOMasterData {
 	void setRate(double value);
 
 	/**
+	 * 获取-科目
+	 * 
+	 * @return 值
+	 */
+	String getAccount();
+
+	/**
+	 * 设置-科目
+	 * 
+	 * @param value 值
+	 */
+	void setAccount(String value);
+
+	/**
 	 * 获取-参考1
 	 * 
 	 * @return 值

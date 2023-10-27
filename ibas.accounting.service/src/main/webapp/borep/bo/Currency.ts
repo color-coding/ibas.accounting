@@ -48,6 +48,28 @@ namespace accounting {
                 this.setProperty(Currency.PROPERTY_ACTIVATED_NAME, value);
             }
 
+            /** 映射的属性名称-系统币 */
+            static PROPERTY_SYSTEM_NAME: string = "System";
+            /** 获取-系统币 */
+            get system(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Currency.PROPERTY_SYSTEM_NAME);
+            }
+            /** 设置-系统币 */
+            set system(value: ibas.emYesNo) {
+                this.setProperty(Currency.PROPERTY_SYSTEM_NAME, value);
+            }
+
+            /** 映射的属性名称-本币 */
+            static PROPERTY_LOCAL_NAME: string = "Local";
+            /** 获取-本币 */
+            get local(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Currency.PROPERTY_LOCAL_NAME);
+            }
+            /** 设置-本币 */
+            set local(value: ibas.emYesNo) {
+                this.setProperty(Currency.PROPERTY_LOCAL_NAME, value);
+            }
+
             /** 映射的属性名称-ISO代码 */
             static PROPERTY_ISO_NAME: string = "ISO";
             /** 获取-ISO代码 */

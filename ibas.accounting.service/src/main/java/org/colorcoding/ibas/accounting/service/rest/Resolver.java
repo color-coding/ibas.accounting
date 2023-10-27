@@ -6,8 +6,12 @@ import javax.ws.rs.ext.Provider;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+import org.colorcoding.ibas.accounting.bo.account.Account;
+import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
+import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.accounting.bo.project.Project;
@@ -30,7 +34,7 @@ public class Resolver implements ContextResolver<JAXBContext> {
 			if (jaxbContext == null) {
 				jaxbContext = JAXBContext.newInstance(Criteria.class, OperationResult.class, UserFieldProxy.class,
 						PeriodCategory.class, PostingPeriod.class, Project.class, Dimension.class, TaxGroup.class,
-						Currency.class);
+						Currency.class, Account.class, Branch.class, JournalEntry.class, PeriodLedgerAccount.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();

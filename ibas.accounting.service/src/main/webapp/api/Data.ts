@@ -8,12 +8,18 @@
 namespace accounting {
     /** 模块-标识 */
     export const CONSOLE_ID: string = "ac70d488-d8fc-478a-af00-c70ef779a50b";
+    /** 模块-标识 */
+    export const CONSOLE_DATA_ID: string = "ac70d488-d8fc-478a-af00-d66d49cd2dc9";
     /** 模块-名称 */
     export const CONSOLE_NAME: string = "Accounting";
+    /** 模块-名称 */
+    export const CONSOLE_DATA_NAME: string = "AccountingData";
     /** 模块-版本 */
     export const CONSOLE_VERSION: string = "0.1.0";
 
     export namespace config {
+        /** 配置项目-启用分支 */
+        export const CONFIG_ITEM_ENABLE_BRANCH: string = "enableBranch";
         /**
          * 获取此模块配置
          * @param key 配置项
@@ -21,6 +27,12 @@ namespace accounting {
          */
         export function get<T>(key: string, defalut?: T): T {
             return ibas.config.get(ibas.strings.format("{0}|{1}", CONSOLE_ID, key), defalut);
+        }
+        /**
+         * 是否启用分支
+         */
+        export function isEnableBranch(): boolean {
+            return get(CONFIG_ITEM_ENABLE_BRANCH, false);
         }
     }
     export namespace bo {
@@ -44,6 +56,16 @@ namespace accounting {
         export const BO_CODE_COSTSTRUCTURE_NODE: string = "${Company}_AC_COSTSTRUNODE";
         /** 业务对象编码-货币 */
         export const BO_CODE_CURRENCY: string = "${Company}_AC_CURRENCY";
+        /** 业务对象编码-科目 */
+        export const BO_CODE_ACCOUNT: string = "${Company}_AC_ACCOUNT";
+        /** 业务对象编码-分支 */
+        export const BO_CODE_BRANCH: string = "${Company}_AC_BRANCH";
+        /** 业务对象编码-日记账分录 */
+        export const BO_CODE_JOURNALENTRY: string = "${Company}_AC_JOURNALENTRY";
+        /** 业务对象编码-分类账 */
+        export const BO_CODE_LEDGERACCOUNT: string = "${Company}_AC_LACCOUNT";
+        /** 业务对象编码-期间-分类账 */
+        export const BO_CODE_PERIODLEDGERACCOUNT: string = "${Company}_AC_PERIODLACCOUNT";
         /**
          * 期间状态
          */
@@ -225,6 +247,58 @@ namespace accounting {
                         condition.value = today;
                         conditions.add(condition);
                     }
+                    return conditions;
+                }
+            }
+            export namespace account {
+                /** 默认查询条件 */
+                export function create(): ibas.IList<ibas.ICondition> {
+                    let today: string = ibas.dates.toString(ibas.dates.today(), "yyyy-MM-dd");
+                    let condition: ibas.ICondition;
+                    let conditions: ibas.IList<ibas.ICondition> = new ibas.ArrayList<ibas.ICondition>();
+                    // 激活的
+                    condition = new ibas.Condition();
+                    condition.bracketOpen = 1;
+                    condition.alias = bo.Account.PROPERTY_ACTIVE_NAME;
+                    condition.operation = ibas.emConditionOperation.EQUAL;
+                    condition.value = ibas.emYesNo.YES.toString();
+                    conditions.add(condition);
+                    // 有效日期
+                    condition = new ibas.Condition();
+                    condition.bracketOpen = 1;
+                    condition.alias = bo.Account.PROPERTY_VALIDDATE_NAME;
+                    condition.operation = ibas.emConditionOperation.IS_NULL;
+                    conditions.add(condition);
+                    condition = new ibas.Condition();
+                    condition.relationship = ibas.emConditionRelationship.OR;
+                    condition.bracketOpen = 1;
+                    condition.alias = bo.Account.PROPERTY_VALIDDATE_NAME;
+                    condition.operation = ibas.emConditionOperation.NOT_NULL;
+                    conditions.add(condition);
+                    condition = new ibas.Condition();
+                    condition.bracketClose = 2;
+                    condition.alias = bo.Account.PROPERTY_VALIDDATE_NAME;
+                    condition.operation = ibas.emConditionOperation.LESS_EQUAL;
+                    condition.value = today;
+                    conditions.add(condition);
+                    // 失效日期
+                    condition = new ibas.Condition();
+                    condition.bracketOpen = 1;
+                    condition.alias = bo.Account.PROPERTY_INVALIDDATE_NAME;
+                    condition.operation = ibas.emConditionOperation.IS_NULL;
+                    conditions.add(condition);
+                    condition = new ibas.Condition();
+                    condition.relationship = ibas.emConditionRelationship.OR;
+                    condition.bracketOpen = 1;
+                    condition.alias = bo.Account.PROPERTY_INVALIDDATE_NAME;
+                    condition.operation = ibas.emConditionOperation.NOT_NULL;
+                    conditions.add(condition);
+                    condition = new ibas.Condition();
+                    condition.bracketClose = 3;
+                    condition.alias = bo.Account.PROPERTY_INVALIDDATE_NAME;
+                    condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                    condition.value = today;
+                    conditions.add(condition);
                     return conditions;
                 }
             }

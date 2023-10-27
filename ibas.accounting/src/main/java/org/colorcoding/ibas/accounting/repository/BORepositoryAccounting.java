@@ -3,6 +3,10 @@ package org.colorcoding.ibas.accounting.repository;
 import java.util.function.Function;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
+import org.colorcoding.ibas.accounting.bo.account.Account;
+import org.colorcoding.ibas.accounting.bo.account.IAccount;
+import org.colorcoding.ibas.accounting.bo.branch.Branch;
+import org.colorcoding.ibas.accounting.bo.branch.IBranch;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.CostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
@@ -16,6 +20,12 @@ import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.currency.ICurrency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
+import org.colorcoding.ibas.accounting.bo.journalentry.IJournalEntry;
+import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.ILedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.IPeriodLedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPostingPeriod;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
@@ -632,6 +642,222 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<ICurrency> saveCurrency(ICurrency bo) {
 		return new OperationResult<ICurrency>(this.saveCurrency((Currency) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-科目
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Account> fetchAccount(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, Account.class);
+	}
+
+	/**
+	 * 查询-科目（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IAccount> fetchAccount(ICriteria criteria) {
+		return new OperationResult<IAccount>(this.fetchAccount(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-科目
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Account> saveAccount(Account bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-科目（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IAccount> saveAccount(IAccount bo) {
+		return new OperationResult<IAccount>(this.saveAccount((Account) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分支
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Branch> fetchBranch(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, Branch.class);
+	}
+
+	/**
+	 * 查询-分支（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBranch> fetchBranch(ICriteria criteria) {
+		return new OperationResult<IBranch>(this.fetchBranch(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-分支
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Branch> saveBranch(Branch bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-分支（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBranch> saveBranch(IBranch bo) {
+		return new OperationResult<IBranch>(this.saveBranch((Branch) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-日记账分录
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<JournalEntry> fetchJournalEntry(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, JournalEntry.class);
+	}
+
+	/**
+	 * 查询-日记账分录（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IJournalEntry> fetchJournalEntry(ICriteria criteria) {
+		return new OperationResult<IJournalEntry>(this.fetchJournalEntry(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-日记账分录
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<JournalEntry> saveJournalEntry(JournalEntry bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-日记账分录（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IJournalEntry> saveJournalEntry(IJournalEntry bo) {
+		return new OperationResult<IJournalEntry>(this.saveJournalEntry((JournalEntry) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分类账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<LedgerAccount> fetchLedgerAccount(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, LedgerAccount.class);
+	}
+
+	/**
+	 * 查询-分类账（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ILedgerAccount> fetchLedgerAccount(ICriteria criteria) {
+		return new OperationResult<ILedgerAccount>(this.fetchLedgerAccount(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-分类账
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<LedgerAccount> saveLedgerAccount(LedgerAccount bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-分类账（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ILedgerAccount> saveLedgerAccount(ILedgerAccount bo) {
+		return new OperationResult<ILedgerAccount>(this.saveLedgerAccount((LedgerAccount) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-期间-分类账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<PeriodLedgerAccount> fetchPeriodLedgerAccount(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, PeriodLedgerAccount.class);
+	}
+
+	/**
+	 * 查询-期间-分类账（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IPeriodLedgerAccount> fetchPeriodLedgerAccount(ICriteria criteria) {
+		return new OperationResult<IPeriodLedgerAccount>(this.fetchPeriodLedgerAccount(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-期间-分类账
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<PeriodLedgerAccount> savePeriodLedgerAccount(PeriodLedgerAccount bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-期间-分类账（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IPeriodLedgerAccount> savePeriodLedgerAccount(IPeriodLedgerAccount bo) {
+		return new OperationResult<IPeriodLedgerAccount>(
+				this.savePeriodLedgerAccount((PeriodLedgerAccount) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

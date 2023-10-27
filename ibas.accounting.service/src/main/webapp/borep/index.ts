@@ -14,6 +14,11 @@
 /// <reference path="./bo/CostItem.ts" />
 /// <reference path="./bo/CostStructure.ts" />
 /// <reference path="./bo/Currency.ts" />
+/// <reference path="./bo/Account.ts" />
+/// <reference path="./bo/Branch.ts" />
+/// <reference path="./bo/JournalEntry.ts" />
+/// <reference path="./bo/PeriodLedgerAccount.ts" />
+/// <reference path="./bo/LedgerAccount.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 namespace accounting {
@@ -30,5 +35,10 @@ namespace accounting {
         boFactory.register(CostStructure.BUSINESS_OBJECT_CODE, CostStructure);
         boFactory.register(bo.BO_CODE_COSTSTRUCTURE_NODE, CostStructure);
         boFactory.register(Currency.BUSINESS_OBJECT_CODE, Currency);
+        boFactory.register(Branch.BUSINESS_OBJECT_CODE, Branch);
+        boFactory.register(JournalEntry.BUSINESS_OBJECT_CODE, JournalEntry);
+        boFactory.register(LedgerAccount.BUSINESS_OBJECT_CODE, LedgerAccount);
+        boFactory.register(PeriodLedgerAccount.BUSINESS_OBJECT_CODE, PeriodLedgerAccount);
+        boFactory.register(Account.BUSINESS_OBJECT_CODE, Account);
     }
 }

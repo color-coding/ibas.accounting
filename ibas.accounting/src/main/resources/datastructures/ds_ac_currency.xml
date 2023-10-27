@@ -5,6 +5,8 @@
     <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Code" UniqueKey="Yes"/>
     <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Name"/>
     <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
+    <Property Name="System" Description="系统币" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="System"/>
+    <Property Name="Local" Description="本币" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Local"/>
     <Property Name="ISO" Description="ISO代码" DataType="Alphanumeric" DataSubType="Default" EditSize="5" Mapped="ISO"/>
     <Property Name="ForeignName" Description="外文名称" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="FrgnName"/>
     <Property Name="DocEntry" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>

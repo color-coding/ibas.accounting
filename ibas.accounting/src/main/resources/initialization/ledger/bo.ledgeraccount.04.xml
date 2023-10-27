@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE LedgerAccount>
+<ns:LedgerAccount xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+	<Sign>GL-AC-04</Sign>
+	<Group>COMMON</Group>
+	<Description>期初余额科目</Description>
+	<Settings></Settings>
+	<Remarks></Remarks>
+</ns:LedgerAccount>

@@ -13,6 +13,10 @@
 /// <reference path="./coststructure/index.ts" />
 /// <reference path="./currency/index.ts" />
 /// <reference path="./costitem/index.ts" />
+/// <reference path="./account/index.ts" />
+/// <reference path="./branch/index.ts" />
+/// <reference path="./journalentry/index.ts" />
+/// <reference path="./ledgeraccount/index.ts" />
 namespace accounting {
     export namespace app {
         /** 属性-导航 */
@@ -34,24 +38,19 @@ namespace accounting {
             /** 初始化 */
             protected registers(): void {
                 // 注册功能
+                this.register(new AccountFunc());
                 this.register(new ProjectFunc());
                 this.register(new CostStructureFunc());
-                this.register(new PostingPeriodFunc());
-                this.register(new CostItemFunc());
-                this.register(new DimensionFunc());
-                this.register(new TaxGroupFunc());
-                this.register(new CurrencyFunc());
+                this.register(new JournalEntryFunc());
                 // 注册服务应用
-                this.register(new PostingPeriodChooseServiceMapping());
                 this.register(new ProjectChooseServiceMapping());
                 this.register(new ProjectLinkServiceMapping());
-                this.register(new DimensionChooseServiceMapping());
-                this.register(new DimensionDataServiceMapping());
-                this.register(new TaxGroupChooseServiceMapping());
                 this.register(new CostStructureChooseServiceMapping());
                 this.register(new CostStructureNodeChooseServiceMapping());
-                this.register(new CostItemChooseServiceMapping());
-                this.register(new CurrencyChooseServiceMapping());
+                this.register(new AccountChooseServiceMapping());
+                this.register(new AccountLinkServiceMapping());
+                this.register(new JournalEntryChooseServiceMapping());
+                this.register(new JournalEntryLinkServiceMapping());
                 // 注册常驻应用
 
             }
@@ -88,6 +87,35 @@ namespace accounting {
                     // 保留基类方法
                     super.run();
                 });
+            }
+        }
+        /** 模块控制台 */
+        export class ConsoleData extends Console {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = CONSOLE_DATA_ID;
+                this.name = CONSOLE_DATA_NAME;
+            }
+            /** 初始化 */
+            protected registers(): void {
+                // 注册功能
+                this.register(new LedgerAccountDeterminationFunc());
+                this.register(new PostingPeriodFunc());
+                this.register(new CostItemFunc());
+                this.register(new TaxGroupFunc());
+                this.register(new CurrencyFunc());
+                this.register(new DimensionFunc());
+                this.register(new BranchFunc());
+                // 注册服务应用
+                this.register(new CostItemChooseServiceMapping());
+                this.register(new CurrencyChooseServiceMapping());
+                this.register(new PostingPeriodChooseServiceMapping());
+                this.register(new DimensionChooseServiceMapping());
+                this.register(new DimensionDataServiceMapping());
+                this.register(new TaxGroupChooseServiceMapping());
+                this.register(new BranchChooseServiceMapping());
+                this.register(new BranchLinkServiceMapping());
             }
         }
         /** 模块控制台 */

@@ -57,6 +57,24 @@ namespace accounting {
                                 width: "12rem",
                             }),
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_currency_system"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "system",
+                                    type: new sap.extension.data.YesNo(true),
+                                }),
+                                width: "8rem",
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_currency_local"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "local",
+                                    type: new sap.extension.data.YesNo(true),
+                                }),
+                                width: "8rem",
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_currency_remarks"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {

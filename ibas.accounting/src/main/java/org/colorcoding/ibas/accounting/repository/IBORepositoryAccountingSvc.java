@@ -1,10 +1,15 @@
 package org.colorcoding.ibas.accounting.repository;
 
+import org.colorcoding.ibas.accounting.bo.account.Account;
+import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.CostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
 import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
+import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.accounting.bo.project.Project;
@@ -200,6 +205,102 @@ public interface IBORepositoryAccountingSvc extends IBORepositorySmartService {
 	 * @return 操作结果
 	 */
 	OperationResult<Currency> saveCurrency(Currency bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-科目
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<Account> fetchAccount(ICriteria criteria, String token);
+
+	/**
+	 * 保存-科目
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<Account> saveAccount(Account bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分支
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<Branch> fetchBranch(ICriteria criteria, String token);
+
+	/**
+	 * 保存-分支
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<Branch> saveBranch(Branch bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-日记账分录
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<JournalEntry> fetchJournalEntry(ICriteria criteria, String token);
+
+	/**
+	 * 保存-日记账分录
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<JournalEntry> saveJournalEntry(JournalEntry bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+
+	/**
+	 * 查询-分类账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<LedgerAccount> fetchLedgerAccount(ICriteria criteria, String token);
+
+	/**
+	 * 保存-分类账
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<LedgerAccount> saveLedgerAccount(LedgerAccount bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-期间-分类账
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<PeriodLedgerAccount> fetchPeriodLedgerAccount(ICriteria criteria, String token);
+
+	/**
+	 * 保存-期间-分类账
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<PeriodLedgerAccount> savePeriodLedgerAccount(PeriodLedgerAccount bo, String token);
 
 	// --------------------------------------------------------------------------------------------//
 

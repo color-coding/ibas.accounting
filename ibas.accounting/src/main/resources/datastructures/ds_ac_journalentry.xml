@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Domain>
+<Domain Name="Accounting" ShortName="AC">
+  <Model Name="JournalEntry" Description="日记账分录" ModelType="Document" Mapped="${Company}_AC_OJDT">
+    <Property Name="DocEntry" Description="凭证编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>
+    <Property Name="DocNum" Description="单据编码" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="DocNum"/>
+    <Property Name="Period" Description="期间" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Period"/>
+    <Property Name="Canceled" Description="取消" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Canceled"/>
+    <Property Name="Status" Description="状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emBOStatus" Mapped="Status"/>
+    <Property Name="ApprovalStatus" Description="审批状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emApprovalStatus" Mapped="ApvlStatus"/>
+    <Property Name="DocumentStatus" Description="单据状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emDocumentStatus" Mapped="DocStatus"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="LogInst" Description="版本" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="DataOwner" Description="数据所有者" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DataOwner"/>
+    <Property Name="TeamMembers" Description="团队成员" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="TeamMembers"/>
+    <Property Name="Organization" Description="数据所属组织" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OrgCode"/>
+    <Property Name="PostingDate" Description="过账日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="DocDate"/>
+    <Property Name="DeliveryDate" Description="到期日" DataType="Date" DataSubType="Default" EditSize="8" Mapped="DocDueDate"/>
+    <Property Name="DocumentDate" Description="凭证日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="TaxDate"/>
+    <Property Name="Branch" Description="分支" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Branch"/>
+    <Property Name="Project" Description="项目代码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Project"/>
+    <Property Name="BaseDocumentType" Description="基于类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="BaseType"/>
+    <Property Name="BaseDocumentEntry" Description="基于标识" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="BaseEntry"/>
+    <Property Name="BaseDocumentLineId" Description="基于行号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="BaseLine"/>
+    <Property Name="DocumentCurrency" Description="单据货币" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DocCur"/>
+    <Property Name="DocumentTotal" Description="单据总计" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="DocTotal"/>
+    <Property Name="Reference1" Description="参考1" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Ref1"/>
+    <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref2"/>
+    <Property Name="Reference3" Description="参考3" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref3"/>
+    <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
+  </Model>
+  <Model Name="JournalEntryLine" Description="日记账分录-行" ModelType="DocumentLine" Mapped="${Company}_AC_JDT1">
+    <Property Name="DocEntry" Description="凭证编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>
+    <Property Name="LineId" Description="行号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LineId" PrimaryKey="Yes"/>
+    <Property Name="VisOrder" Description="显示顺序" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="VisOrder"/>
+    <Property Name="Canceled" Description="取消" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Canceled"/>
+    <Property Name="Status" Description="状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emBOStatus" Mapped="Status"/>
+    <Property Name="LineStatus" Description="单据状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emDocumentStatus" Mapped="LineStatus"/>
+    <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="LogInst" Description="版本" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="Account" Description="科目" DataType="Alphanumeric" DataSubType="Default" EditSize="15" Mapped="Account"/>
+    <Property Name="ShortName" Description="业务伙伴/科目代码" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="ShortName"/>
+    <Property Name="Debit" Description="借方金额" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="Debit"/>
+    <Property Name="Credit" Description="贷方金额" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="Credit"/>
+    <Property Name="Currency" Description="货币" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Currency"/>
+    <Property Name="SystemDebit" Description="借方金额（系统）" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="SysDebit"/>
+    <Property Name="SystemCredit" Description="贷方金额（系统）" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="SysCredit"/>
+    <Property Name="SystemCurrency" Description="系统币" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="SysCurrency"/>
+    <Property Name="SystemRate" Description="系统币汇率" DataType="Decimal" DataSubType="Rate" EditSize="8" Mapped="SysRate"/>
+    <Property Name="LocalDebit" Description="借方金额（本币）" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="LclDebit"/>
+    <Property Name="LocalCredit" Description="贷方金额（本币）" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="LclCredit"/>
+    <Property Name="LocalCurrency" Description="本币" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="LclCurrency"/>
+    <Property Name="LocalRate" Description="本币汇率" DataType="Decimal" DataSubType="Rate" EditSize="8" Mapped="LclRate"/>
+    <Property Name="Tax" Description="税码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Tax"/>
+    <Property Name="TaxRate" Description="税率" DataType="Decimal" DataSubType="Rate" EditSize="8" Mapped="TaxRate"/>
+    <Property Name="BaseTotal" Description="基础总额" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="BaseTotal"/>
+    <Property Name="Branch" Description="分支" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Branch"/>
+    <Property Name="Project" Description="项目代码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Project"/>
+    <Property Name="DistributionRule1" Description="分配规则1" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode1"/>
+    <Property Name="DistributionRule2" Description="分配规则2" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode2"/>
+    <Property Name="DistributionRule3" Description="分配规则3" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode3"/>
+    <Property Name="DistributionRule4" Description="分配规则4" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode4"/>
+    <Property Name="DistributionRule5" Description="分配规则5" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode5"/>
+    <Property Name="Reference1" Description="参考1" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Ref1"/>
+    <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref2"/>
+    <Property Name="Reference3" Description="参考3" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref3"/>
+  </Model>
+  <BusinessObject MappedModel="JournalEntry" ShortName="${Company}_AC_JOURNALENTRY">
+    <RelatedBO Relation="OneToMany" MappedModel="JournalEntryLine"/>
+  </BusinessObject>
+</Domain>

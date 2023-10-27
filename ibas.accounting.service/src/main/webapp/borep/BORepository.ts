@@ -189,6 +189,70 @@ namespace accounting {
             saveCurrency(saver: ibas.ISaveCaller<bo.Currency>): void {
                 super.save(bo.Currency.name, saver);
             }
+            /**
+             * 查询 科目
+             * @param fetcher 查询者
+             */
+            fetchAccount(fetcher: ibas.IFetchCaller<bo.Account>): void {
+                super.fetch(bo.Account.name, fetcher);
+            }
+            /**
+             * 保存 科目
+             * @param saver 保存者
+             */
+            saveAccount(saver: ibas.ISaveCaller<bo.Account>): void {
+                super.save(bo.Account.name, saver);
+            }
+
+            /**
+             * 查询 分支
+             * @param fetcher 查询者
+             */
+            fetchBranch(fetcher: ibas.IFetchCaller<bo.Branch>): void {
+                super.fetch(bo.Branch.name, fetcher);
+            }
+            /**
+             * 保存 分支
+             * @param saver 保存者
+             */
+            saveBranch(saver: ibas.ISaveCaller<bo.Branch>): void {
+                super.save(bo.Branch.name, saver);
+            }
+            /**
+             * 查询 日记账分录
+             * @param fetcher 查询者
+             */
+            fetchJournalEntry(fetcher: ibas.IFetchCaller<bo.JournalEntry>): void {
+                super.fetch(bo.JournalEntry.name, fetcher);
+            }
+            /**
+             * 保存 日记账分录
+             * @param saver 保存者
+             */
+            saveJournalEntry(saver: ibas.ISaveCaller<bo.JournalEntry>): void {
+                super.save(bo.JournalEntry.name, saver);
+            }
+            /**
+             * 查询 分类账
+             * @param fetcher 查询者
+             */
+            fetchLedgerAccount(fetcher: ibas.IFetchCaller<bo.LedgerAccount>): void {
+                super.fetch(bo.LedgerAccount.name, fetcher);
+            }
+            /**
+             * 查询 期间-分类账
+             * @param fetcher 查询者
+             */
+            fetchPeriodLedgerAccount(fetcher: ibas.IFetchCaller<bo.PeriodLedgerAccount>): void {
+                super.fetch(bo.PeriodLedgerAccount.name, fetcher);
+            }
+            /**
+             * 保存 期间-分类账
+             * @param saver 保存者
+             */
+            savePeriodLedgerAccount(saver: ibas.ISaveCaller<bo.PeriodLedgerAccount>): void {
+                super.save(bo.PeriodLedgerAccount.name, saver);
+            }
 
         }
         /**

@@ -21,6 +21,8 @@ namespace accounting {
             category: emTaxGroupCategory;
             /** 税率 */
             rate: number;
+            /** 科目 */
+            account: string;
             /** 参考1 */
             reference1: string;
             /** 参考2 */

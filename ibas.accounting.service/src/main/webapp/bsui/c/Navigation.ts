@@ -13,6 +13,10 @@
 /// <reference path="./coststructure/index.ts" />
 /// <reference path="./currency/index.ts" />
 /// <reference path="./costitem/index.ts" />
+/// <reference path="./account/index.ts" />
+/// <reference path="./branch/index.ts" />
+/// <reference path="./journalentry/index.ts" />
+/// <reference path="./ledgeraccount/index.ts" />
 namespace accounting {
     export namespace ui {
         /** 视图导航 */
@@ -98,6 +102,48 @@ namespace accounting {
                         break;
                     case app.CurrencyEditApp.APPLICATION_ID:
                         view = new c.CurrencyEditView();
+                        break;
+                    case app.AccountListApp.APPLICATION_ID:
+                        view = new c.AccountListView();
+                        break;
+                    case app.AccountChooseApp.APPLICATION_ID:
+                        view = new c.AccountChooseView();
+                        break;
+                    case app.AccountViewApp.APPLICATION_ID:
+                        view = new c.AccountViewView();
+                        break;
+                    case app.AccountEditApp.APPLICATION_ID:
+                        view = new c.AccountEditView();
+                        break;
+                    case app.AccountTreeApp.APPLICATION_ID:
+                        view = new c.AccountTreeView();
+                        break;
+                    case app.BranchListApp.APPLICATION_ID:
+                        view = new c.BranchListView();
+                        break;
+                    case app.BranchChooseApp.APPLICATION_ID:
+                        view = new c.BranchChooseView();
+                        break;
+                    case app.BranchViewApp.APPLICATION_ID:
+                        view = new c.BranchViewView();
+                        break;
+                    case app.BranchEditApp.APPLICATION_ID:
+                        view = new c.BranchEditView();
+                        break;
+                    case app.JournalEntryListApp.APPLICATION_ID:
+                        view = new c.JournalEntryListView();
+                        break;
+                    case app.JournalEntryChooseApp.APPLICATION_ID:
+                        view = new c.JournalEntryChooseView();
+                        break;
+                    case app.JournalEntryViewApp.APPLICATION_ID:
+                        view = new c.JournalEntryViewView();
+                        break;
+                    case app.JournalEntryEditApp.APPLICATION_ID:
+                        view = new c.JournalEntryEditView();
+                        break;
+                    case app.LedgerAccountDeterminationApp.APPLICATION_ID:
+                        view = new c.LedgerAccountDeterminationView();
                         break;
                     default:
                         break;

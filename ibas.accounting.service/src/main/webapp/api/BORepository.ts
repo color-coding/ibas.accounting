@@ -99,6 +99,42 @@ namespace accounting {
              * @param saver 保存者
              */
             saveCurrency(saver: ibas.ISaveCaller<bo.ICurrency>): void;
+            /**
+             * 查询 科目
+             * @param fetcher 查询者
+             */
+            fetchAccount(fetcher: ibas.IFetchCaller<bo.IAccount>): void;
+            /**
+             * 保存 科目
+             * @param saver 保存者
+             */
+            saveAccount(saver: ibas.ISaveCaller<bo.IAccount>): void;
+            /**
+             * 查询 分支
+             * @param fetcher 查询者
+             */
+            fetchBranch(fetcher: ibas.IFetchCaller<bo.IBranch>): void;
+            /**
+             * 保存 分支
+             * @param saver 保存者
+             */
+            saveBranch(saver: ibas.ISaveCaller<bo.IBranch>): void;
+            /**
+             * 查询 分类账
+             * @param fetcher 查询者
+             */
+            fetchLedgerAccount(fetcher: ibas.IFetchCaller<bo.ILedgerAccount>): void;
+            /**
+             * 查询 期间-分类账
+             * @param fetcher 查询者
+             */
+            fetchPeriodLedgerAccount(fetcher: ibas.IFetchCaller<bo.IPeriodLedgerAccount>): void;
+            /**
+             * 保存 期间-分类账
+             * @param saver 保存者
+             */
+            savePeriodLedgerAccount(saver: ibas.ISaveCaller<bo.IPeriodLedgerAccount>): void;
+
         }
     }
 }

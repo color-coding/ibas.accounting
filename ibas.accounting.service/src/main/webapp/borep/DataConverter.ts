@@ -91,6 +91,28 @@ namespace accounting {
                     if (property === bo.CostItem.PROPERTY_PHANTOM_NAME) {
                         return ibas.enums.toString(ibas.emYesNo, value);
                     }
+                } else if (boName === bo.Account.name) {
+                    if (property === bo.Account.PROPERTY_PROTECTED_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_ACTIVE_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_CONTROL_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_CASH_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_CASHFLOWRELEVANT_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Branch.name) {
+                    if (property === bo.Branch.PROPERTY_MAIN_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Currency.name) {
+                    if (property === bo.Currency.PROPERTY_SYSTEM_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.Currency.PROPERTY_LOCAL_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
                 }
                 return super.convertData(boName, property, value);
             }
@@ -151,6 +173,28 @@ namespace accounting {
                     }
                 } else if (boName === bo.CostItem.name) {
                     if (property === bo.CostItem.PROPERTY_PHANTOM_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Account.name) {
+                    if (property === bo.Account.PROPERTY_PROTECTED_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_ACTIVE_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_CONTROL_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_CASH_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.Account.PROPERTY_CASHFLOWRELEVANT_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Branch.name) {
+                    if (property === bo.Branch.PROPERTY_MAIN_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Currency.name) {
+                    if (property === bo.Currency.PROPERTY_SYSTEM_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.Currency.PROPERTY_LOCAL_NAME) {
                         return ibas.enums.valueOf(ibas.emYesNo, value);
                     }
                 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE Account>
+<ns:Account xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+	<Code>500000000000000</Code>
+	<Name>#5</Name>
+	<Level>1</Level>
+	<Active>NO</Active>
+</ns:Account>

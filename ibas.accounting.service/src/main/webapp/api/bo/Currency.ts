@@ -15,6 +15,10 @@ namespace accounting {
             name: string;
             /** 激活 */
             activated: ibas.emYesNo;
+            /** 系统币 */
+            system: ibas.emYesNo;
+            /** 本币 */
+            local: ibas.emYesNo;
             /** ISO代码 */
             iso: string;
             /** 外文名称 */

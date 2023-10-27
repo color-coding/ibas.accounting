@@ -8,6 +8,7 @@
     <Property Name="ValidDate" Description="生效日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="ValidDate"/>
     <Property Name="Category" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emTaxGroupCategory" Mapped="Category"/>
     <Property Name="Rate" Description="税率" DataType="Decimal" DataSubType="Rate" EditSize="8" Mapped="Rate"/>
+    <Property Name="Account" Description="科目" DataType="Alphanumeric" DataSubType="Default" EditSize="15" Mapped="Account"/>
     <Property Name="Reference1" Description="参考1" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Ref1"/>
     <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref2"/>
     <Property Name="DocEntry" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>
