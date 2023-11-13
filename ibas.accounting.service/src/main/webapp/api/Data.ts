@@ -124,6 +124,21 @@ namespace accounting {
             DIMENSION_4,
             DIMENSION_5,
         }
+        /**
+         * 总账科目条件支持属性
+         */
+        export enum emLedgerAccountConditionProperty {
+            ObjectCode = "ObjectCode",
+            OrderType = "OrderType",
+            Project = "Project",
+            DataOwner = "DataOwner",
+            Organization = "Organization",
+            Customer = "Customer",
+            Supplier = "Supplier",
+            Item = "Item",
+            ItemGroup = "ItemGroup",
+            Warehouse = "Warehouse",
+        }
         /** 维度服务契约 */
         export interface IDimensionDataServiceContract extends ibas.IServiceContract {
             /** 维度类型 */
@@ -131,6 +146,26 @@ namespace accounting {
         }
         /** 维度服务代理 */
         export class DimensionDataServiceProxy extends ibas.ServiceProxy<IDimensionDataServiceContract> {
+        }
+        export interface ILedgerAccountSetting {
+            /** 分类账 */
+            ledger: string;
+            /** 条件 */
+            conditions: ibas.ICondition[];
+            /** 科目 */
+            account?: string;
+        }
+        /** 分类账设置契约 */
+        export interface ILedgerAccountSettingContract extends ibas.IServiceContract {
+            /** 业务对象 */
+            objectCode: string;
+            /** 描述 */
+            description: string;
+            /** 设置内容 */
+            settings: ILedgerAccountSetting[];
+        }
+        /** 分类账设置服务代理 */
+        export class LedgerAccountSettingServiceProxy extends ibas.ServiceProxy<ILedgerAccountSettingContract> {
         }
         /** 查询条件 */
         export namespace conditions {

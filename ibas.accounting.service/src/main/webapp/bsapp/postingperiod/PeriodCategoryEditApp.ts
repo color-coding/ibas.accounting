@@ -269,7 +269,7 @@ namespace accounting {
                 }
                 if (type === "12months") {
                     if (this.editPostingPeriods.length > 0) {
-                        this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_data_exists"));
+                        this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_period_exists"));
                         return;
                     }
                     let startDate: Date = this.editData.startDate;
@@ -284,7 +284,7 @@ namespace accounting {
                     }
                 } else if (type === "4quarters") {
                     if (this.editPostingPeriods.length > 0) {
-                        this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_data_exists"));
+                        this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_period_exists"));
                         return;
                     }
                     let startDate: Date = this.editData.startDate;

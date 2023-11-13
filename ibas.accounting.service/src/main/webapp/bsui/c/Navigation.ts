@@ -145,6 +145,9 @@ namespace accounting {
                     case app.LedgerAccountDeterminationApp.APPLICATION_ID:
                         view = new c.LedgerAccountDeterminationView();
                         break;
+                    case app.LedgerAccountSettingService.APPLICATION_ID:
+                        view = new c.LedgerAccountSettingView();
+                        break;
                     default:
                         break;
                 }

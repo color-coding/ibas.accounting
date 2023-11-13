@@ -62,6 +62,7 @@
   "accounting_app_journalentry_edit": "日记账分录编辑",
   "accounting_func_ledgeraccountdetermination": "总账科目确定",
   "accounting_app_ledgeraccountdetermination": "总账科目确定",
+  "accounting_app_ledgeraccountsetting": "总账科目设置",
   "accounting_service_dimension_data": "维度数据服务",
   "accounting_title_general": "常规信息",
   "accounting_title_others": "其他信息",
@@ -70,7 +71,8 @@
   "accounting_postingperiod_12_months": "12月",
   "accounting_postingperiod_4_quarters": " 4季度",
   "accounting_data_was_using": "[{0}]已使用，不支持此操作",
-  "accounting_data_exists": "期间已存在，不支持此操作",
+  "accounting_period_exists": "期间已存在，不支持此操作",
+  "accounting_period_not_found": "期间[{0}]不存在",
   "accounting_please_set_data_value": "请设置[{0}]的[{1}]值",
   "accounting_please_selected_structure": "请选择费用结构",
   "accounting_not_found_budget": "没有找到预算[{0}]",
@@ -86,5 +88,6 @@
   "accounting_add_node_by_organization": "添加组织节点",
   "accounting_save_changed_data": "数据已修改，是否保存？",
   "accounting_continue_to_close_node": "结算[{0}]，操作后不可撤销，是否继续？",
+  "accounting_ledgeraccount_setting": "科目设置",
   "accounting_closing_delimiter": "----结束----"
 }

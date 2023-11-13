@@ -51,6 +51,7 @@ namespace accounting {
                 this.register(new AccountLinkServiceMapping());
                 this.register(new JournalEntryChooseServiceMapping());
                 this.register(new JournalEntryLinkServiceMapping());
+                this.register(new LedgerAccountSettingServiceMapping());
                 // 注册常驻应用
 
             }

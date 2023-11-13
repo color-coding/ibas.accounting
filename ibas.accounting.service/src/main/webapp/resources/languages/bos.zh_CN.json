@@ -505,12 +505,29 @@
         "bo_periodledgeraccount_updateactionid": "更新动作标识",
         "bo_periodledgeraccount_remarks": "备注",
         "bo_periodledgeraccount_name_unknown": "未命名",
-        "bo_periodledgeraccount_condition_relationship": "关系",
-        "bo_periodledgeraccount_condition_bracketopen": "开括号",
-        "bo_periodledgeraccount_condition_bracketclose": "闭括号",
-        "bo_periodledgeraccount_condition_operation": "方法",
-        "bo_periodledgeraccount_condition_property": "属性",
-        "bo_periodledgeraccount_condition_value": "值",
+        "bo_periodledgeraccount_periodledgeraccountconditions": "期间-分类账-条件集合",
+        "bo_periodledgeraccountcondition": "期间-分类账-条件",
+        "bo_periodledgeraccountcondition_objectkey": "编号",
+        "bo_periodledgeraccountcondition_lineid": "行号",
+        "bo_periodledgeraccountcondition_objectcode": "对象类型",
+        "bo_periodledgeraccountcondition_visorder": "显示顺序",
+        "bo_periodledgeraccountcondition_loginst": "实例号（版本）",
+        "bo_periodledgeraccountcondition_datasource": "数据源",
+        "bo_periodledgeraccountcondition_createdate": "创建日期",
+        "bo_periodledgeraccountcondition_createtime": "创建时间",
+        "bo_periodledgeraccountcondition_updatedate": "修改日期",
+        "bo_periodledgeraccountcondition_updatetime": "修改时间",
+        "bo_periodledgeraccountcondition_createusersign": "创建用户",
+        "bo_periodledgeraccountcondition_updateusersign": "修改用户",
+        "bo_periodledgeraccountcondition_createactionid": "创建动作标识",
+        "bo_periodledgeraccountcondition_updateactionid": "更新动作标识",
+        "bo_periodledgeraccountcondition_bracketopen": "开括号",
+        "bo_periodledgeraccountcondition_relationship": "关系",
+        "bo_periodledgeraccountcondition_propertyname": "属性",
+        "bo_periodledgeraccountcondition_operation": "方法",
+        "bo_periodledgeraccountcondition_value": "值",
+        "bo_periodledgeraccountcondition_bracketclose": "闭括号",
+        "bo_periodledgeraccountcondition_remarks": "备注",
         "bo_periodledgeraccount_closing_delimiter": "----结束----"
     },
     {
@@ -546,5 +563,17 @@
     {
         "em_entitytype_organization": "组织/部门",
         "em_entitytype_project": "项目"
+    },
+    {
+        "em_ledgeraccountconditionproperty_objectcode": "业务对象",
+        "em_ledgeraccountconditionproperty_ordertype": "单据类型",
+        "em_ledgeraccountconditionproperty_project": "项目",
+        "em_ledgeraccountconditionproperty_dataowner": "数据所有者",
+        "em_ledgeraccountconditionproperty_organization": "数据所属组织",
+        "em_ledgeraccountconditionproperty_customer": "客户",
+        "em_ledgeraccountconditionproperty_supplier": "供应商",
+        "em_ledgeraccountconditionproperty_item": "项目/物料",
+        "em_ledgeraccountconditionproperty_itemgroup": "项目/物料组",
+        "em_ledgeraccountconditionproperty_warehouse": "仓库"
     }
 ]

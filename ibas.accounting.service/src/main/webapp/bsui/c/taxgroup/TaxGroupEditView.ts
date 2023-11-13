@@ -14,8 +14,8 @@ namespace accounting {
                 deleteDataEvent: Function;
                 /** 新建数据事件，参数1：是否克隆 */
                 createDataEvent: Function;
-                /** 选择科目事件 */
-                chooseAccountEvent: Function;
+                /** 选择总账科目事件 */
+                chooseLedgerAccountEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -85,46 +85,6 @@ namespace accounting {
                                                     }).bindProperty("bindingValue", {
                                                         path: "rate",
                                                         type: new sap.extension.data.Rate(),
-                                                    }),
-                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_account") }),
-                                                    new sap.m.HBox("", {
-                                                        width: "100%",
-                                                        renderType: sap.m.FlexRendertype.Bare,
-                                                        items: [
-                                                            new sap.extension.m.Input("", {
-                                                                width: "40%",
-                                                                showValueHelp: true,
-                                                                showValueLink: true,
-                                                                valueHelpRequest: function (): void {
-                                                                    that.fireViewEvents(that.chooseAccountEvent, this.getBindingContext().getObject());
-                                                                },
-                                                                valueLinkRequest: function (event: sap.ui.base.Event): void {
-                                                                    ibas.servicesManager.runLinkService({
-                                                                        boCode: bo.Account.BUSINESS_OBJECT_CODE,
-                                                                        linkValue: event.getParameter("value")
-                                                                    });
-                                                                }
-                                                            }).bindProperty("bindingValue", {
-                                                                path: "account",
-                                                                type: new sap.extension.data.Alphanumeric({
-                                                                    maxLength: 15
-                                                                }),
-                                                            }).addStyleClass("sapUiTinyMarginEnd"),
-                                                            new sap.extension.m.RepositoryInput("", {
-                                                                width: "60%",
-                                                                editable: false,
-                                                                showValueLink: false,
-                                                                repository: bo.BORepositoryAccounting,
-                                                                dataInfo: {
-                                                                    type: bo.Account,
-                                                                    key: bo.Account.PROPERTY_CODE_NAME,
-                                                                    text: bo.Account.PROPERTY_NAME_NAME
-                                                                },
-                                                            }).bindProperty("bindingValue", {
-                                                                path: "account",
-                                                                type: new sap.extension.data.Alphanumeric(),
-                                                            }),
-                                                        ]
                                                     }),
                                                     new sap.m.Toolbar("", { visible: false }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_taxgroup_reference1") }),
@@ -197,6 +157,24 @@ namespace accounting {
                                                     // 复制当前对象
                                                     that.fireViewEvents(that.createDataEvent, true);
                                                 }
+                                            }),
+                                        ],
+                                    })
+                                }),
+                                new sap.m.ToolbarSeparator(),
+                                new sap.extension.m.MenuButton("", {
+                                    autoHide: true,
+                                    text: ibas.i18n.prop("shell_quick_to"),
+                                    icon: "sap-icon://generate-shortcut",
+                                    type: sap.m.ButtonType.Transparent,
+                                    menu: new sap.m.Menu("", {
+                                        items: [
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.i18n.prop("accounting_ledgeraccount_setting"),
+                                                icon: "sap-icon://credit-card",
+                                                press: function (): void {
+                                                    that.fireViewEvents(that.chooseLedgerAccountEvent);
+                                                },
                                             }),
                                         ],
                                     })

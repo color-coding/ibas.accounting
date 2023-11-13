@@ -30,7 +30,6 @@
     <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="Account" Description="科目" DataType="Alphanumeric" DataSubType="Default" EditSize="15" Mapped="Account"/>
     <Property Name="Settings" Description="设置" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Settings"/>
-    <Property Name="Conditions" Description="条件" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Conditions"/>
     <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
@@ -46,5 +45,30 @@
     <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
     <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
   </Model>
-  <BusinessObject MappedModel="PeriodLedgerAccount" ShortName="${Company}_AC_PERIODLACCOUNT"/>
+  <Model Name="PeriodLedgerAccountCondition" Description="期间-分类账-条件" ModelType="SimpleLine" Mapped="${Company}_AC_PLA1">
+    <Property Name="ObjectKey" Description="编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="LineId" Description="行号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LineId" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="VisOrder" Description="显示顺序" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="VisOrder"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="BracketOpen" Description="开括号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="BracketOpen"/>
+    <Property Name="Relationship" Description="关系" DataType="Alphanumeric" DataSubType="Default" EditSize="3" DeclaredType="emConditionRelationship" Mapped="Relationship"/>
+    <Property Name="PropertyName" Description="属性" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Property"/>
+    <Property Name="Operation" Description="方法" DataType="Alphanumeric" DataSubType="Default" EditSize="2" DeclaredType="emConditionOperation" Mapped="Operation"/>
+    <Property Name="Value" Description="值" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Value"/>
+    <Property Name="BracketClose" Description="闭括号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="BracketClose"/>
+    <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
+  </Model>
+  <BusinessObject MappedModel="PeriodLedgerAccount" ShortName="${Company}_AC_PERIODLACCOUNT">
+    <RelatedBO Relation="OneToMany" MappedModel="PeriodLedgerAccountCondition"/>
+  </BusinessObject>
 </Domain>

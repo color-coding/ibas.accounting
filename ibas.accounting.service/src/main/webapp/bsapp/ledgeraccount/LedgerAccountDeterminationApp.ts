@@ -112,9 +112,6 @@ namespace accounting {
                 condition = criteria.conditions.create();
                 condition.alias = bo.PeriodLedgerAccount.PROPERTY_LEDGER_NAME;
                 condition.value = ledger.sign;
-                condition = criteria.conditions.create();
-                condition.alias = bo.PeriodLedgerAccount.PROPERTY_ACTIVATED_NAME;
-                condition.value = ibas.emYesNo.YES.toString();
                 let sort: ibas.ISort = criteria.sorts.create();
                 sort.alias = bo.PeriodLedgerAccount.PROPERTY_ORDER_NAME;
                 sort.sortType = ibas.emSortType.ASCENDING;

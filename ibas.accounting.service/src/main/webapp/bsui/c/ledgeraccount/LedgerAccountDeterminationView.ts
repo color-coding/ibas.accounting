@@ -269,10 +269,19 @@ namespace accounting {
                                                                             new sap.extension.table.Table("", {
                                                                                 visibleRowCount: 4,
                                                                                 chooseType: ibas.emChooseType.NONE,
-                                                                                rows: "/",
+                                                                                rows: {
+                                                                                    path: "periodLedgerAccountConditions",
+                                                                                    filters: [
+                                                                                        new sap.ui.model.Filter("isDeleted", sap.ui.model.FilterOperator.NE, true)
+                                                                                    ],
+                                                                                    sorter: {
+                                                                                        path: "visOrder",
+                                                                                        descending: false
+                                                                                    },
+                                                                                },
                                                                                 columns: [
                                                                                     new sap.extension.table.DataColumn("", {
-                                                                                        label: ibas.i18n.prop("bo_periodledgeraccount_condition_relationship"),
+                                                                                        label: ibas.i18n.prop("bo_periodledgeraccountcondition_relationship"),
                                                                                         template: new sap.extension.m.EnumSelect("", {
                                                                                             enumType: initialfantasy.bo.emConditionRelationship
                                                                                         }).bindProperty("bindingValue", {
@@ -281,10 +290,10 @@ namespace accounting {
                                                                                                 enumType: initialfantasy.bo.emConditionRelationship
                                                                                             })
                                                                                         }),
-                                                                                        width: "4rem",
+                                                                                        width: "7rem",
                                                                                     }),
                                                                                     new sap.extension.table.DataColumn("", {
-                                                                                        label: ibas.i18n.prop("bo_periodledgeraccount_condition_bracketopen"),
+                                                                                        label: ibas.i18n.prop("bo_periodledgeraccountcondition_bracketopen"),
                                                                                         template: new sap.extension.m.RepeatCharSelect("", {
                                                                                             repeatText: "(",
                                                                                             maxCount: 5,
@@ -292,19 +301,20 @@ namespace accounting {
                                                                                             path: "bracketOpen",
                                                                                             type: "sap.ui.model.type.Integer"
                                                                                         }),
-                                                                                        width: "4rem",
+                                                                                        width: "7rem",
                                                                                     }),
                                                                                     new sap.extension.table.DataColumn("", {
-                                                                                        label: ibas.i18n.prop("bo_periodledgeraccount_condition_property"),
-                                                                                        template: new sap.extension.m.Select("", {
+                                                                                        label: ibas.i18n.prop("bo_periodledgeraccountcondition_propertyname"),
+                                                                                        template: new sap.extension.m.EnumSelect("", {
+                                                                                            enumType: app.emLedgerAccountConditionProperty
                                                                                         }).bindProperty("bindingValue", {
-                                                                                            path: "property",
+                                                                                            path: "propertyName",
                                                                                             type: new sap.extension.data.Alphanumeric()
                                                                                         }),
-                                                                                        width: "8rem",
+                                                                                        width: "10rem",
                                                                                     }),
                                                                                     new sap.extension.table.DataColumn("", {
-                                                                                        label: ibas.i18n.prop("bo_periodledgeraccount_condition_operation"),
+                                                                                        label: ibas.i18n.prop("bo_periodledgeraccountcondition_operation"),
                                                                                         template: new sap.extension.m.EnumSelect("", {
                                                                                             enumType: initialfantasy.bo.emConditionOperation
                                                                                         }).bindProperty("bindingValue", {
@@ -313,21 +323,21 @@ namespace accounting {
                                                                                                 enumType: initialfantasy.bo.emConditionOperation
                                                                                             })
                                                                                         }),
-                                                                                        width: "6rem",
+                                                                                        width: "8rem",
                                                                                     }),
                                                                                     new sap.extension.table.DataColumn("", {
-                                                                                        label: ibas.i18n.prop("bo_periodledgeraccount_condition_value"),
+                                                                                        label: ibas.i18n.prop("bo_periodledgeraccountcondition_value"),
                                                                                         template: new sap.extension.m.Input("", {
                                                                                         }).bindProperty("bindingValue", {
-                                                                                            path: "conditionValue",
+                                                                                            path: "value",
                                                                                             type: new sap.extension.data.Alphanumeric({
                                                                                                 maxLength: 30
                                                                                             })
                                                                                         }),
-                                                                                        width: "8rem",
+                                                                                        width: "10rem",
                                                                                     }),
                                                                                     new sap.extension.table.DataColumn("", {
-                                                                                        label: ibas.i18n.prop("bo_periodledgeraccount_condition_bracketclose"),
+                                                                                        label: ibas.i18n.prop("bo_periodledgeraccountcondition_bracketclose"),
                                                                                         template: new sap.extension.m.RepeatCharSelect("", {
                                                                                             repeatText: ")",
                                                                                             maxCount: 5,
@@ -335,15 +345,28 @@ namespace accounting {
                                                                                             path: "bracketClose",
                                                                                             type: "sap.ui.model.type.Integer"
                                                                                         }),
-                                                                                        width: "4rem",
+                                                                                        width: "7rem",
                                                                                     }),
                                                                                 ],
+                                                                                sortProperty: "visOrder",
                                                                                 rowActionCount: 1,
                                                                                 rowActionTemplate: new sap.ui.table.RowAction("", {
                                                                                     items: [
                                                                                         new sap.ui.table.RowActionItem("", {
                                                                                             icon: "sap-icon://delete",
-                                                                                            press: function (oEvent: any): void {
+                                                                                            press: function (this: sap.m.Button): void {
+                                                                                                let data: any = this.getBindingContext().getObject();
+                                                                                                if (data instanceof bo.PeriodLedgerAccountCondition) {
+                                                                                                    if (data.isNew) {
+                                                                                                        let parent: any = this.getParent().getParent().getParent().getBindingContext().getObject();
+                                                                                                        if (parent instanceof bo.PeriodLedgerAccount) {
+                                                                                                            parent.periodLedgerAccountConditions.remove(data);
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        data.delete();
+                                                                                                    }
+                                                                                                    this.getBindingContext().getModel().refresh(true);
+                                                                                                }
                                                                                             },
                                                                                         }),
                                                                                     ]
@@ -357,7 +380,12 @@ namespace accounting {
                                                                                             icon: "sap-icon://add",
                                                                                             text: ibas.i18n.prop("shell_data_add"),
                                                                                             type: sap.m.ButtonType.Transparent,
-                                                                                            press: function (oEvent: any): void {
+                                                                                            press: function (this: sap.m.Button): void {
+                                                                                                let data: any = this.getBindingContext().getObject();
+                                                                                                if (data instanceof bo.PeriodLedgerAccount) {
+                                                                                                    let item: any = data.periodLedgerAccountConditions.create();
+                                                                                                    this.getBindingContext().getModel().refresh(true);
+                                                                                                }
                                                                                             },
                                                                                         })
                                                                                     ]

@@ -3,6 +3,7 @@ package org.colorcoding.ibas.accounting.bo.ledgeraccount;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -28,7 +29,7 @@ public class PeriodLedgerAccount extends BusinessObject<PeriodLedgerAccount> imp
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = 1983282629167295686L;
+	private static final long serialVersionUID = -8708299067564453361L;
 
 	/**
 	 * 当前类型
@@ -151,7 +152,7 @@ public class PeriodLedgerAccount extends BusinessObject<PeriodLedgerAccount> imp
 	/**
 	 * 序号 属性
 	 */
-	@DbField(name = "Order", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Order", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_ORDER = registerProperty(PROPERTY_ORDER_NAME, Integer.class,
 			MY_CLASS);
 
@@ -265,37 +266,6 @@ public class PeriodLedgerAccount extends BusinessObject<PeriodLedgerAccount> imp
 	 */
 	public final void setSettings(String value) {
 		this.setProperty(PROPERTY_SETTINGS, value);
-	}
-
-	/**
-	 * 属性名称-条件
-	 */
-	private static final String PROPERTY_CONDITIONS_NAME = "Conditions";
-
-	/**
-	 * 条件 属性
-	 */
-	@DbField(name = "Conditions", type = DbFieldType.MEMO, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<String> PROPERTY_CONDITIONS = registerProperty(PROPERTY_CONDITIONS_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-条件
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_CONDITIONS_NAME)
-	public final String getConditions() {
-		return this.getProperty(PROPERTY_CONDITIONS);
-	}
-
-	/**
-	 * 设置-条件
-	 * 
-	 * @param value 值
-	 */
-	public final void setConditions(String value) {
-		this.setProperty(PROPERTY_CONDITIONS, value);
 	}
 
 	/**
@@ -733,13 +703,45 @@ public class PeriodLedgerAccount extends BusinessObject<PeriodLedgerAccount> imp
 	}
 
 	/**
+	 * 属性名称-期间-分类账-条件
+	 */
+	private static final String PROPERTY_PERIODLEDGERACCOUNTCONDITIONS_NAME = "PeriodLedgerAccountConditions";
+
+	/**
+	 * 期间-分类账-条件的集合属性
+	 * 
+	 */
+	public static final IPropertyInfo<IPeriodLedgerAccountConditions> PROPERTY_PERIODLEDGERACCOUNTCONDITIONS = registerProperty(
+			PROPERTY_PERIODLEDGERACCOUNTCONDITIONS_NAME, IPeriodLedgerAccountConditions.class, MY_CLASS);
+
+	/**
+	 * 获取-期间-分类账-条件集合
+	 * 
+	 * @return 值
+	 */
+	@XmlElementWrapper(name = PROPERTY_PERIODLEDGERACCOUNTCONDITIONS_NAME)
+	@XmlElement(name = PeriodLedgerAccountCondition.BUSINESS_OBJECT_NAME, type = PeriodLedgerAccountCondition.class)
+	public final IPeriodLedgerAccountConditions getPeriodLedgerAccountConditions() {
+		return this.getProperty(PROPERTY_PERIODLEDGERACCOUNTCONDITIONS);
+	}
+
+	/**
+	 * 设置-期间-分类账-条件集合
+	 * 
+	 * @param value 值
+	 */
+	public final void setPeriodLedgerAccountConditions(IPeriodLedgerAccountConditions value) {
+		this.setProperty(PROPERTY_PERIODLEDGERACCOUNTCONDITIONS, value);
+	}
+
+	/**
 	 * 初始化数据
 	 */
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
+		this.setPeriodLedgerAccountConditions(new PeriodLedgerAccountConditions(this));
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-		this.setActivated(emYesNo.YES);
 
 	}
 

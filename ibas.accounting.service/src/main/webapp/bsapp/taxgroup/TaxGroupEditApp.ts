@@ -29,7 +29,7 @@ namespace accounting {
                 // 其他事件
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.createDataEvent = this.createData;
-                this.view.chooseAccountEvent = this.chooseAccount;
+                this.view.chooseLedgerAccountEvent = this.chooseLedgerAccount;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -168,18 +168,25 @@ namespace accounting {
                     createData();
                 }
             }
-            /** 选择科目事件 */
-            protected chooseAccount(): void {
-                let that: this = this;
-                let conditions: ibas.ICondition[] = app.conditions.account.create();
-                ibas.servicesManager.runChooseService<bo.Account>({
-                    boCode: bo.Account.BUSINESS_OBJECT_CODE,
-                    criteria: conditions,
-                    onCompleted(selecteds: ibas.IList<bo.Account>): void {
-                        for (let selected of selecteds) {
-                            that.editData.account = selected.code;
-                        }
-                    }
+            /** 选择总账科目事件 */
+            private chooseLedgerAccount(): void {
+                if (ibas.objects.isNull(this.editData) || this.editData.isDirty) {
+                    throw new Error(ibas.i18n.prop("shell_data_saved_first"));
+                }
+                ibas.servicesManager.runApplicationService<ILedgerAccountSettingContract>({
+                    proxy: new LedgerAccountSettingServiceProxy({
+                        objectCode: this.editData.objectCode,
+                        description: ibas.strings.format("{0} - {1}", this.editData.code, this.editData.name),
+                        settings: [
+                            {
+                                // 税科目
+                                ledger: "GL-AC-06",
+                                conditions: [
+                                    new ibas.Condition(bo.TaxGroup.PROPERTY_CODE_NAME, ibas.emConditionOperation.EQUAL, this.editData.code)
+                                ]
+                            },
+                        ]
+                    }),
                 });
             }
         }
@@ -191,8 +198,8 @@ namespace accounting {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
-            /** 选择科目事件 */
-            chooseAccountEvent: Function;
+            /** 选择总账科目事件 */
+            chooseLedgerAccountEvent: Function;
         }
     }
 }

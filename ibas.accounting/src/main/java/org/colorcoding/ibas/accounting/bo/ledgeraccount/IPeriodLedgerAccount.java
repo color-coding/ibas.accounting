@@ -9,6 +9,7 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
  * 
  */
 public interface IPeriodLedgerAccount extends IBOSimple {
+
 	/**
 	 * 获取-名称
 	 * 
@@ -106,20 +107,6 @@ public interface IPeriodLedgerAccount extends IBOSimple {
 	 * @param value 值
 	 */
 	void setSettings(String value);
-
-	/**
-	 * 获取-条件
-	 * 
-	 * @return 值
-	 */
-	String getConditions();
-
-	/**
-	 * 设置-条件
-	 * 
-	 * @param value 值
-	 */
-	void setConditions(String value);
 
 	/**
 	 * 获取-对象编号
@@ -316,5 +303,19 @@ public interface IPeriodLedgerAccount extends IBOSimple {
 	 * @param value 值
 	 */
 	void setRemarks(String value);
+
+	/**
+	 * 获取-期间-分类账-条件集合
+	 * 
+	 * @return 值
+	 */
+	IPeriodLedgerAccountConditions getPeriodLedgerAccountConditions();
+
+	/**
+	 * 设置-期间-分类账-条件集合
+	 * 
+	 * @param value 值
+	 */
+	void setPeriodLedgerAccountConditions(IPeriodLedgerAccountConditions value);
 
 }

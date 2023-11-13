@@ -81,17 +81,6 @@ namespace accounting {
                 this.setProperty(TaxGroup.PROPERTY_RATE_NAME, value);
             }
 
-            /** 映射的属性名称-科目 */
-            static PROPERTY_ACCOUNT_NAME: string = "Account";
-            /** 获取-科目 */
-            get account(): string {
-                return this.getProperty<string>(TaxGroup.PROPERTY_ACCOUNT_NAME);
-            }
-            /** 设置-科目 */
-            set account(value: string) {
-                this.setProperty(TaxGroup.PROPERTY_ACCOUNT_NAME, value);
-            }
-
             /** 映射的属性名称-参考1 */
             static PROPERTY_REFERENCE1_NAME: string = "Reference1";
             /** 获取-参考1 */
