@@ -4,6 +4,6 @@
 	<Sign>GL-AC-06</Sign>
 	<Group>COMMON</Group>
 	<Description>税科目</Description>
-	<Settings></Settings>
+	<Settings>TaxGroup;</Settings>
 	<Remarks></Remarks>
 </ns:LedgerAccount>

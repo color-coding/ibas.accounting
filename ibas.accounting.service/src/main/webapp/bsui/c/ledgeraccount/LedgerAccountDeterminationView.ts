@@ -100,6 +100,21 @@ namespace accounting {
                                                 })
                                             }
                                         }),
+                                        new sap.m.Button("", {
+                                            icon: "sap-icon://refresh",
+                                            press(): void {
+                                                for (let list of that.ledgerPage.getContent()) {
+                                                    if (list instanceof sap.extension.m.List) {
+                                                        let selected: any = list.getSelecteds().firstOrDefault();
+                                                        if (!ibas.objects.isNull(selected)) {
+                                                            that.fireViewEvents(that.selectLedgerAccountEvent, selected,
+                                                                that.periodSelect.getSelectedItem()?.getBindingContext()?.getObject());
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        })
                                     ]
                                 }),
                             })
@@ -211,7 +226,7 @@ namespace accounting {
                                                                             }).bindProperty("bindingValue", {
                                                                                 path: "name",
                                                                                 type: new sap.extension.data.Alphanumeric({
-                                                                                    maxLength: 60
+                                                                                    maxLength: 100
                                                                                 }),
                                                                             }),
                                                                             new sap.m.Label("", { text: ibas.i18n.prop("bo_periodledgeraccount_activated") }),
@@ -283,11 +298,11 @@ namespace accounting {
                                                                                     new sap.extension.table.DataColumn("", {
                                                                                         label: ibas.i18n.prop("bo_periodledgeraccountcondition_relationship"),
                                                                                         template: new sap.extension.m.EnumSelect("", {
-                                                                                            enumType: initialfantasy.bo.emConditionRelationship
+                                                                                            enumType: ibas.emConditionRelationship
                                                                                         }).bindProperty("bindingValue", {
                                                                                             path: "relationship",
                                                                                             type: new sap.extension.data.Enum({
-                                                                                                enumType: initialfantasy.bo.emConditionRelationship
+                                                                                                enumType: ibas.emConditionRelationship
                                                                                             })
                                                                                         }),
                                                                                         width: "7rem",
@@ -316,11 +331,11 @@ namespace accounting {
                                                                                     new sap.extension.table.DataColumn("", {
                                                                                         label: ibas.i18n.prop("bo_periodledgeraccountcondition_operation"),
                                                                                         template: new sap.extension.m.EnumSelect("", {
-                                                                                            enumType: initialfantasy.bo.emConditionOperation
+                                                                                            enumType: ibas.emConditionOperation
                                                                                         }).bindProperty("bindingValue", {
                                                                                             path: "operation",
                                                                                             type: new sap.extension.data.Enum({
-                                                                                                enumType: initialfantasy.bo.emConditionOperation
+                                                                                                enumType: ibas.emConditionOperation
                                                                                             })
                                                                                         }),
                                                                                         width: "8rem",
@@ -485,7 +500,43 @@ namespace accounting {
                                                 }
                                             }
                                         }),
+                                        new sap.m.ToolbarSeparator(),
+                                        new sap.m.SearchField("", {
+                                            search(this: sap.m.SearchField): void {
+                                                let content: string;
+                                                let search: string = this.getValue();
+                                                if (search) {
+                                                    search = search.trim().toLowerCase();
+                                                }
+                                                for (let item of that.accountPage.getContent()) {
+                                                    if (item instanceof sap.m.List) {
+                                                        for (let cItem of item.getItems()) {
+                                                            if (cItem instanceof sap.m.CustomListItem) {
+                                                                cItem.setVisible(true);
+                                                                if (ibas.strings.isEmpty(search)) {
+                                                                    continue;
+                                                                }
+                                                                let done: boolean = false;
+                                                                for (let pItem of (<sap.m.Panel>cItem.getContent()[0]).getHeaderToolbar().getContent()) {
+                                                                    if (pItem instanceof sap.m.Text) {
+                                                                        content = pItem.getText(true); if (content && content.toLowerCase().indexOf(search) >= 0) {
+                                                                            done = true;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                if (done) {
+                                                                    continue;
+                                                                }
+                                                                cItem.setVisible(false);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }),
                                         new sap.m.ToolbarSpacer(),
+                                        new sap.m.ToolbarSeparator(),
                                         new sap.m.Button("", {
                                             type: sap.m.ButtonType.Transparent,
                                             icon: "sap-icon://create",

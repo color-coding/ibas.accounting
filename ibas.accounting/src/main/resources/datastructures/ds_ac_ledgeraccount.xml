@@ -23,7 +23,7 @@
   </Model>
   <BusinessObject MappedModel="LedgerAccount" ShortName="${Company}_AC_LACCOUNT"/>
   <Model Name="PeriodLedgerAccount" Description="期间-分类账" ModelType="Simple" Mapped="${Company}_AC_OPLA">
-    <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Name" UniqueKey="Yes"/>
+    <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Name" UniqueKey="Yes"/>
     <Property Name="Period" Description="期间" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Period" UniqueKey="Yes"/>
     <Property Name="Ledger" Description="分类" DataType="Alphanumeric" DataSubType="Default" EditSize="10" Mapped="Ledger" UniqueKey="Yes"/>
     <Property Name="Order" Description="序号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Order"/>

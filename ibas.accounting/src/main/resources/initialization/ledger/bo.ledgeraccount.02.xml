@@ -3,7 +3,7 @@
 <ns:LedgerAccount xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
 	<Sign>GL-AC-02</Sign>
 	<Group>COMMON</Group>
-	<Description>汇兑收益</Description>
+	<Description>汇兑收益科目</Description>
 	<Settings></Settings>
 	<Remarks></Remarks>
 </ns:LedgerAccount>

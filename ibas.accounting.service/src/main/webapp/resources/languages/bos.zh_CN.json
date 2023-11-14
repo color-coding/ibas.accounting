@@ -574,6 +574,7 @@
         "em_ledgeraccountconditionproperty_supplier": "供应商",
         "em_ledgeraccountconditionproperty_item": "项目/物料",
         "em_ledgeraccountconditionproperty_itemgroup": "项目/物料组",
-        "em_ledgeraccountconditionproperty_warehouse": "仓库"
+        "em_ledgeraccountconditionproperty_warehouse": "仓库",
+        "em_ledgeraccountconditionproperty_tax": "税"
     }
 ]

@@ -267,37 +267,6 @@ public class TaxGroup extends BusinessObject<TaxGroup> implements ITaxGroup {
 	}
 
 	/**
-	 * 属性名称-科目
-	 */
-	private static final String PROPERTY_ACCOUNT_NAME = "Account";
-
-	/**
-	 * 科目 属性
-	 */
-	@DbField(name = "Account", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<String> PROPERTY_ACCOUNT = registerProperty(PROPERTY_ACCOUNT_NAME, String.class,
-			MY_CLASS);
-
-	/**
-	 * 获取-科目
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_ACCOUNT_NAME)
-	public final String getAccount() {
-		return this.getProperty(PROPERTY_ACCOUNT);
-	}
-
-	/**
-	 * 设置-科目
-	 * 
-	 * @param value 值
-	 */
-	public final void setAccount(String value) {
-		this.setProperty(PROPERTY_ACCOUNT, value);
-	}
-
-	/**
 	 * 属性名称-参考1
 	 */
 	private static final String PROPERTY_REFERENCE1_NAME = "Reference1";

@@ -138,6 +138,7 @@ namespace accounting {
             Item = "Item",
             ItemGroup = "ItemGroup",
             Warehouse = "Warehouse",
+            Tax = "Tax",
         }
         /** 维度服务契约 */
         export interface IDimensionDataServiceContract extends ibas.IServiceContract {
@@ -155,6 +156,12 @@ namespace accounting {
             /** 科目 */
             account?: string;
         }
+        export interface ILedgerAccountCategory {
+            /** 种类 */
+            category: string;
+            /** 条件 */
+            conditions: ibas.ICondition[];
+        }
         /** 分类账设置契约 */
         export interface ILedgerAccountSettingContract extends ibas.IServiceContract {
             /** 业务对象 */
@@ -162,7 +169,7 @@ namespace accounting {
             /** 描述 */
             description: string;
             /** 设置内容 */
-            settings: ILedgerAccountSetting[];
+            settings?: ILedgerAccountSetting[] | ILedgerAccountCategory;
         }
         /** 分类账设置服务代理 */
         export class LedgerAccountSettingServiceProxy extends ibas.ServiceProxy<ILedgerAccountSettingContract> {

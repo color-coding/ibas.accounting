@@ -182,7 +182,7 @@ namespace accounting {
                                 // 税科目
                                 ledger: "GL-AC-06",
                                 conditions: [
-                                    new ibas.Condition(bo.TaxGroup.PROPERTY_CODE_NAME, ibas.emConditionOperation.EQUAL, this.editData.code)
+                                    new ibas.Condition(emLedgerAccountConditionProperty.Tax, ibas.emConditionOperation.EQUAL, this.editData.code)
                                 ]
                             },
                         ]
