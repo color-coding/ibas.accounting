@@ -33,6 +33,7 @@ namespace accounting {
                 this.view.removeJournalEntryLineEvent = this.removeJournalEntryLine;
                 this.view.chooseJournalEntryLineAccountEvent = this.chooseJournalEntryLineAccount;
                 this.view.chooseJournalEntryLineShortNameEvent = this.chooseJournalEntryLineShortName;
+                this.view.chooseJournalEntryLineDistributionRuleEvent = this.chooseJournalEntryLineDistributionRule;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -272,6 +273,30 @@ namespace accounting {
                 });
 
             }
+            private chooseJournalEntryLineDistributionRule(type: emDimensionType, caller: bo.JournalEntryLine): void {
+                if (ibas.objects.isNull(type)) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("saccounting_dimension_invaild", ""));
+                    return;
+                }
+                ibas.servicesManager.runApplicationService<app.IDimensionDataServiceContract, String>({
+                    proxy: new app.DimensionDataServiceProxy({
+                        type: type,
+                    }),
+                    onCompleted(result: string): void {
+                        if (type === emDimensionType.DIMENSION_1) {
+                            caller.distributionRule1 = result;
+                        } else if (type === emDimensionType.DIMENSION_2) {
+                            caller.distributionRule2 = result;
+                        } else if (type === emDimensionType.DIMENSION_3) {
+                            caller.distributionRule3 = result;
+                        } else if (type === emDimensionType.DIMENSION_4) {
+                            caller.distributionRule4 = result;
+                        } else if (type === emDimensionType.DIMENSION_5) {
+                            caller.distributionRule5 = result;
+                        }
+                    }
+                });
+            }
         }
         /** 视图-日记账分录 */
         export interface IJournalEntryEditView extends ibas.IBOEditView {
@@ -291,6 +316,8 @@ namespace accounting {
             chooseJournalEntryLineAccountEvent: Function;
             /** 选择日记账分录-行业务伙伴/科目事件 */
             chooseJournalEntryLineShortNameEvent: Function;
+            /** 选择日记账分录-行分配中心事件 */
+            chooseJournalEntryLineDistributionRuleEvent: Function;
         }
     }
 }

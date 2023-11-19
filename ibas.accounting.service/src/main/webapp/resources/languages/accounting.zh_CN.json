@@ -77,6 +77,7 @@
   "accounting_please_selected_structure": "请选择费用结构",
   "accounting_not_found_budget": "没有找到预算[{0}]",
   "accounting_not_found_account": "没有找到科目[{0} - {1}]",
+  "accounting_not_found_journalentry": "没有找到日记账分录",
   "accounting_who's_cost": "{0}的费用",
   "accounting_edit_more": "编辑更多",
   "accounting_add_node": "添加节点",

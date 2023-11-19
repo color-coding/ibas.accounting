@@ -476,6 +476,7 @@
         "bo_ledgeraccount_group_purchase": "采购",
         "bo_ledgeraccount_group_inventory": "库存",
         "bo_ledgeraccount_group_tax": "税",
+        "bo_ledgeraccount_group_payment": "收款&付款",
         "bo_ledgeraccount_closing_delimiter": "----结束----"
     },
     {

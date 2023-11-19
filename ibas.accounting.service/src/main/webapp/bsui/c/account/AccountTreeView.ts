@@ -355,7 +355,9 @@ namespace accounting {
                 showGroups(datas: app.AccountNode[]): void {
                     let oldDatas: app.AccountNode[] = this.accountList.getModel()?.getData();
                     if (oldDatas !== datas) {
-                        this.accountList.setModel(new sap.extension.model.JSONModel(datas));
+                        let model: sap.extension.model.JSONModel = new sap.extension.model.JSONModel(datas);
+                        model.setSizeLimit(1000);
+                        this.accountList.setModel(model);
                     } else {
                         this.accountList.getModel().refresh(true);
                     }

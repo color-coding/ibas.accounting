@@ -29,7 +29,6 @@ import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.BusinessRuleException;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.ICheckRules;
-import org.colorcoding.ibas.bobas.rule.common.BusinessRuleMinValue;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequiredElements;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleSumElements;
 
@@ -1245,7 +1244,6 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 				new BusinessRuleRequiredElements(PROPERTY_JOURNALENTRYLINES), // 要求有元素
 				new BusinessRuleSumElements(PROPERTY_DOCUMENTTOTAL, PROPERTY_JOURNALENTRYLINES,
 						JournalEntryLine.PROPERTY_DEBIT), // 计算单据总计
-				new BusinessRuleMinValue<BigDecimal>(Decimal.ZERO, PROPERTY_DOCUMENTTOTAL), // 不能低于0
 		};
 	}
 
@@ -1278,7 +1276,13 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 				continue;
 			} else {
 				// 分支的借贷方不平
-				throw new BusinessRuleException(I18N.prop("msg_ac_business_rule_debit_credit_imbalance"));
+				if (MyConfiguration.isDebugMode()) {
+					// 调试模式，生成无效单据
+					this.setDocumentStatus(emDocumentStatus.PLANNED);
+				} else {
+					// 抛出错误
+					throw new BusinessRuleException(I18N.prop("msg_ac_business_rule_debit_credit_imbalance"));
+				}
 			}
 		}
 

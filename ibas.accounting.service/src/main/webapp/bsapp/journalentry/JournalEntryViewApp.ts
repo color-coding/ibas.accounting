@@ -116,6 +116,9 @@ namespace accounting {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
+                            if (opRslt.resultObjects.length === 0) {
+                                throw new Error(ibas.i18n.prop("accounting_not_found_journalentry"));
+                            }
                             that.viewData = opRslt.resultObjects.firstOrDefault();
                             if (!that.isViewShowed()) {
                                 // 没显示视图，先显示

@@ -35,15 +35,15 @@ namespace accounting {
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_shortdescription"),
-                                width: "12rem",
+                                width: "14rem",
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_debit"),
-                                width: "8rem",
+                                width: "12rem",
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_credit"),
-                                width: "8rem",
+                                width: "12rem",
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_distributionrule1"),
@@ -53,12 +53,6 @@ namespace accounting {
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_distributionrule3"),
-                            }),
-                            new sap.extension.m.Column("", {
-                                header: ibas.i18n.prop("bo_journalentryline_reference1"),
-                            }),
-                            new sap.extension.m.Column("", {
-                                header: ibas.i18n.prop("bo_journalentryline_reference2"),
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_reference3"),
@@ -160,18 +154,6 @@ namespace accounting {
                                     new sap.extension.m.ObjectAttribute("", {
                                         bindingValue: {
                                             path: "distributionRule3",
-                                            type: new sap.extension.data.Alphanumeric(),
-                                        }
-                                    }),
-                                    new sap.extension.m.ObjectAttribute("", {
-                                        bindingValue: {
-                                            path: "reference1",
-                                            type: new sap.extension.data.Alphanumeric(),
-                                        }
-                                    }),
-                                    new sap.extension.m.ObjectAttribute("", {
-                                        bindingValue: {
-                                            path: "reference2",
                                             type: new sap.extension.data.Alphanumeric(),
                                         }
                                     }),
@@ -349,6 +331,13 @@ namespace accounting {
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
                                             new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_journalentry_remarks"),
+                                                bindingValue: {
+                                                    path: "remarks",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_journalentry_reference1"),
                                                 bindingValue: {
                                                     path: "reference1",
@@ -366,13 +355,6 @@ namespace accounting {
                                                 title: ibas.i18n.prop("bo_journalentry_reference3"),
                                                 bindingValue: {
                                                     path: "reference3",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_journalentry_remarks"),
-                                                bindingValue: {
-                                                    path: "remarks",
                                                     type: new sap.extension.data.Alphanumeric(),
                                                 }
                                             }),

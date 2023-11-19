@@ -39,7 +39,16 @@ namespace accounting {
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_journalentry_basedocument"),
-                                template: new sap.extension.m.Text("", {
+                                template: new sap.extension.m.Link("", {
+                                    press(): void {
+                                        let data: any = this.getBindingContext().getObject();
+                                        if (data instanceof bo.JournalEntry && data.baseDocumentEntry > 0) {
+                                            ibas.servicesManager.runLinkService({
+                                                boCode: data.baseDocumentType,
+                                                linkValue: data.baseDocumentEntry.toString(),
+                                            });
+                                        }
+                                    }
                                 }).bindProperty("bindingValue", {
                                     parts: [
                                         {

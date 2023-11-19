@@ -58,7 +58,11 @@ namespace accounting {
                                                 title: {
                                                     path: "description",
                                                     type: new sap.extension.data.Alphanumeric(),
-                                                }
+                                                },
+                                                info: {
+                                                    path: "sign",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                },
                                             }),
                                         },
                                         selectionChange(oEvent: sap.ui.base.Event): void {

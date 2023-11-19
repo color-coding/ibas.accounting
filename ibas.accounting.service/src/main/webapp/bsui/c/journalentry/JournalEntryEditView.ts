@@ -22,6 +22,8 @@ namespace accounting {
                 chooseJournalEntryLineAccountEvent: Function;
                 /** 选择日记账分录-行业务伙伴/科目事件 */
                 chooseJournalEntryLineShortNameEvent: Function;
+                /** 选择日记账分录-行分配中心事件 */
+                chooseJournalEntryLineDistributionRuleEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -33,6 +35,16 @@ namespace accounting {
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_basedocument") }),
                             new sap.extension.m.Input("", {
                                 editable: false,
+                                showValueLink: true,
+                                valueLinkRequest(): void {
+                                    let data: any = this.getBindingContext().getObject();
+                                    if (data instanceof bo.JournalEntry && data.baseDocumentEntry > 0) {
+                                        ibas.servicesManager.runLinkService({
+                                            boCode: data.baseDocumentType,
+                                            linkValue: data.baseDocumentEntry.toString(),
+                                        });
+                                    }
+                                }
                             }).bindProperty("bindingValue", {
                                 parts: [
                                     {
@@ -51,7 +63,7 @@ namespace accounting {
                                     return ibas.businessobjects.describe(ibas.strings.format("{[{0}].[DocEntry = {1}]}", type, entry));
                                 }
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference1") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference12") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
                                 path: "reference1",
@@ -59,7 +71,6 @@ namespace accounting {
                                     maxLength: 100
                                 }),
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference23") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
                                 path: "reference2",
@@ -67,7 +78,7 @@ namespace accounting {
                                     maxLength: 200
                                 }),
                             }),
-                            // new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference3") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference3") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
                                 path: "reference3",
@@ -273,6 +284,11 @@ namespace accounting {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_journalentryline_distributionrule1"),
                                         template: new sap.extension.m.Input("", {
+                                            showValueHelp: true,
+                                            valueHelpRequest(): void {
+                                                that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
+                                                    app.emDimensionType.DIMENSION_1, this.getBindingContext().getObject());
+                                            }
                                         }).bindProperty("bindingValue", {
                                             path: "distributionRule1",
                                             type: new sap.extension.data.Alphanumeric({
@@ -283,6 +299,11 @@ namespace accounting {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_journalentryline_distributionrule2"),
                                         template: new sap.extension.m.Input("", {
+                                            showValueHelp: true,
+                                            valueHelpRequest(): void {
+                                                that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
+                                                    app.emDimensionType.DIMENSION_2, this.getBindingContext().getObject());
+                                            }
                                         }).bindProperty("bindingValue", {
                                             path: "distributionRule2",
                                             type: new sap.extension.data.Alphanumeric({
@@ -293,30 +314,15 @@ namespace accounting {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_journalentryline_distributionrule3"),
                                         template: new sap.extension.m.Input("", {
+                                            showValueHelp: true,
+                                            valueHelpRequest(): void {
+                                                that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
+                                                    app.emDimensionType.DIMENSION_3, this.getBindingContext().getObject());
+                                            }
                                         }).bindProperty("bindingValue", {
                                             path: "distributionRule3",
                                             type: new sap.extension.data.Alphanumeric({
                                                 maxLength: 8
-                                            }),
-                                        }),
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_journalentryline_reference1"),
-                                        template: new sap.extension.m.Input("", {
-                                        }).bindProperty("bindingValue", {
-                                            path: "reference1",
-                                            type: new sap.extension.data.Alphanumeric({
-                                                maxLength: 100
-                                            }),
-                                        }),
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_journalentryline_reference2"),
-                                        template: new sap.extension.m.Input("", {
-                                        }).bindProperty("bindingValue", {
-                                            path: "reference2",
-                                            type: new sap.extension.data.Alphanumeric({
-                                                maxLength: 200
                                             }),
                                         }),
                                     }),
