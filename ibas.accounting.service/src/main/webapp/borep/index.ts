@@ -19,6 +19,7 @@
 /// <reference path="./bo/JournalEntry.ts" />
 /// <reference path="./bo/PeriodLedgerAccount.ts" />
 /// <reference path="./bo/LedgerAccount.ts" />
+/// <reference path="./bo/LedgerConditionProperty.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 namespace accounting {
@@ -40,5 +41,6 @@ namespace accounting {
         boFactory.register(LedgerAccount.BUSINESS_OBJECT_CODE, LedgerAccount);
         boFactory.register(PeriodLedgerAccount.BUSINESS_OBJECT_CODE, PeriodLedgerAccount);
         boFactory.register(Account.BUSINESS_OBJECT_CODE, Account);
+        boFactory.register(LedgerConditionProperty.BUSINESS_OBJECT_CODE, LedgerConditionProperty);
     }
 }

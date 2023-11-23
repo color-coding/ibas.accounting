@@ -37,5 +37,32 @@ public class Ledgers {
 	 * 税科目
 	 */
 	public static final String LEDGER_COMMON_TAX_ACCOUNT = "GL-AC-06";
-
+	/**
+	 * 业务对象编码
+	 */
+	public static final String CONDITION_PROPERTY_OBJECTCODE = "ObjectCode";
+	/**
+	 * 数据所有者
+	 */
+	public static final String CONDITION_PROPERTY_DATAOWNER = "DataOwner";
+	/**
+	 * 数据所属组织
+	 */
+	public static final String CONDITION_PROPERTY_ORGANIZATION = "Organization";
+	/**
+	 * 单据类型
+	 */
+	public static final String CONDITION_PROPERTY_ORDERTYPE = "OrderType";
+	/**
+	 * 项目
+	 */
+	public static final String CONDITION_PROPERTY_PROJECT = "Project";
+	/**
+	 * 税
+	 */
+	public static final String CONDITION_PROPERTY_TAX = "Tax";
+	/**
+	 * 分支
+	 */
+	public static final String CONDITION_PROPERTY_BRANCH = "Branch";
 }

@@ -274,6 +274,15 @@ namespace accounting {
                 this.add(item);
                 return item;
             }
+
+            protected afterAdd(item: PeriodLedgerAccountCondition): void {
+                super.afterAdd(item);
+                if (this.length === 1) {
+                    if (item.isNew) {
+                        item.relationship = ibas.emConditionRelationship.NONE;
+                    }
+                }
+            }
         }
 
         /** 期间-分类账-条件 */
@@ -516,6 +525,8 @@ namespace accounting {
 
             /** 初始化数据 */
             protected init(): void {
+                this.relationship = ibas.emConditionRelationship.AND;
+                this.operation = ibas.emConditionOperation.EQUAL;
             }
         }
 

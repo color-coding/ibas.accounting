@@ -19,4 +19,5 @@
 /// <reference path="./bo/JournalEntry.ts" />
 /// <reference path="./bo/PeriodLedgerAccount.ts" />
 /// <reference path="./bo/LedgerAccount.ts" />
+/// <reference path="./bo/LedgerConditionProperty.ts" />
 /// <reference path="./BORepository.ts" />

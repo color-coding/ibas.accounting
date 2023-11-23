@@ -253,6 +253,13 @@ namespace accounting {
             savePeriodLedgerAccount(saver: ibas.ISaveCaller<bo.PeriodLedgerAccount>): void {
                 super.save(bo.PeriodLedgerAccount.name, saver);
             }
+            /**
+             * 查询 分类账条件属性
+             * @param fetcher 查询者
+             */
+            fetchLedgerConditionProperty(fetcher: ibas.IFetchCaller<bo.LedgerConditionProperty>): void {
+                super.fetch(bo.LedgerConditionProperty.name, fetcher);
+            }
 
         }
         /**

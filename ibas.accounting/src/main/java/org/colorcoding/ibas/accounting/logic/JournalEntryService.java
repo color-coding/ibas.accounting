@@ -22,6 +22,8 @@ import org.colorcoding.ibas.bobas.core.IBORepository;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.List;
+import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.expression.JudmentOperationException;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.BusinessLogic;
 import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
@@ -218,13 +220,33 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 		sort = criteria.getSorts().create();
 		sort.setAlias(PeriodLedgerAccount.PROPERTY_ORDER.getName());
 		sort.setSortType(SortType.ASCENDING);
+		sort = criteria.getSorts().create();
+		sort.setAlias(PeriodLedgerAccount.PROPERTY_OBJECTKEY.getName());
+		sort.setSortType(SortType.DESCENDING);
 		IOperationResult<IPeriodLedgerAccount> opRsltLedger = boRepository.fetchPeriodLedgerAccount(criteria);
 		if (opRsltLedger.getError() != null) {
 			throw new BusinessLogicException(opRsltLedger.getError());
 		}
-		if (opRsltLedger.getResultObjects().isEmpty()) {
-			throw new BusinessLogicException(I18N.prop("msg_ac_not_found_ledger_account", jeContent.getLedger()));
+		JudgmentLink judgmentLink;
+		for (IPeriodLedgerAccount plAccount : opRsltLedger.getResultObjects()) {
+			if (DataConvert.isNullOrEmpty(plAccount.getAccount())) {
+				continue;
+			}
+			if (plAccount.getActivated() == emYesNo.NO) {
+				continue;
+			}
+			try {
+				judgmentLink = new JudgmentLink();
+				judgmentLink.parsingConditions(plAccount.getPeriodLedgerAccountConditions());
+				if (judgmentLink.judge(jeContent.getSourceData())) {
+					return plAccount.getAccount();
+				}
+			} catch (JudmentOperationException e) {
+				if (MyConfiguration.isDebugMode()) {
+					Logger.log(MessageLevel.WARN, e);
+				}
+			}
 		}
-		return opRsltLedger.getResultObjects().firstOrDefault().getAccount();
+		throw new BusinessLogicException(I18N.prop("msg_ac_not_found_ledger_account", jeContent.getLedger()));
 	}
 }

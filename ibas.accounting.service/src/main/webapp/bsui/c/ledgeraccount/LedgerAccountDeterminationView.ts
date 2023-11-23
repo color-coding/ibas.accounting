@@ -134,7 +134,7 @@ namespace accounting {
                                         visible: false,
                                         inset: false,
                                         items: {
-                                            path: "/",
+                                            path: "/rows",
                                             templateShareable: true,
                                             sorter: [
                                                 new sap.ui.model.Sorter("order", false)
@@ -285,7 +285,7 @@ namespace accounting {
                                                                     new sap.ui.layout.form.SimpleForm("", {
                                                                         editable: true,
                                                                         content: [
-                                                                            new sap.extension.table.Table("", {
+                                                                            new sap.extension.table.DataTable("", {
                                                                                 visibleRowCount: 4,
                                                                                 chooseType: ibas.emChooseType.NONE,
                                                                                 rows: {
@@ -322,10 +322,9 @@ namespace accounting {
                                                                                         }),
                                                                                         width: "7rem",
                                                                                     }),
-                                                                                    new sap.extension.table.DataColumn("", {
+                                                                                    this.columnProperty = new sap.extension.table.DataColumn("", {
                                                                                         label: ibas.i18n.prop("bo_periodledgeraccountcondition_propertyname"),
-                                                                                        template: new sap.extension.m.EnumSelect("", {
-                                                                                            enumType: app.emLedgerAccountConditionProperty
+                                                                                        template: new sap.extension.m.Select("", {
                                                                                         }).bindProperty("bindingValue", {
                                                                                             path: "propertyName",
                                                                                             type: new sap.extension.data.Alphanumeric()
@@ -366,6 +365,14 @@ namespace accounting {
                                                                                         }),
                                                                                         width: "7rem",
                                                                                     }),
+                                                                                    new sap.extension.table.DataColumn("", {
+                                                                                        label: ibas.i18n.prop("bo_periodledgeraccountcondition_remarks"),
+                                                                                        template: new sap.extension.m.Input("", {
+                                                                                        }).bindProperty("bindingValue", {
+                                                                                            path: "remarks",
+                                                                                            type: new sap.extension.data.Alphanumeric()
+                                                                                        }),
+                                                                                    }),
                                                                                 ],
                                                                                 sortProperty: "visOrder",
                                                                                 rowActionCount: 1,
@@ -402,7 +409,7 @@ namespace accounting {
                                                                                             press: function (this: sap.m.Button): void {
                                                                                                 let data: any = this.getBindingContext().getObject();
                                                                                                 if (data instanceof bo.PeriodLedgerAccount) {
-                                                                                                    let item: any = data.periodLedgerAccountConditions.create();
+                                                                                                    let item: bo.IPeriodLedgerAccountCondition = data.periodLedgerAccountConditions.create();
                                                                                                     this.getBindingContext().getModel().refresh(true);
                                                                                                 }
                                                                                             },
@@ -577,6 +584,8 @@ namespace accounting {
                 private periodSelect: sap.extension.m.Select;
                 private ledgerPage: sap.extension.m.Page;
                 private accountPage: sap.extension.m.Page;
+                private columnProperty: sap.extension.table.DataColumn;
+                private propertySelect: sap.extension.m.Select;
 
                 showPostingPeriods(datas: bo.PeriodCategory[]): void {
                     this.periodSelect.setModel(new sap.extension.model.JSONModel(datas));
@@ -595,7 +604,18 @@ namespace accounting {
                     }
                     this.ledgerPage.setModel(new sap.extension.model.JSONModel(groups));
                 }
-                showPostingPeriodAccounts(datas: bo.PeriodLedgerAccount[] | bo.PeriodLedgerAccount): void {
+                showPostingPeriodAccounts(datas: bo.PeriodLedgerAccount[] | bo.PeriodLedgerAccount, properties?: bo.LedgerConditionProperty[]): void {
+                    if (properties instanceof Array) {
+                        let select: sap.extension.m.Select = <any>this.columnProperty.getTemplate();
+                        select.destroyItems();
+                        for (let item of properties) {
+                            select.addItem(new sap.extension.m.SelectItem("", {
+                                key: item.name,
+                                text: item.description
+                            }));
+                        }
+                        // this.propertySelect.setModel(new sap.extension.model.JSONModel({ items: properties }));
+                    }
                     if (this.accountPage.getContent().length > 1) {
                         this.accountPage.removeContent(0);
                         for (let item of this.accountPage.getContent()) {
@@ -606,7 +626,7 @@ namespace accounting {
                         }
                     }
                     if (datas instanceof Array) {
-                        this.accountPage.setModel(new sap.extension.model.JSONModel(datas));
+                        this.accountPage.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     } else {
                         let model: sap.extension.model.JSONModel = this.accountPage.getModel();
                         model.addData(datas);

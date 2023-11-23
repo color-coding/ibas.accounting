@@ -30,6 +30,7 @@ namespace accounting {
                 this.view.deletePostingPeriodAccountEvent = this.deletePostingPeriodAccount;
             }
             protected periodAccounts: ibas.IList<bo.PeriodLedgerAccount> = new ibas.ArrayList<bo.PeriodLedgerAccount>();
+            protected conditionProperties: ibas.IList<bo.LedgerConditionProperty> = new ibas.ArrayList<bo.LedgerConditionProperty>();
             /** 视图显示后 */
             protected viewShowed(): void {
                 let sort: ibas.ISort;
@@ -69,6 +70,20 @@ namespace accounting {
                                 throw new Error(opRslt.message);
                             }
                             this.view.showPostingPeriods(opRslt.resultObjects);
+                        } catch (error) {
+                            this.messages(error);
+                        }
+                    }
+                });
+                criteria = new ibas.Criteria();
+                boRepository.fetchLedgerConditionProperty({
+                    criteria: criteria,
+                    onCompleted: (opRslt) => {
+                        try {
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
+                            }
+                            this.conditionProperties = opRslt.resultObjects;
                         } catch (error) {
                             this.messages(error);
                         }
@@ -132,7 +147,18 @@ namespace accounting {
                                 glAccount.period = period.objectKey;
                                 this.periodAccounts.add(glAccount);
                             }
-                            this.view.showPostingPeriodAccounts(this.periodAccounts.filter(c => c.isDeleted === false));
+                            let properties: ibas.IList<bo.LedgerConditionProperty> = ibas.arrays.create(this.conditionProperties);
+                            for (let item of this.conditionProperties) {
+                                if (!ibas.strings.isEmpty(item.filters)) {
+                                    // 不包含
+                                    if (item.filters.indexOf(ibas.strings.format("!{0};", ledger.sign)) >= 0) {
+                                        properties.remove(item);
+                                    } else if (item.filters.indexOf(ibas.strings.format("{0};", ledger.sign)) < 0) {
+                                        properties.remove(item);
+                                    }
+                                }
+                            }
+                            this.view.showPostingPeriodAccounts(this.periodAccounts.filter(c => c.isDeleted === false), properties);
                         } catch (error) {
                             this.messages(error);
                         }
@@ -268,7 +294,7 @@ namespace accounting {
             /** 选中总账科目事件 */
             selectLedgerAccountEvent: Function;
             /** 显示过账期间总账科目 */
-            showPostingPeriodAccounts(datas: bo.PeriodLedgerAccount[]): void;
+            showPostingPeriodAccounts(datas: bo.PeriodLedgerAccount[], properties?: bo.LedgerConditionProperty[]): void;
             /** 创建过账期间总账科目事件 */
             createPostingPeriodAccountEvent: Function;
             /** 删除账期间总账科目科目事件 */

@@ -134,6 +134,11 @@ namespace accounting {
              * @param saver 保存者
              */
             savePeriodLedgerAccount(saver: ibas.ISaveCaller<bo.IPeriodLedgerAccount>): void;
+            /**
+             * 查询 分类账条件属性
+             * @param fetcher 查询者
+             */
+            fetchLedgerConditionProperty(fetcher: ibas.IFetchCaller<bo.ILedgerConditionProperty>): void;
 
         }
     }

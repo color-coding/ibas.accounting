@@ -23,8 +23,10 @@ import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
 import org.colorcoding.ibas.accounting.bo.journalentry.IJournalEntry;
 import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.ILedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.ILedgerConditionProperty;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.IPeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerConditionProperty;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPostingPeriod;
@@ -858,6 +860,52 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	public IOperationResult<IPeriodLedgerAccount> savePeriodLedgerAccount(IPeriodLedgerAccount bo) {
 		return new OperationResult<IPeriodLedgerAccount>(
 				this.savePeriodLedgerAccount((PeriodLedgerAccount) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分类账条件属性
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<LedgerConditionProperty> fetchLedgerConditionProperty(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, LedgerConditionProperty.class);
+	}
+
+	/**
+	 * 查询-分类账条件属性（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ILedgerConditionProperty> fetchLedgerConditionProperty(ICriteria criteria) {
+		return new OperationResult<ILedgerConditionProperty>(
+				this.fetchLedgerConditionProperty(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-分类账条件属性
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<LedgerConditionProperty> saveLedgerConditionProperty(LedgerConditionProperty bo,
+			String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-分类账条件属性（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ILedgerConditionProperty> saveLedgerConditionProperty(ILedgerConditionProperty bo) {
+		return new OperationResult<ILedgerConditionProperty>(
+				this.saveLedgerConditionProperty((LedgerConditionProperty) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

@@ -9,6 +9,7 @@ import org.colorcoding.ibas.accounting.bo.currency.ICurrency;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
 import org.colorcoding.ibas.accounting.bo.journalentry.IJournalEntry;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.ILedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.ILedgerConditionProperty;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.IPeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPostingPeriod;
@@ -270,6 +271,23 @@ public interface IBORepositoryAccountingApp extends IBORepositoryApplication {
 	 * @return 操作结果
 	 */
 	IOperationResult<IPeriodLedgerAccount> savePeriodLedgerAccount(IPeriodLedgerAccount bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分类账条件属性
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ILedgerConditionProperty> fetchLedgerConditionProperty(ICriteria criteria);
+
+	/**
+	 * 保存-分类账条件属性
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ILedgerConditionProperty> saveLedgerConditionProperty(ILedgerConditionProperty bo);
 
 	// --------------------------------------------------------------------------------------------//
 

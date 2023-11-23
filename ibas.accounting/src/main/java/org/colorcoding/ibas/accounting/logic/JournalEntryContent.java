@@ -119,11 +119,14 @@ public class JournalEntryContent {
 	 * @return 新对象实例
 	 */
 	public JournalEntryContent duplicate() {
-		try {
-			return (JournalEntryContent) this.clone();
-		} catch (CloneNotSupportedException e) {
-			return this;
-		}
+		JournalEntryContent nContent = new JournalEntryContent(this.getSourceData());
+		nContent.setCategory(this.getCategory());
+		nContent.setLedger(this.getLedger());
+		nContent.setAmount(this.getAmount());
+		nContent.setCurrency(this.getCurrency());
+		nContent.setAccount(this.getAccount());
+		nContent.setShortName(this.getShortName());
+		return nContent;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerAccount;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerConditionProperty;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
@@ -440,6 +441,23 @@ public class DataService extends BORepositoryAccounting {
 	public OperationResult<PeriodLedgerAccount> savePeriodLedgerAccount(PeriodLedgerAccount bo,
 			@QueryParam("token") String token) {
 		return super.savePeriodLedgerAccount(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-分类账条件属性
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchLedgerConditionProperty")
+	public OperationResult<LedgerConditionProperty> fetchLedgerConditionProperty(Criteria criteria,
+			@QueryParam("token") String token) {
+		return super.fetchLedgerConditionProperty(criteria, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

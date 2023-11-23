@@ -11,6 +11,7 @@ import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
+import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerConditionProperty;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
@@ -34,7 +35,8 @@ public class Resolver implements ContextResolver<JAXBContext> {
 			if (jaxbContext == null) {
 				jaxbContext = JAXBContext.newInstance(Criteria.class, OperationResult.class, UserFieldProxy.class,
 						PeriodCategory.class, PostingPeriod.class, Project.class, Dimension.class, TaxGroup.class,
-						Currency.class, Account.class, Branch.class, JournalEntry.class, PeriodLedgerAccount.class);
+						Currency.class, Account.class, Branch.class, JournalEntry.class, PeriodLedgerAccount.class,
+						LedgerConditionProperty.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();

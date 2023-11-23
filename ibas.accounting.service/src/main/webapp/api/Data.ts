@@ -66,6 +66,8 @@ namespace accounting {
         export const BO_CODE_LEDGERACCOUNT: string = "${Company}_AC_LACCOUNT";
         /** 业务对象编码-期间-分类账 */
         export const BO_CODE_PERIODLEDGERACCOUNT: string = "${Company}_AC_PERIODLACCOUNT";
+        /** 业务对象编码-分类账条件属性 */
+        export const BO_CODE_LEDGERCONDITIONPROPERTY: string = "${Company}_AC_LCONDPTY";
         /**
          * 期间状态
          */
