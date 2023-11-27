@@ -112,10 +112,6 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 		JournalEntryContent jeContent;
 		List<JournalEntryContent> jeContents = new ArrayList<>();
 		for (JournalEntryContent item : contract.getContents()) {
-			if (DataConvert.isNullOrEmpty(item.getAccount())) {
-				// 获取科目
-				item.setAccount(this.accountOf(item));
-			}
 			// 计算金额
 			if (item instanceof JournalEntrySmartContent) {
 				((JournalEntrySmartContent) item).setService(new IBusinessLogicServiceInformation() {
@@ -136,6 +132,10 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 					}
 				});
 				((JournalEntrySmartContent) item).caculate();
+			}
+			// 获取科目
+			if (DataConvert.isNullOrEmpty(item.getAccount())) {
+				item.setAccount(this.accountOf(item));
 			}
 			jeContent = jeContents.firstOrDefault(
 					c -> c.getCategory() == item.getCategory() && c.getAccount().equalsIgnoreCase(item.getAccount()));
@@ -238,7 +238,7 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 			try {
 				judgmentLink = new JudgmentLink();
 				judgmentLink.parsingConditions(plAccount.getPeriodLedgerAccountConditions());
-				if (judgmentLink.judge(jeContent.getSourceData())) {
+				if (judgmentLink.judge(jeContent)) {
 					return plAccount.getAccount();
 				}
 			} catch (JudmentOperationException e) {

@@ -20,7 +20,11 @@ public class JournalEntryContent {
 		Debit,
 	}
 
-	public JournalEntryContent(Object sourceData) {
+	JournalEntryContent() {
+	}
+
+	JournalEntryContent(Object sourceData) {
+		this();
 		this.setSourceData(sourceData);
 		this.setCategory(Category.Credit);
 	}

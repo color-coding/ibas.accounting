@@ -59,19 +59,20 @@ class JudgmentLink extends org.colorcoding.ibas.bobas.expression.JudgmentLink {
 
 			@Override
 			public void setValue(Object value) {
-				if (value instanceof IPropertyValueGetter) {
-					Object ptyValue = ((IPropertyValueGetter) value).getValue(this.getPropertyName());
-					if (ptyValue == null) {
-
-					}
-					this.value = ptyValue;
-				} else if (value instanceof IManagedFields) {
-					IFieldData fieldData = ((IManagedFields) value).getField(this.getPropertyName());
-					if (fieldData != null) {
-						this.value = fieldData.getValue();
+				if (value instanceof JournalEntrySmartContent) {
+					this.value = ((JournalEntrySmartContent) value).getSourceDataPropertyValue(this.getPropertyName());
+				} else if (value instanceof JournalEntryContent) {
+					Object sourceData = ((JournalEntryContent) value).getSourceData();
+					if (sourceData instanceof IManagedFields) {
+						IFieldData fieldData = ((IManagedFields) value).getField(this.getPropertyName());
+						if (fieldData != null) {
+							this.value = fieldData.getValue();
+						}
 					}
 				}
-				this.value = "$NULL$";
+				if (this.value == null) {
+					this.value = JournalEntrySmartContent.VALUE_NULL;
+				}
 			}
 
 			@Override

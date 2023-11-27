@@ -1,9 +1,12 @@
 package org.colorcoding.ibas.accounting.logic;
 
+import org.colorcoding.ibas.bobas.core.fields.IFieldData;
+import org.colorcoding.ibas.bobas.core.fields.IManagedFields;
+
 /**
  * 日记账分录内容，待计算
  */
-public abstract class JournalEntrySmartContent extends JournalEntryContent {
+public class JournalEntrySmartContent extends JournalEntryContent {
 
 	public JournalEntrySmartContent(Object sourceData) {
 		super(sourceData);
@@ -19,8 +22,32 @@ public abstract class JournalEntrySmartContent extends JournalEntryContent {
 		this.service = service;
 	}
 
+	public final static String VALUE_NULL = "$NULL$";
+
 	/**
-	 * 计算金额
+	 * 获取元数据属性值
+	 * 
+	 * @param property 属性
+	 * @return 值，未找到时：$NULL$
 	 */
-	public abstract void caculate();
+	public Object getSourceDataPropertyValue(String property) {
+		if (this.getSourceData() instanceof IJECPropertyValueGetter) {
+			Object ptyValue = ((IJECPropertyValueGetter) this.getSourceData()).getValue(property);
+			if (ptyValue != null) {
+				return ptyValue;
+			}
+		} else if (this.getSourceData() instanceof IManagedFields) {
+			IFieldData fieldData = ((IManagedFields) this.getSourceData()).getField(property);
+			if (fieldData != null) {
+				return fieldData.getValue();
+			}
+		}
+		return VALUE_NULL;
+	}
+
+	/**
+	 * 计算金额（可重装）
+	 */
+	public void caculate() {
+	}
 }
