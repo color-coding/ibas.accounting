@@ -34,9 +34,13 @@ public class Ledgers {
 	 */
 	public static final String LEDGER_COMMON_BANK_CHARGES_ACCOUNT = "GL-AC-05";
 	/**
-	 * 税科目
+	 * 进项税科目
 	 */
-	public static final String LEDGER_COMMON_TAX_ACCOUNT = "GL-AC-06";
+	public static final String LEDGER_COMMON_INPUT_TAX_ACCOUNT = "GL-AC-06";
+	/**
+	 * 销项税科目
+	 */
+	public static final String LEDGER_COMMON_OUTPUT_TAX_ACCOUNT = "GL-AC-07";
 	/**
 	 * 业务对象编码
 	 */

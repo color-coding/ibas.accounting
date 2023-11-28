@@ -173,21 +173,39 @@ namespace accounting {
                 if (ibas.objects.isNull(this.editData) || this.editData.isDirty) {
                     throw new Error(ibas.i18n.prop("shell_data_saved_first"));
                 }
-                ibas.servicesManager.runApplicationService<ILedgerAccountSettingContract>({
-                    proxy: new LedgerAccountSettingServiceProxy({
-                        objectCode: this.editData.objectCode,
-                        description: ibas.strings.format("{0} - {1}", this.editData.code, this.editData.name),
-                        settings: [
-                            {
-                                // 税科目
-                                ledger: "GL-AC-06",
-                                conditions: [
-                                    new ibas.Condition(emLedgerAccountConditionProperty.Tax, ibas.emConditionOperation.EQUAL, this.editData.code)
-                                ]
-                            },
-                        ]
-                    }),
-                });
+                if (this.editData.category === bo.emTaxGroupCategory.INPUT) {
+                    ibas.servicesManager.runApplicationService<ILedgerAccountSettingContract>({
+                        proxy: new LedgerAccountSettingServiceProxy({
+                            objectCode: this.editData.objectCode,
+                            description: ibas.strings.format("{0} - {1}", this.editData.code, this.editData.name),
+                            settings: [
+                                {
+                                    // 进项税科目
+                                    ledger: "GL-AC-06",
+                                    conditions: [
+                                        new ibas.Condition(emLedgerAccountConditionProperty.Tax, ibas.emConditionOperation.EQUAL, this.editData.code)
+                                    ]
+                                },
+                            ]
+                        }),
+                    });
+                } else if (this.editData.category === bo.emTaxGroupCategory.OUTPUT) {
+                    ibas.servicesManager.runApplicationService<ILedgerAccountSettingContract>({
+                        proxy: new LedgerAccountSettingServiceProxy({
+                            objectCode: this.editData.objectCode,
+                            description: ibas.strings.format("{0} - {1}", this.editData.code, this.editData.name),
+                            settings: [
+                                {
+                                    // 销项税科目
+                                    ledger: "GL-AC-07",
+                                    conditions: [
+                                        new ibas.Condition(emLedgerAccountConditionProperty.Tax, ibas.emConditionOperation.EQUAL, this.editData.code)
+                                    ]
+                                },
+                            ]
+                        }),
+                    });
+                }
             }
         }
         /** 视图-税收组 */
