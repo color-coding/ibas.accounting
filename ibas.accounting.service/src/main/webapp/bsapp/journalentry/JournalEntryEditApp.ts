@@ -275,7 +275,7 @@ namespace accounting {
             }
             private chooseJournalEntryLineDistributionRule(type: emDimensionType, caller: bo.JournalEntryLine): void {
                 if (ibas.objects.isNull(type)) {
-                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("saccounting_dimension_invaild", ""));
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_dimension_invaild", ""));
                     return;
                 }
                 ibas.servicesManager.runApplicationService<app.IDimensionDataServiceContract, String>({

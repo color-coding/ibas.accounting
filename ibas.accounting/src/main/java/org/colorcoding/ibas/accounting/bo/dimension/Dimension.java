@@ -6,17 +6,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.accounting.MyConfiguration;
+import org.colorcoding.ibas.accounting.data.emDimensionSource;
+import org.colorcoding.ibas.accounting.logic.IApplicationConfigDimensionContract;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
-import org.colorcoding.ibas.accounting.MyConfiguration;
-import org.colorcoding.ibas.accounting.data.emDimensionSource;
 
 /**
  * 维度
@@ -26,7 +29,7 @@ import org.colorcoding.ibas.accounting.data.emDimensionSource;
 @XmlType(name = Dimension.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = Dimension.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = Dimension.BUSINESS_OBJECT_CODE)
-public class Dimension extends BusinessObject<Dimension> implements IDimension {
+public class Dimension extends BusinessObject<Dimension> implements IDimension, IBusinessLogicsHost {
 
 	/**
 	 * 序列化版本标记
@@ -688,6 +691,36 @@ public class Dimension extends BusinessObject<Dimension> implements IDimension {
 	protected IBusinessRule[] registerRules() {
 		return new IBusinessRule[] { // 注册的业务规则
 				new BusinessRuleRequired(PROPERTY_CODE), // 要求有值
+		};
+	}
+
+	@Override
+	public IBusinessLogicContract[] getContracts() {
+		return new IBusinessLogicContract[] {
+				// 应用程序配置
+				new IApplicationConfigDimensionContract() {
+
+					@Override
+					public String getIdentifiers() {
+						return Dimension.this.toString();
+					}
+
+					@Override
+					public String getDimension() {
+						return Dimension.this.getCode();
+					}
+
+					@Override
+					public String getDescription() {
+						return Dimension.this.getName();
+					}
+
+					@Override
+					public emYesNo getActivated() {
+						return Dimension.this.getActivated();
+					}
+				}
+
 		};
 	}
 

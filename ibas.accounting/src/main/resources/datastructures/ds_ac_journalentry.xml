@@ -76,11 +76,11 @@
     <Property Name="BaseTotal" Description="基础总额" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="BaseTotal"/>
     <Property Name="Branch" Description="分支" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Branch"/>
     <Property Name="Project" Description="项目代码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Project"/>
-    <Property Name="DistributionRule1" Description="分配规则1" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode1"/>
-    <Property Name="DistributionRule2" Description="分配规则2" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode2"/>
-    <Property Name="DistributionRule3" Description="分配规则3" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode3"/>
-    <Property Name="DistributionRule4" Description="分配规则4" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode4"/>
-    <Property Name="DistributionRule5" Description="分配规则5" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode5"/>
+    <Property Name="DistributionRule1" Description="成本中心1" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode1"/>
+    <Property Name="DistributionRule2" Description="成本中心2" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode2"/>
+    <Property Name="DistributionRule3" Description="成本中心3" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode3"/>
+    <Property Name="DistributionRule4" Description="成本中心4" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode4"/>
+    <Property Name="DistributionRule5" Description="成本中心5" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="OcrCode5"/>
     <Property Name="Reference1" Description="参考1" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Ref1"/>
     <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref2"/>
     <Property Name="Reference3" Description="参考3" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref3"/>

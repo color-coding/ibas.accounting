@@ -552,14 +552,14 @@ public interface IJournalEntryLine extends IBODocumentLine {
 
 
     /**
-    * 获取-分配规则1
+    * 获取-成本中心1
     * 
     * @return 值
     */
     String getDistributionRule1();
 
     /**
-    * 设置-分配规则1
+    * 设置-成本中心1
     * 
     * @param value 值
     */
@@ -567,14 +567,14 @@ public interface IJournalEntryLine extends IBODocumentLine {
 
 
     /**
-    * 获取-分配规则2
+    * 获取-成本中心2
     * 
     * @return 值
     */
     String getDistributionRule2();
 
     /**
-    * 设置-分配规则2
+    * 设置-成本中心2
     * 
     * @param value 值
     */
@@ -582,14 +582,14 @@ public interface IJournalEntryLine extends IBODocumentLine {
 
 
     /**
-    * 获取-分配规则3
+    * 获取-成本中心3
     * 
     * @return 值
     */
     String getDistributionRule3();
 
     /**
-    * 设置-分配规则3
+    * 设置-成本中心3
     * 
     * @param value 值
     */
@@ -597,14 +597,14 @@ public interface IJournalEntryLine extends IBODocumentLine {
 
 
     /**
-    * 获取-分配规则4
+    * 获取-成本中心4
     * 
     * @return 值
     */
     String getDistributionRule4();
 
     /**
-    * 设置-分配规则4
+    * 设置-成本中心4
     * 
     * @param value 值
     */
@@ -612,14 +612,14 @@ public interface IJournalEntryLine extends IBODocumentLine {
 
 
     /**
-    * 获取-分配规则5
+    * 获取-成本中心5
     * 
     * @return 值
     */
     String getDistributionRule5();
 
     /**
-    * 设置-分配规则5
+    * 设置-成本中心5
     * 
     * @param value 值
     */

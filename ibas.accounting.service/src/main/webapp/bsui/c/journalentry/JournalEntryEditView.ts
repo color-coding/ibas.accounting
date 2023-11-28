@@ -287,7 +287,7 @@ namespace accounting {
                                             showValueHelp: true,
                                             valueHelpRequest(): void {
                                                 that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
-                                                    app.emDimensionType.DIMENSION_1, this.getBindingContext().getObject());
+                                                    accounting.app.emDimensionType.DIMENSION_1, this.getBindingContext().getObject());
                                             }
                                         }).bindProperty("bindingValue", {
                                             path: "distributionRule1",
@@ -295,6 +295,7 @@ namespace accounting {
                                                 maxLength: 8
                                             }),
                                         }),
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_1)
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_journalentryline_distributionrule2"),
@@ -302,7 +303,7 @@ namespace accounting {
                                             showValueHelp: true,
                                             valueHelpRequest(): void {
                                                 that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
-                                                    app.emDimensionType.DIMENSION_2, this.getBindingContext().getObject());
+                                                    accounting.app.emDimensionType.DIMENSION_2, this.getBindingContext().getObject());
                                             }
                                         }).bindProperty("bindingValue", {
                                             path: "distributionRule2",
@@ -310,6 +311,7 @@ namespace accounting {
                                                 maxLength: 8
                                             }),
                                         }),
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_2)
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_journalentryline_distributionrule3"),
@@ -317,7 +319,7 @@ namespace accounting {
                                             showValueHelp: true,
                                             valueHelpRequest(): void {
                                                 that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
-                                                    app.emDimensionType.DIMENSION_3, this.getBindingContext().getObject());
+                                                    accounting.app.emDimensionType.DIMENSION_3, this.getBindingContext().getObject());
                                             }
                                         }).bindProperty("bindingValue", {
                                             path: "distributionRule3",
@@ -325,6 +327,39 @@ namespace accounting {
                                                 maxLength: 8
                                             }),
                                         }),
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_3)
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_journalentryline_distributionrule4"),
+                                        template: new sap.extension.m.Input("", {
+                                            showValueHelp: true,
+                                            valueHelpRequest(): void {
+                                                that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
+                                                    accounting.app.emDimensionType.DIMENSION_4, this.getBindingContext().getObject());
+                                            }
+                                        }).bindProperty("bindingValue", {
+                                            path: "distributionRule4",
+                                            type: new sap.extension.data.Alphanumeric({
+                                                maxLength: 8
+                                            }),
+                                        }),
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_4)
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_journalentryline_distributionrule5"),
+                                        template: new sap.extension.m.Input("", {
+                                            showValueHelp: true,
+                                            valueHelpRequest(): void {
+                                                that.fireViewEvents(that.chooseJournalEntryLineDistributionRuleEvent,
+                                                    accounting.app.emDimensionType.DIMENSION_5, this.getBindingContext().getObject());
+                                            }
+                                        }).bindProperty("bindingValue", {
+                                            path: "distributionRule5",
+                                            type: new sap.extension.data.Alphanumeric({
+                                                maxLength: 8
+                                            }),
+                                        }),
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_5)
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_journalentryline_reference3"),

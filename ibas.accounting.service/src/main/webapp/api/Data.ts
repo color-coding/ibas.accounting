@@ -34,6 +34,15 @@ namespace accounting {
         export function isEnableBranch(): boolean {
             return get(CONFIG_ITEM_ENABLE_BRANCH, false);
         }
+        /** 配置项目-启用维度 */
+        export const CONFIG_ITEM_ENABLE_DIMENSION: string = "enableDimension";
+        /**
+         * 是否启用维度
+         * @param dim 维度
+         */
+        export function isEnableDimension(dim: app.emDimensionType): boolean {
+            return get(ibas.strings.format("{0}|{1}", CONFIG_ITEM_ENABLE_DIMENSION, dim), false);
+        }
     }
     export namespace bo {
         /** 业务仓库名称 */
@@ -120,11 +129,11 @@ namespace accounting {
          * 维度类型
          */
         export enum emDimensionType {
-            DIMENSION_1,
-            DIMENSION_2,
-            DIMENSION_3,
-            DIMENSION_4,
-            DIMENSION_5,
+            DIMENSION_1 = "DIM01",
+            DIMENSION_2 = "DIM02",
+            DIMENSION_3 = "DIM03",
+            DIMENSION_4 = "DIM04",
+            DIMENSION_5 = "DIM05",
         }
         /**
          * 总账科目条件支持属性
