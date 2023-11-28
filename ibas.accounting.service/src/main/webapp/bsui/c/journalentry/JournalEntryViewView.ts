@@ -47,12 +47,23 @@ namespace accounting {
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_distributionrule1"),
+                                visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_1),
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_distributionrule2"),
+                                visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_2),
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_distributionrule3"),
+                                visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_3),
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_journalentryline_distributionrule4"),
+                                visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_4),
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_journalentryline_distributionrule5"),
+                                visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_5),
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_reference3"),
@@ -143,19 +154,36 @@ namespace accounting {
                                         bindingValue: {
                                             path: "distributionRule1",
                                             type: new sap.extension.data.Alphanumeric(),
-                                        }
+                                        },
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_1),
                                     }),
                                     new sap.extension.m.ObjectAttribute("", {
                                         bindingValue: {
                                             path: "distributionRule2",
                                             type: new sap.extension.data.Alphanumeric(),
-                                        }
+                                        },
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_2),
                                     }),
                                     new sap.extension.m.ObjectAttribute("", {
                                         bindingValue: {
                                             path: "distributionRule3",
                                             type: new sap.extension.data.Alphanumeric(),
-                                        }
+                                        },
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_3),
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "distributionRule4",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_4),
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "distributionRule5",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
+                                        visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_5),
                                     }),
                                     new sap.extension.m.ObjectAttribute("", {
                                         bindingValue: {

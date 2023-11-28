@@ -43,6 +43,26 @@ namespace accounting {
         export function isEnableDimension(dim: app.emDimensionType): boolean {
             return get(ibas.strings.format("{0}|{1}", CONFIG_ITEM_ENABLE_DIMENSION, dim), false);
         }
+        /** 配置项目-本币 */
+        export const CONFIG_ITEM_LOCAL_CURRENCY: string = "localCurrency";
+        /** 配置项目-系统币 */
+        export const CONFIG_ITEM_SYSTEM_CURRENCY: string = "systemCurrency";
+        /**
+         * 获取币种
+         * @param type 类型
+         */
+        export function currency(type: "LOCAL" | "SYSTEM"): string {
+            let currency: string;
+            if (type === "LOCAL") {
+                currency = get(CONFIG_ITEM_LOCAL_CURRENCY);
+            } else if (type === "SYSTEM") {
+                currency = get(CONFIG_ITEM_SYSTEM_CURRENCY);
+            }
+            if (ibas.objects.isNull(currency)) {
+                currency = ibas.config.get(ibas.CONFIG_ITEM_DEFAULT_CURRENCY);
+            }
+            return currency;
+        }
     }
     export namespace bo {
         /** 业务仓库名称 */

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
- namespace accounting {
+namespace accounting {
     export namespace app {
         /** 编辑应用-分支 */
         export class BranchEditApp extends ibas.BOEditApplication<IBranchEditView, bo.Branch> {
@@ -88,35 +88,64 @@
                 }
             }
             /** 保存数据 */
-            protected saveData(): void {
+            protected saveData(others?: bo.Branch[]): void {
                 this.busy(true);
-                let that: this = this;
-                let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
-                boRepository.saveBranch({
-                    beSaved: this.editData,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.Branch>): void {
-                        try {
-                            that.busy(false);
-                            if (opRslt.resultCode !== 0) {
-                                throw new Error(opRslt.message);
-                            }
-                            if (opRslt.resultObjects.length === 0) {
-                                // 删除成功，释放当前对象
-                                that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
-                                that.editData = undefined;
-                            } else {
-                                // 替换编辑对象
-                                that.editData = opRslt.resultObjects.firstOrDefault();
-                                that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
-                            }
-                            // 刷新当前视图
-                            that.viewShowed();
-                        } catch (error) {
-                            that.messages(error);
-                        }
+                if (ibas.objects.isNull(others)) {
+                    // 修改其他分支状态
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    // 其他标记主分支
+                    if (this.editData.main === ibas.emYesNo.YES) {
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = bo.Branch.PROPERTY_MAIN_NAME;
+                        condition.value = ibas.emYesNo.YES.toString();
+                        condition.bracketOpen = 1;
+                        condition = criteria.conditions.create();
+                        condition.alias = bo.Branch.PROPERTY_CODE_NAME;
+                        condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                        condition.value = this.editData.code;
+                        condition.bracketClose = 1;
                     }
+                    if (criteria.conditions.length > 1) {
+                        let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                        boRepository.fetchBranch({
+                            criteria: criteria,
+                            onCompleted: (opRslt) => {
+                                for (let item of opRslt.resultObjects) {
+                                    if (this.editData.main === ibas.emYesNo.YES) {
+                                        if (this.editData.main === item.main) {
+                                            item.main = ibas.emYesNo.NO;
+                                        }
+                                    }
+                                }
+                                this.saveData(opRslt.resultObjects.filter(c => c.isDirty === true));
+                            }
+                        }); return;
+                    }
+                }
+                let beSaveds: ibas.ArrayList<bo.Branch> = ibas.arrays.create(others);
+                beSaveds.add(this.editData);
+                let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                ibas.queues.execute(beSaveds, (data, next) => {
+                    // 处理数据
+                    boRepository.saveBranch({
+                        beSaved: data,
+                        onCompleted(opRslt: ibas.IOperationResult<bo.Branch>): void {
+                            if (opRslt.resultCode !== 0) {
+                                next(new Error(opRslt.message));
+                            } else {
+                                next();
+                            }
+                        }
+                    });
+                }, (error) => {
+                    // 处理完成
+                    if (error instanceof Error) {
+                        this.messages(ibas.emMessageType.ERROR, error.message);
+                    } else {
+                        this.messages(ibas.emMessageType.SUCCESS,
+                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                    }
+                    this.busy(false);
                 });
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }

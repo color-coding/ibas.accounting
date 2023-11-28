@@ -11,6 +11,7 @@ import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.accounting.logic.JournalEntryContent.Category;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
+import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
@@ -133,6 +134,10 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 				});
 				((JournalEntrySmartContent) item).caculate();
 			}
+			// 调试模式，0金额过滤
+			if (Decimal.isZero(item.getAmount()) && MyConfiguration.isDebugMode()) {
+				continue;
+			}
 			// 获取科目
 			if (DataConvert.isNullOrEmpty(item.getAccount())) {
 				item.setAccount(this.accountOf(item));
@@ -174,7 +179,14 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 			journalLine.setCredit(jeContent.getCategory() == Category.Credit ? jeContent.getAmount() : Decimal.ZERO);
 			journalLine.setCurrency(jeContent.getCurrency());
 		}
-		//
+		// 无分录行，则旧数据删除，新数据不保存
+		if (journal.getJournalEntryLines().where(c -> c.isSavable() && !c.isDeleted()).isEmpty()) {
+			if (journal.isNew()) {
+				((BusinessObject<?>) journal).unsavable();
+			} else {
+				journal.delete();
+			}
+		}
 	}
 
 	@Override
@@ -210,7 +222,6 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 		}
 		int periodYear = opRslt.getResultObjects().firstOrDefault().getObjectKey();
 		criteria = new Criteria();
-		criteria.setResultCount(1);
 		condition = criteria.getConditions().create();
 		condition.setAlias(PeriodLedgerAccount.PROPERTY_PERIOD.getName());
 		condition.setValue(periodYear);

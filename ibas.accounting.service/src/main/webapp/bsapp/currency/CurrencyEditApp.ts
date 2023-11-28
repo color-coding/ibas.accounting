@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
- namespace accounting {
+namespace accounting {
     export namespace app {
         /** 编辑应用-货币 */
         export class CurrencyEditApp extends ibas.BOEditApplication<ICurrencyEditView, bo.Currency> {
@@ -87,35 +87,84 @@
                 super.run.apply(this, arguments);
             }
             /** 保存数据 */
-            protected saveData(): void {
+            protected saveData(others?: bo.Currency[]): void {
                 this.busy(true);
-                let that: this = this;
-                let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
-                boRepository.saveCurrency({
-                    beSaved: this.editData,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.Currency>): void {
-                        try {
-                            that.busy(false);
-                            if (opRslt.resultCode !== 0) {
-                                throw new Error(opRslt.message);
-                            }
-                            if (opRslt.resultObjects.length === 0) {
-                                // 删除成功，释放当前对象
-                                that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
-                                that.editData = undefined;
-                            } else {
-                                // 替换编辑对象
-                                that.editData = opRslt.resultObjects.firstOrDefault();
-                                that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
-                            }
-                            // 刷新当前视图
-                            that.viewShowed();
-                        } catch (error) {
-                            that.messages(error);
-                        }
+                if (ibas.objects.isNull(others)) {
+                    // 修改其他币种状态
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    // 其他标记系统币
+                    if (this.editData.system === ibas.emYesNo.YES) {
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = bo.Currency.PROPERTY_SYSTEM_NAME;
+                        condition.value = ibas.emYesNo.YES.toString();
+                        condition.bracketOpen = 1;
+                        condition = criteria.conditions.create();
+                        condition.alias = bo.Currency.PROPERTY_CODE_NAME;
+                        condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                        condition.value = this.editData.code;
+                        condition.bracketClose = 1;
                     }
+                    // 其他标记本币
+                    if (this.editData.local === ibas.emYesNo.YES) {
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = bo.Currency.PROPERTY_LOCAL_NAME;
+                        condition.value = ibas.emYesNo.YES.toString();
+                        condition.bracketOpen = 1;
+                        if (criteria.conditions.length > 1) {
+                            condition.relationship = ibas.emConditionRelationship.OR;
+                        }
+                        condition = criteria.conditions.create();
+                        condition.alias = bo.Currency.PROPERTY_CODE_NAME;
+                        condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                        condition.value = this.editData.code;
+                        condition.bracketClose = 1;
+                    }
+                    if (criteria.conditions.length > 1) {
+                        let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                        boRepository.fetchCurrency({
+                            criteria: criteria,
+                            onCompleted: (opRslt) => {
+                                for (let item of opRslt.resultObjects) {
+                                    if (this.editData.system === ibas.emYesNo.YES) {
+                                        if (this.editData.system === item.system) {
+                                            item.system = ibas.emYesNo.NO;
+                                        }
+                                    }
+                                    if (this.editData.local === ibas.emYesNo.YES) {
+                                        if (this.editData.local === item.local) {
+                                            item.local = ibas.emYesNo.NO;
+                                        }
+                                    }
+                                }
+                                this.saveData(opRslt.resultObjects.filter(c => c.isDirty === true));
+                            }
+                        }); return;
+                    }
+                }
+                let beSaveds: ibas.ArrayList<bo.Currency> = ibas.arrays.create(others);
+                beSaveds.add(this.editData);
+                let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                ibas.queues.execute(beSaveds, (data, next) => {
+                    // 处理数据
+                    boRepository.saveCurrency({
+                        beSaved: data,
+                        onCompleted(opRslt: ibas.IOperationResult<bo.Currency>): void {
+                            if (opRslt.resultCode !== 0) {
+                                next(new Error(opRslt.message));
+                            } else {
+                                next();
+                            }
+                        }
+                    });
+                }, (error) => {
+                    // 处理完成
+                    if (error instanceof Error) {
+                        this.messages(ibas.emMessageType.ERROR, error.message);
+                    } else {
+                        this.messages(ibas.emMessageType.SUCCESS,
+                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                    }
+                    this.busy(false);
                 });
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
@@ -130,7 +179,7 @@
                     onCompleted(action: ibas.emMessageAction): void {
                         if (action === ibas.emMessageAction.YES) {
                             that.editData.delete();
-                            that.saveData();
+                            that.saveData([]);
                         }
                     }
                 });

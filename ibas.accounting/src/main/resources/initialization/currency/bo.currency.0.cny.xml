@@ -5,5 +5,7 @@
 	<Name>人民币</Name>
 	<ForeignName>Chinese Yuan</ForeignName>
 	<Activated>YES</Activated>
+	<System>YES</System>
+	<Local>YES</Local>
 	<ISO>CNY</ISO>
 </ns2:Currency>

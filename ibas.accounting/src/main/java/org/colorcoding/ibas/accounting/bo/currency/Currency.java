@@ -1,5 +1,8 @@
 package org.colorcoding.ibas.accounting.bo.currency;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -7,10 +10,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
+import org.colorcoding.ibas.accounting.logic.IApplicationConfigLocalCurrencyContract;
+import org.colorcoding.ibas.accounting.logic.IApplicationConfigSystemCurrencyContract;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -23,7 +30,7 @@ import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 @XmlType(name = Currency.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = Currency.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = Currency.BUSINESS_OBJECT_CODE)
-public class Currency extends BusinessObject<Currency> implements ICurrency {
+public class Currency extends BusinessObject<Currency> implements ICurrency, IBusinessLogicsHost {
 
 	/**
 	 * 序列化版本标记
@@ -710,6 +717,42 @@ public class Currency extends BusinessObject<Currency> implements ICurrency {
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setActivated(emYesNo.YES);
 
+	}
+
+	@Override
+	public IBusinessLogicContract[] getContracts() {
+		List<IBusinessLogicContract> contracts = new ArrayList<>();
+		// 系统币
+		if (this.getSystem() == emYesNo.YES) {
+			contracts.add(new IApplicationConfigSystemCurrencyContract() {
+
+				@Override
+				public String getIdentifiers() {
+					return Currency.this.toString();
+				}
+
+				@Override
+				public String getCurrency() {
+					return Currency.this.getCode();
+				}
+			});
+		}
+		// 本币
+		if (this.getLocal() == emYesNo.YES) {
+			contracts.add(new IApplicationConfigLocalCurrencyContract() {
+
+				@Override
+				public String getIdentifiers() {
+					return Currency.this.toString();
+				}
+
+				@Override
+				public String getCurrency() {
+					return Currency.this.getCode();
+				}
+			});
+		}
+		return contracts.toArray(new IBusinessLogicContract[] {});
 	}
 
 }
