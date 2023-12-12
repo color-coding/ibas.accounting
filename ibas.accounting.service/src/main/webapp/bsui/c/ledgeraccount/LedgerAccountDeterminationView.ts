@@ -589,6 +589,16 @@ namespace accounting {
 
                 showPostingPeriods(datas: bo.PeriodCategory[]): void {
                     this.periodSelect.setModel(new sap.extension.model.JSONModel(datas));
+                    for (let item of this.periodSelect.getItems()) {
+                        let data: any = item.getBindingContext().getObject();
+                        if (data instanceof bo.PeriodCategory) {
+                            if (ibas.dates.after(ibas.dates.today(), data.startDate)
+                                && ibas.dates.before(ibas.dates.today(), data.endDate)) {
+                                this.periodSelect.setSelectedItem(item);
+                                break;
+                            }
+                        }
+                    }
                 }
                 showLedgerAccounts(datas: bo.LedgerAccount[]): void {
                     let groups: ibas.IList<GroupLedgerAccount> = new ibas.ArrayList<GroupLedgerAccount>();

@@ -123,6 +123,9 @@ namespace accounting {
         export class ConsolePhone extends Console {
             /** 初始化 */
             protected registers(): void {
+                // 注册功能
+                this.register(new ProjectFunc());
+                // 注册服务应用
                 this.register(new ProjectChooseServiceMapping());
                 this.register(new ProjectLinkServiceMapping());
                 this.register(new TaxGroupChooseServiceMapping());

@@ -25,8 +25,14 @@ namespace accounting {
             protected newView(id: string): ibas.IView {
                 let view: ibas.IView = null;
                 switch (id) {
+                    case app.ProjectListApp.APPLICATION_ID:
+                        view = new m.ProjectListView();
+                        break;
                     case app.ProjectChooseApp.APPLICATION_ID:
                         view = new m.ProjectChooseView();
+                        break;
+                    case app.ProjectEditApp.APPLICATION_ID:
+                        view = new m.ProjectEditView();
                         break;
                     case app.ProjectViewApp.APPLICATION_ID:
                         view = new m.ProjectViewView();
