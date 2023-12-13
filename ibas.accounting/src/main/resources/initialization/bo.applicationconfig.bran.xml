@@ -6,6 +6,6 @@
 	<ConfigGroup>ac70d488-d8fc-478a-af00-c70ef779a50b</ConfigGroup>
 	<ConfigValue>false</ConfigValue>
 	<Settings>[{"Key":true,"Text":"是"},{"Key":false,"Text":"否"}]</Settings>
-	<Category>CLIENT</Category>
+	<Category>ALL</Category>
 	<Activated>YES</Activated>
 </ns:ApplicationConfig>

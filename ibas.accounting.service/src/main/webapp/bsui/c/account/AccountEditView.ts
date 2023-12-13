@@ -174,19 +174,16 @@ namespace accounting {
                         editable: true,
                         content: [
                             new sap.m.Toolbar("", { visible: false }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_account_branch") }),
-                            new sap.extension.m.RepositorySelect("", {
-                                repository: bo.BORepositoryAccounting,
-                                dataInfo: {
-                                    type: bo.Branch,
-                                    key: bo.Branch.PROPERTY_CODE_NAME,
-                                    text: bo.Branch.PROPERTY_NAME_NAME
-                                },
+                            new sap.m.Label("", {
+                                text: ibas.i18n.prop("bo_account_branch"),
+                                visible: accounting.config.isEnableBranch(),
+                            }),
+                            new sap.extension.m.BranchInput("", {
+                                showValueHelp: true,
+                                visible: accounting.config.isEnableBranch(),
                             }).bindProperty("bindingValue", {
                                 path: "branch",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 8
-                                }),
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_account_remarks") }),
                             new sap.extension.m.TextArea("", {

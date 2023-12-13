@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
+import org.colorcoding.ibas.accounting.logic.IBranchCheckContract;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
@@ -22,6 +23,8 @@ import org.colorcoding.ibas.bobas.data.emBOStatus;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -41,7 +44,7 @@ import org.colorcoding.ibas.bobas.rule.common.BusinessRuleSumElements;
 @XmlRootElement(name = JournalEntry.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = JournalEntry.BUSINESS_OBJECT_CODE)
 public class JournalEntry extends BusinessObject<JournalEntry>
-		implements IJournalEntry, IDataOwnership, IBOUserFields, ICheckRules {
+		implements IJournalEntry, IDataOwnership, IBOUserFields, ICheckRules, IBusinessLogicsHost {
 
 	/**
 	 * 序列化版本标记
@@ -1286,6 +1289,26 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 			}
 		}
 
+	}
+
+	@Override
+	public IBusinessLogicContract[] getContracts() {
+		return new IBusinessLogicContract[] {
+				// 分支检查
+				new IBranchCheckContract() {
+
+					@Override
+					public String getIdentifiers() {
+						return JournalEntry.this.toString();
+					}
+
+					@Override
+					public String getBranch() {
+						return JournalEntry.this.getBranch();
+					}
+				}
+
+		};
 	}
 
 }

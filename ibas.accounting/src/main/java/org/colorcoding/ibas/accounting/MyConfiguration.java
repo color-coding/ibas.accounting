@@ -59,6 +59,10 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	/**
 	 * 配置项目-开启分录创建服务
 	 */
-	public final static String CONFIG_ITEM_ENABLED_JOURNAL_ENTRY_SERVICE = "enabledJournalEntryService";
+	public final static String CONFIG_ITEM_ENABLE_JOURNAL_ENTRY_SERVICE = "enableJournalEntryService";
+	/**
+	 * 配置项目-开启分支
+	 */
+	public final static String CONFIG_ITEM_ENABLE_BRANCH = "enableBranch";
 
 }

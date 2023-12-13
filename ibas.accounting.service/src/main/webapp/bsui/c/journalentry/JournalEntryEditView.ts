@@ -379,23 +379,16 @@ namespace accounting {
                         editable: true,
                         content: [
                             new sap.m.Toolbar("", { visible: false }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_branch") }),
-                            new sap.extension.m.SelectionInput("", {
+                            new sap.m.Label("", {
+                                text: ibas.i18n.prop("bo_journalentry_branch"),
+                                visible: accounting.config.isEnableBranch(),
+                            }),
+                            new sap.extension.m.BranchInput("", {
                                 showValueHelp: true,
-                                repository: bo.BORepositoryAccounting,
-                                dataInfo: {
-                                    type: bo.Branch,
-                                    key: bo.Branch.PROPERTY_CODE_NAME,
-                                    text: bo.Branch.PROPERTY_NAME_NAME
-                                },
-                                criteria: [
-                                    new ibas.Condition(bo.Branch.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.NOT_EQUAL, ibas.emYesNo.YES.toString())
-                                ]
+                                visible: accounting.config.isEnableBranch(),
                             }).bindProperty("bindingValue", {
                                 path: "branch",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 8
-                                }),
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_project") }),
                             new sap.extension.m.SelectionInput("", {

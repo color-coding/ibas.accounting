@@ -38,7 +38,7 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 	public JournalEntryService() {
 		super();
 		this.setEnabled(
-				MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ENABLED_JOURNAL_ENTRY_SERVICE, false));
+				MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ENABLE_JOURNAL_ENTRY_SERVICE, false));
 	}
 
 	private boolean enabled;
@@ -175,8 +175,9 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 			} else {
 				journalLine.setShortName(jeContent.getShortName());
 			}
-			journalLine.setDebit(jeContent.getCategory() == Category.Debit ? jeContent.getAmount() : Decimal.ZERO);
-			journalLine.setCredit(jeContent.getCategory() == Category.Credit ? jeContent.getAmount() : Decimal.ZERO);
+			// 金额保存2位小数
+			journalLine.setDebit(jeContent.getCategory() == Category.Debit ? jeContent.getAmount(2) : Decimal.ZERO);
+			journalLine.setCredit(jeContent.getCategory() == Category.Credit ? jeContent.getAmount(2) : Decimal.ZERO);
 			journalLine.setCurrency(jeContent.getCurrency());
 		}
 		// 无分录行，则旧数据删除，新数据不保存

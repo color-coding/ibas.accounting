@@ -2,6 +2,8 @@ package org.colorcoding.ibas.accounting.logic;
 
 import java.math.BigDecimal;
 
+import org.colorcoding.ibas.bobas.data.Decimal;
+
 /**
  * 日记账分录内容
  */
@@ -71,6 +73,13 @@ public class JournalEntryContent {
 	private BigDecimal amount;
 
 	public final BigDecimal getAmount() {
+		return amount;
+	}
+
+	public final BigDecimal getAmount(int decimalPlaces) {
+		if (decimalPlaces > 0) {
+			return Decimal.round(this.amount, decimalPlaces);
+		}
 		return amount;
 	}
 
