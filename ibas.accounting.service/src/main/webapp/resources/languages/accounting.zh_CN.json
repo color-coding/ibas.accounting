@@ -63,6 +63,7 @@
   "accounting_func_ledgeraccountdetermination": "总账科目确定",
   "accounting_app_ledgeraccountdetermination": "总账科目确定",
   "accounting_app_ledgeraccountsetting": "总账科目设置",
+  "accounting_app_branchsetting": "默认分支设置",
   "accounting_service_dimension_data": "维度数据服务",
   "accounting_title_general": "常规信息",
   "accounting_title_others": "其他信息",
@@ -90,5 +91,7 @@
   "accounting_save_changed_data": "数据已修改，是否保存？",
   "accounting_continue_to_close_node": "结算[{0}]，操作后不可撤销，是否继续？",
   "accounting_ledgeraccount_setting": "科目设置",
+  "accounting_set_user_branch": "设置当前用户默认分支为[{0} - {1}]",
+  "accounting_not_found_branchs": "没有找到有效分支",
   "accounting_closing_delimiter": "----结束----"
 }

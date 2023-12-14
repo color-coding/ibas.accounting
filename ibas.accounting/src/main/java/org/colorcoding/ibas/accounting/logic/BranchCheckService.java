@@ -3,6 +3,7 @@ package org.colorcoding.ibas.accounting.logic;
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.branch.IBranch;
+import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
@@ -20,6 +21,8 @@ import org.colorcoding.ibas.bobas.message.MessageLevel;
 
 @LogicContract(IBranchCheckContract.class)
 public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBranch> {
+
+	private final static IBranch EMPTY_BRANCH = new _Branch();
 
 	public BranchCheckService() {
 		super();
@@ -48,6 +51,9 @@ public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBra
 
 	@Override
 	protected IBranch fetchBeAffected(IBranchCheckContract contract) {
+		if (DataConvert.isNullOrEmpty(contract.getBranch())) {
+			return EMPTY_BRANCH;
+		}
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(Branch.PROPERTY_CODE.getName());
@@ -80,8 +86,16 @@ public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBra
 		}
 		// 分支不存在
 		if (branch == null) {
-			throw new BusinessLogicException(
-					I18N.prop("msg_bp_branch_is_not_exist", contract.getBranch() == null ? "" : contract.getBranch()));
+			return EMPTY_BRANCH;
+		}
+		return branch;
+	}
+
+	@Override
+	protected void impact(IBranchCheckContract contract) {
+		IBranch branch = this.getBeAffected();
+		if (branch == EMPTY_BRANCH) {
+			throw new BusinessLogicException(I18N.prop("msg_ac_branch_is_not_exist"));
 		}
 		// 分支是否可用
 		if (branch.getActivated() == emYesNo.NO) {
@@ -92,11 +106,6 @@ public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBra
 			throw new BusinessLogicException(
 					I18N.prop("msg_bp_branch_is_unavailable", branch.getCode(), branch.getName()));
 		}
-		return branch;
-	}
-
-	@Override
-	protected void impact(IBranchCheckContract contract) {
 		if (this.getBeAffected().getReferenced() == emYesNo.NO) {
 			this.getBeAffected().setReferenced(emYesNo.YES);
 		}
@@ -104,6 +113,18 @@ public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBra
 
 	@Override
 	protected void revoke(IBranchCheckContract contract) {
+	}
+
+}
+
+class _Branch extends Branch {
+
+	private static final long serialVersionUID = 1L;
+
+	public _Branch() {
+		super();
+		this.setSavable(false);
+		this.setCode("$EMPTY");
 	}
 
 }

@@ -129,10 +129,14 @@ namespace accounting {
                     // 处理数据
                     boRepository.saveBranch({
                         beSaved: data,
-                        onCompleted(opRslt: ibas.IOperationResult<bo.Branch>): void {
+                        onCompleted: (opRslt) => {
                             if (opRslt.resultCode !== 0) {
                                 next(new Error(opRslt.message));
                             } else {
+                                if (opRslt.resultObjects.contain(c => c.code === this.editData.code)) {
+                                    this.editData = opRslt.resultObjects.firstOrDefault(c => c.code === this.editData.code);
+                                    this.view.showBranch(this.editData);
+                                }
                                 next();
                             }
                         }

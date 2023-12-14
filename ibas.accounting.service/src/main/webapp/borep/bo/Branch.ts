@@ -334,6 +334,28 @@ namespace accounting {
                 this.setProperty(Branch.PROPERTY_UPDATEACTIONID_NAME, value);
             }
 
+            /** 映射的属性名称-已引用 */
+            static PROPERTY_REFERENCED_NAME: string = "Referenced";
+            /** 获取-已引用 */
+            get referenced(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Branch.PROPERTY_REFERENCED_NAME);
+            }
+            /** 设置-已引用 */
+            set referenced(value: ibas.emYesNo) {
+                this.setProperty(Branch.PROPERTY_REFERENCED_NAME, value);
+            }
+
+            /** 映射的属性名称-删除的 */
+            static PROPERTY_DELETED_NAME: string = "Deleted";
+            /** 获取-删除的 */
+            get deleted(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Branch.PROPERTY_DELETED_NAME);
+            }
+            /** 设置-删除的 */
+            set deleted(value: ibas.emYesNo) {
+                this.setProperty(Branch.PROPERTY_DELETED_NAME, value);
+            }
+
             /** 映射的属性名称-备注 */
             static PROPERTY_REMARKS_NAME: string = "Remarks";
             /** 获取-备注 */

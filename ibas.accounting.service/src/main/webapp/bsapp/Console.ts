@@ -53,6 +53,9 @@ namespace accounting {
                 this.register(new JournalEntryLinkServiceMapping());
                 this.register(new LedgerAccountSettingServiceMapping());
                 // 注册常驻应用
+                if (config.isEnableBranch()) {
+                    this.register(new BranchSettingApplicationMapping());
+                }
 
             }
             /** 运行 */
@@ -107,7 +110,9 @@ namespace accounting {
                 this.register(new TaxGroupFunc());
                 this.register(new CurrencyFunc());
                 this.register(new DimensionFunc());
-                this.register(new BranchFunc());
+                if (config.isEnableBranch()) {
+                    this.register(new BranchFunc());
+                }
                 // 注册服务应用
                 this.register(new CostItemChooseServiceMapping());
                 this.register(new CurrencyChooseServiceMapping());

@@ -8,9 +8,9 @@
     <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="ValidDate" Description="生效日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="ValidDate"/>
     <Property Name="InvalidDate" Description="失效日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="InvalidDate"/>
-	<Property Name="Main" Description="主要的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Main"/>
-	<Property Name="Customer" Description="客户" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Customer"/>
-	<Property Name="Supplier" Description="供应商" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Supplier"/>
+    <Property Name="Main" Description="主要的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Main"/>
+    <Property Name="Customer" Description="客户" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Customer"/>
+    <Property Name="Supplier" Description="供应商" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Supplier"/>
     <Property Name="Warehouse" Description="仓库" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Warehouse"/>
     <Property Name="Street" Description="街道" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Street"/>
     <Property Name="District" Description="县/区" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="District"/>

@@ -52,6 +52,9 @@ namespace accounting {
                     case app.CurrencyChooseApp.APPLICATION_ID:
                         view = new m.CurrencyChooseView();
                         break;
+                    case app.BranchSettingApp.APPLICATION_ID:
+                        view = new m.BranchSettingView();
+                        break;
                     default:
                         break;
                 }

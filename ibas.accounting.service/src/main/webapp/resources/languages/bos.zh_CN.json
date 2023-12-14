@@ -357,6 +357,8 @@
         "bo_branch_updateusersign": "修改用户",
         "bo_branch_createactionid": "创建动作标识",
         "bo_branch_updateactionid": "更新动作标识",
+        "bo_branch_referenced": "已引用",
+        "bo_branch_deleted": "删除的",
         "bo_branch_remarks": "备注",
         "bo_branch_closing_delimiter": "----结束----"
     },

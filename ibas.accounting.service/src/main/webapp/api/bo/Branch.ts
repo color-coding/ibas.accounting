@@ -67,6 +67,10 @@ namespace accounting {
             createActionId: string;
             /** 更新动作标识 */
             updateActionId: string;
+            /** 已引用 */
+            referenced: ibas.emYesNo;
+            /** 删除的 */
+            deleted: ibas.emYesNo;
             /** 备注 */
             remarks: string;
 

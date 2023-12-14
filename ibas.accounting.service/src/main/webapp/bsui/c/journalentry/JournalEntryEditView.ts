@@ -380,10 +380,11 @@ namespace accounting {
                         content: [
                             new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", {
-                                text: ibas.i18n.prop("bo_journalentry_branch"),
+                                required: true,
                                 visible: accounting.config.isEnableBranch(),
+                                text: ibas.i18n.prop("bo_journalentry_branch"),
                             }),
-                            new sap.extension.m.BranchInput("", {
+                            new sap.extension.m.DataBranchInput("", {
                                 showValueHelp: true,
                                 visible: accounting.config.isEnableBranch(),
                             }).bindProperty("bindingValue", {

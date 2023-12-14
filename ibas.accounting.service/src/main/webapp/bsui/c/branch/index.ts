@@ -9,3 +9,4 @@
 /// <reference path="./BranchChooseView.ts" />
 /// <reference path="./BranchViewView.ts" />
 /// <reference path="./BranchEditView.ts" />
+/// <reference path="./BranchSettingView.ts" />

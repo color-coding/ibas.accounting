@@ -130,6 +130,9 @@ namespace accounting {
                     case app.BranchEditApp.APPLICATION_ID:
                         view = new c.BranchEditView();
                         break;
+                    case app.BranchSettingApp.APPLICATION_ID:
+                        view = new c.BranchSettingView();
+                        break;
                     case app.JournalEntryListApp.APPLICATION_ID:
                         view = new c.JournalEntryListView();
                         break;

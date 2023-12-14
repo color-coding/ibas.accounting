@@ -10,3 +10,4 @@
 /// <reference path="./BranchChooseApp.ts" />
 /// <reference path="./BranchViewApp.ts" />
 /// <reference path="./BranchEditApp.ts" />
+/// <reference path="./BranchSettingApp.ts" />
