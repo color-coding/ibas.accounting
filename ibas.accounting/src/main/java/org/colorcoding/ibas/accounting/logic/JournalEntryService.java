@@ -132,7 +132,12 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 						return JournalEntryService.this;
 					}
 				});
-				((JournalEntrySmartContent) item).caculate();
+				try {
+					((JournalEntrySmartContent) item).caculate();
+				} catch (Exception e) {
+					throw new BusinessLogicException(
+							I18N.prop("msg_ac_business_logic_caculate_error", item.getSourceData(), e.getMessage()));
+				}
 			}
 			// 调试模式，0金额过滤
 			if (Decimal.isZero(item.getAmount()) && MyConfiguration.isDebugMode()) {

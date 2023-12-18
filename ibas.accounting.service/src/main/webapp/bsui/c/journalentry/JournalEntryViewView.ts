@@ -306,15 +306,27 @@ namespace accounting {
                             new sap.ui.layout.VerticalLayout("", {
                                 width: "30%",
                                 content: [
-                                    new sap.extension.m.ObjectAttribute("", {
+                                    new sap.extension.m.RepositoryObjectAttribute("", {
                                         title: ibas.i18n.prop("bo_journalentry_branch"),
+                                        repository: bo.BORepositoryAccounting,
+                                        dataInfo: {
+                                            type: bo.Branch,
+                                            key: bo.Branch.PROPERTY_CODE_NAME,
+                                            text: bo.Branch.PROPERTY_NAME_NAME
+                                        },
                                         bindingValue: {
                                             path: "branch",
                                             type: new sap.extension.data.Alphanumeric(),
                                         }
                                     }),
-                                    new sap.extension.m.ObjectAttribute("", {
+                                    new sap.extension.m.RepositoryObjectAttribute("", {
                                         title: ibas.i18n.prop("bo_journalentry_project"),
+                                        repository: bo.BORepositoryAccounting,
+                                        dataInfo: {
+                                            type: bo.Project,
+                                            key: bo.Project.PROPERTY_CODE_NAME,
+                                            text: bo.Project.PROPERTY_NAME_NAME
+                                        },
                                         bindingValue: {
                                             path: "project",
                                             type: new sap.extension.data.Alphanumeric(),

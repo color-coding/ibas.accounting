@@ -400,8 +400,10 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 										journal.setAmount(nItem.getBudget().subtract(nItem.getLocked())
 												.subtract(nItem.getIncurred()));
 										journal.setCurrency(nItem.getCurrency());
-										// 结转后预算金额 = 已发生金额
-										nItem.setBudget(nItem.getIncurred());
+										// 结转后预算金额 = 已发生金额， 最后一个不结转
+										if (i < nodes.size() - 1) {
+											nItem.setBudget(nItem.getIncurred());
+										}
 										if (journal.getAmount().compareTo(Decimal.ZERO) <= 0) {
 											// 跳过可用金额小于等于0
 											continue;
@@ -469,8 +471,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 				}
 			} else {
 				// 结算结构
-				/*
-				 * 不改变节点状态，否则无法恢复
+				/* 不改变节点状态，否则无法恢复
 				 * 
 				 * Consumer<ICostStructureNodes> closeNode = new Consumer<ICostStructureNodes>()
 				 * {
@@ -479,8 +480,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 				 * item : t) { item.setStatus(emCostStatus.CLOSED);
 				 * this.accept(item.getCostStructureNodes()); }
 				 * 
-				 * } }; closeNode.accept(costStructure.getCostStructureNodes());
-				 */
+				 * } }; closeNode.accept(costStructure.getCostStructureNodes()); */
 				costStructure.setStatus(action);
 			}
 			boolean myTrans = false;
