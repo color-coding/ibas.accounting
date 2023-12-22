@@ -8,6 +8,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.colorcoding.ibas.accounting.bo.account.Account;
+import org.colorcoding.ibas.accounting.bo.bank.Bank;
+import org.colorcoding.ibas.accounting.bo.bank.BankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
@@ -460,6 +462,67 @@ public class DataService extends BORepositoryAccounting {
 		return super.fetchLedgerConditionProperty(criteria, token);
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBank")
+	public OperationResult<Bank> fetchBank(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchBank(criteria, token);
+	}
+
+	/**
+	 * 保存-银行
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveBank")
+	public OperationResult<Bank> saveBank(Bank bo, @QueryParam("token") String token) {
+		return super.saveBank(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行账户
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBankAccount")
+	public OperationResult<BankAccount> fetchBankAccount(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchBankAccount(criteria, token);
+	}
+
+	/**
+	 * 保存-银行账户
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveBankAccount")
+	public OperationResult<BankAccount> saveBankAccount(BankAccount bo, @QueryParam("token") String token) {
+		return super.saveBankAccount(bo, token);
+	}
 	// --------------------------------------------------------------------------------------------//
 
 }

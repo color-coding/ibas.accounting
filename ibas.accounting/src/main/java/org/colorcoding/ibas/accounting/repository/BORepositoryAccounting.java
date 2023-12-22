@@ -5,6 +5,10 @@ import java.util.function.Function;
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.bo.account.Account;
 import org.colorcoding.ibas.accounting.bo.account.IAccount;
+import org.colorcoding.ibas.accounting.bo.bank.Bank;
+import org.colorcoding.ibas.accounting.bo.bank.BankAccount;
+import org.colorcoding.ibas.accounting.bo.bank.IBank;
+import org.colorcoding.ibas.accounting.bo.bank.IBankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.branch.IBranch;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.CostItemJournal;
@@ -471,7 +475,8 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 				}
 			} else {
 				// 结算结构
-				/* 不改变节点状态，否则无法恢复
+				/*
+				 * 不改变节点状态，否则无法恢复
 				 * 
 				 * Consumer<ICostStructureNodes> closeNode = new Consumer<ICostStructureNodes>()
 				 * {
@@ -480,7 +485,8 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 				 * item : t) { item.setStatus(emCostStatus.CLOSED);
 				 * this.accept(item.getCostStructureNodes()); }
 				 * 
-				 * } }; closeNode.accept(costStructure.getCostStructureNodes()); */
+				 * } }; closeNode.accept(costStructure.getCostStructureNodes());
+				 */
 				costStructure.setStatus(action);
 			}
 			boolean myTrans = false;
@@ -906,6 +912,92 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	public IOperationResult<ILedgerConditionProperty> saveLedgerConditionProperty(ILedgerConditionProperty bo) {
 		return new OperationResult<ILedgerConditionProperty>(
 				this.saveLedgerConditionProperty((LedgerConditionProperty) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Bank> fetchBank(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, Bank.class);
+	}
+
+	/**
+	 * 查询-银行（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBank> fetchBank(ICriteria criteria) {
+		return new OperationResult<IBank>(this.fetchBank(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-银行
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Bank> saveBank(Bank bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-银行（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBank> saveBank(IBank bo) {
+		return new OperationResult<IBank>(this.saveBank((Bank) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行账户
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BankAccount> fetchBankAccount(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, BankAccount.class);
+	}
+
+	/**
+	 * 查询-银行账户（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBankAccount> fetchBankAccount(ICriteria criteria) {
+		return new OperationResult<IBankAccount>(this.fetchBankAccount(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-银行账户
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BankAccount> saveBankAccount(BankAccount bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-银行账户（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBankAccount> saveBankAccount(IBankAccount bo) {
+		return new OperationResult<IBankAccount>(this.saveBankAccount((BankAccount) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

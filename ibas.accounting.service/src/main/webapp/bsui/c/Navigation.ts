@@ -17,6 +17,8 @@
 /// <reference path="./branch/index.ts" />
 /// <reference path="./journalentry/index.ts" />
 /// <reference path="./ledgeraccount/index.ts" />
+/// <reference path="./bank/index.ts" />
+/// <reference path="./bankaccount/index.ts" />
 namespace accounting {
     export namespace ui {
         /** 视图导航 */
@@ -150,6 +152,30 @@ namespace accounting {
                         break;
                     case app.LedgerAccountSettingService.APPLICATION_ID:
                         view = new c.LedgerAccountSettingView();
+                        break;
+                    case app.BankListApp.APPLICATION_ID:
+                        view = new c.BankListView();
+                        break;
+                    case app.BankChooseApp.APPLICATION_ID:
+                        view = new c.BankChooseView();
+                        break;
+                    case app.BankViewApp.APPLICATION_ID:
+                        view = new c.BankViewView();
+                        break;
+                    case app.BankEditApp.APPLICATION_ID:
+                        view = new c.BankEditView();
+                        break;
+                    case app.BankAccountListApp.APPLICATION_ID:
+                        view = new c.BankAccountListView();
+                        break;
+                    case app.BankAccountChooseApp.APPLICATION_ID:
+                        view = new c.BankAccountChooseView();
+                        break;
+                    case app.BankAccountViewApp.APPLICATION_ID:
+                        view = new c.BankAccountViewView();
+                        break;
+                    case app.BankAccountEditApp.APPLICATION_ID:
+                        view = new c.BankAccountEditView();
                         break;
                     default:
                         break;

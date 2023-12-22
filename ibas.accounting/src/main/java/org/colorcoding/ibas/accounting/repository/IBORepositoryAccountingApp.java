@@ -1,6 +1,8 @@
 package org.colorcoding.ibas.accounting.repository;
 
 import org.colorcoding.ibas.accounting.bo.account.IAccount;
+import org.colorcoding.ibas.accounting.bo.bank.IBank;
+import org.colorcoding.ibas.accounting.bo.bank.IBankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.IBranch;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.ICostItem;
@@ -289,6 +291,39 @@ public interface IBORepositoryAccountingApp extends IBORepositoryApplication {
 	 */
 	IOperationResult<ILedgerConditionProperty> saveLedgerConditionProperty(ILedgerConditionProperty bo);
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IBank> fetchBank(ICriteria criteria);
+
+	/**
+	 * 保存-银行
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IBank> saveBank(IBank bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行账户
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IBankAccount> fetchBankAccount(ICriteria criteria);
+
+	/**
+	 * 保存-银行账户
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IBankAccount> saveBankAccount(IBankAccount bo);
 	// --------------------------------------------------------------------------------------------//
 
 }

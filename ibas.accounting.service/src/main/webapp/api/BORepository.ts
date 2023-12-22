@@ -139,6 +139,26 @@ namespace accounting {
              * @param fetcher 查询者
              */
             fetchLedgerConditionProperty(fetcher: ibas.IFetchCaller<bo.ILedgerConditionProperty>): void;
+            /**
+             * 查询 银行
+             * @param fetcher 查询者
+             */
+            fetchBank(fetcher: ibas.IFetchCaller<bo.IBank>): void;
+            /**
+             * 保存 银行
+             * @param saver 保存者
+             */
+            saveBank(saver: ibas.ISaveCaller<bo.IBank>): void;
+            /**
+             * 查询 银行账户
+             * @param fetcher 查询者
+             */
+            fetchBankAccount(fetcher: ibas.IFetchCaller<bo.IBankAccount>): void;
+            /**
+             * 保存 银行账户
+             * @param saver 保存者
+             */
+            saveBankAccount(saver: ibas.ISaveCaller<bo.IBankAccount>): void;
 
         }
     }

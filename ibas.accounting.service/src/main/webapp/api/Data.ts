@@ -97,6 +97,10 @@ namespace accounting {
         export const BO_CODE_PERIODLEDGERACCOUNT: string = "${Company}_AC_PERIODLACCOUNT";
         /** 业务对象编码-分类账条件属性 */
         export const BO_CODE_LEDGERCONDITIONPROPERTY: string = "${Company}_AC_LCONDPTY";
+        /** 业务对象编码-银行 */
+        export const BO_CODE_BANK: string = "${Company}_AC_BANK";
+        /** 业务对象编码-银行账户 */
+        export const BO_CODE_BANKACCOUNT: string = "${Company}_AC_BANKACONT";
         /**
          * 期间状态
          */

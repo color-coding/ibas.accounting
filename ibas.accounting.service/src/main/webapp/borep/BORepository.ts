@@ -260,6 +260,35 @@ namespace accounting {
             fetchLedgerConditionProperty(fetcher: ibas.IFetchCaller<bo.LedgerConditionProperty>): void {
                 super.fetch(bo.LedgerConditionProperty.name, fetcher);
             }
+            /**
+             * 查询 银行
+             * @param fetcher 查询者
+             */
+            fetchBank(fetcher: ibas.IFetchCaller<bo.Bank>): void {
+                super.fetch(bo.Bank.name, fetcher);
+            }
+            /**
+             * 保存 银行
+             * @param saver 保存者
+             */
+            saveBank(saver: ibas.ISaveCaller<bo.Bank>): void {
+                super.save(bo.Bank.name, saver);
+            }
+
+            /**
+             * 查询 银行账户
+             * @param fetcher 查询者
+             */
+            fetchBankAccount(fetcher: ibas.IFetchCaller<bo.BankAccount>): void {
+                super.fetch(bo.BankAccount.name, fetcher);
+            }
+            /**
+             * 保存 银行账户
+             * @param saver 保存者
+             */
+            saveBankAccount(saver: ibas.ISaveCaller<bo.BankAccount>): void {
+                super.save(bo.BankAccount.name, saver);
+            }
 
         }
         /**

@@ -20,4 +20,6 @@
 /// <reference path="./bo/PeriodLedgerAccount.ts" />
 /// <reference path="./bo/LedgerAccount.ts" />
 /// <reference path="./bo/LedgerConditionProperty.ts" />
+/// <reference path="./bo/Bank.ts" />
+/// <reference path="./bo/BankAccount.ts" />
 /// <reference path="./BORepository.ts" />

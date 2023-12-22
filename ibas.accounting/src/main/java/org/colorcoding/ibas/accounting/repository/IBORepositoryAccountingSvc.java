@@ -1,6 +1,8 @@
 package org.colorcoding.ibas.accounting.repository;
 
 import org.colorcoding.ibas.accounting.bo.account.Account;
+import org.colorcoding.ibas.accounting.bo.bank.Bank;
+import org.colorcoding.ibas.accounting.bo.bank.BankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.CostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
@@ -322,6 +324,43 @@ public interface IBORepositoryAccountingSvc extends IBORepositorySmartService {
 	 */
 	OperationResult<LedgerConditionProperty> saveLedgerConditionProperty(LedgerConditionProperty bo, String token);
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<Bank> fetchBank(ICriteria criteria, String token);
+
+	/**
+	 * 保存-银行
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<Bank> saveBank(Bank bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-银行账户
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<BankAccount> fetchBankAccount(ICriteria criteria, String token);
+
+	/**
+	 * 保存-银行账户
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<BankAccount> saveBankAccount(BankAccount bo, String token);
 	// --------------------------------------------------------------------------------------------//
 
 }

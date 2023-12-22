@@ -14,6 +14,8 @@
 /// <reference path="./account/index.ts" />
 /// <reference path="./branch/index.ts" />
 /// <reference path="./journalentry/index.ts" />
+/// <reference path="./bank/index.ts" />
+/// <reference path="./bankaccount/index.ts" />
 namespace accounting {
     export namespace ui {
         /** 视图导航 */
@@ -54,6 +56,12 @@ namespace accounting {
                         break;
                     case app.BranchSettingApp.APPLICATION_ID:
                         view = new m.BranchSettingView();
+                        break;
+                    case app.BankChooseApp.APPLICATION_ID:
+                        view = new m.BankChooseView();
+                        break;
+                    case app.BankAccountChooseApp.APPLICATION_ID:
+                        view = new m.BankAccountChooseView();
                         break;
                     default:
                         break;

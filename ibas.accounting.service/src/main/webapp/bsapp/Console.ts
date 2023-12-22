@@ -17,6 +17,8 @@
 /// <reference path="./branch/index.ts" />
 /// <reference path="./journalentry/index.ts" />
 /// <reference path="./ledgeraccount/index.ts" />
+/// <reference path="./bank/index.ts" />
+/// <reference path="./bankaccount/index.ts" />
 namespace accounting {
     export namespace app {
         /** 属性-导航 */
@@ -107,6 +109,7 @@ namespace accounting {
                 this.register(new LedgerAccountDeterminationFunc());
                 this.register(new PostingPeriodFunc());
                 this.register(new CostItemFunc());
+                this.register(new BankAccountFunc());
                 this.register(new TaxGroupFunc());
                 this.register(new CurrencyFunc());
                 this.register(new DimensionFunc());
@@ -122,6 +125,10 @@ namespace accounting {
                 this.register(new TaxGroupChooseServiceMapping());
                 this.register(new BranchChooseServiceMapping());
                 this.register(new BranchLinkServiceMapping());
+                this.register(new BankChooseServiceMapping());
+                this.register(new BankLinkServiceMapping());
+                this.register(new BankAccountChooseServiceMapping());
+                this.register(new BankAccountLinkServiceMapping());
             }
         }
         /** 模块控制台 */
@@ -137,6 +144,8 @@ namespace accounting {
                 this.register(new CostStructureChooseServiceMapping());
                 this.register(new CostStructureNodeChooseServiceMapping());
                 this.register(new CostItemChooseServiceMapping());
+                this.register(new BankChooseServiceMapping());
+                this.register(new BankAccountChooseServiceMapping());
             }
         }
     }
