@@ -20,6 +20,8 @@ namespace accounting {
                 deletePostingPeriodAccountEvent: Function;
                 /** 保存过账期间总账科目事件 */
                 savePostingPeriodAccountEvent: Function;
+                /** 复制从期间总账科目事件 */
+                copyLedgerAccountsEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -104,9 +106,25 @@ namespace accounting {
                                                 })
                                             }
                                         }),
-                                        new sap.m.Button("", {
+                                        new sap.m.MenuButton("", {
+                                            type: sap.m.ButtonType.Transparent,
                                             icon: "sap-icon://refresh",
-                                            press(): void {
+                                            useDefaultActionOnly: true,
+                                            buttonMode: sap.m.MenuButtonMode.Split,
+                                            menuPosition: sap.ui.core.Popup.Dock.EndBottom,
+                                            menu: new sap.m.Menu("", {
+                                                items: [
+                                                    new sap.m.MenuItem("", {
+                                                        icon: "sap-icon://mirrored-task-circle",
+                                                        text: ibas.i18n.prop("accounting_copy_period"),
+                                                        press: function (): void {
+                                                            that.fireViewEvents(that.copyLedgerAccountsEvent,
+                                                                that.periodSelect.getSelectedItem()?.getBindingContext()?.getObject());
+                                                        }
+                                                    }),
+                                                ]
+                                            }),
+                                            defaultAction(): void {
                                                 for (let list of that.ledgerPage.getContent()) {
                                                     if (list instanceof sap.extension.m.List) {
                                                         let selected: any = list.getSelecteds().firstOrDefault();
@@ -118,7 +136,7 @@ namespace accounting {
                                                     }
                                                 }
                                             }
-                                        })
+                                        }),
                                     ]
                                 }),
                             })

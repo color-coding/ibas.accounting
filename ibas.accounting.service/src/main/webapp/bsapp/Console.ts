@@ -120,6 +120,7 @@ namespace accounting {
                 this.register(new CostItemChooseServiceMapping());
                 this.register(new CurrencyChooseServiceMapping());
                 this.register(new PostingPeriodChooseServiceMapping());
+                this.register(new PeriodCategoryChooseServiceMapping());
                 this.register(new DimensionChooseServiceMapping());
                 this.register(new DimensionDataServiceMapping());
                 this.register(new TaxGroupChooseServiceMapping());

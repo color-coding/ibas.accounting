@@ -28,6 +28,7 @@ namespace accounting {
                 this.view.createPostingPeriodAccountEvent = this.createPostingPeriodAccount;
                 this.view.choosePostingPeriodAccountAccountEvent = this.choosePostingPeriodAccountAccount;
                 this.view.deletePostingPeriodAccountEvent = this.deletePostingPeriodAccount;
+                this.view.copyLedgerAccountsEvent = this.copyLedgerAccountsEvent;
             }
             protected periodAccounts: ibas.IList<bo.PeriodLedgerAccount> = new ibas.ArrayList<bo.PeriodLedgerAccount>();
             protected conditionProperties: ibas.IList<bo.LedgerConditionProperty> = new ibas.ArrayList<bo.LedgerConditionProperty>();
@@ -284,6 +285,99 @@ namespace accounting {
                     this.view.showPostingPeriodAccounts(this.periodAccounts.filter(c => c.isDeleted === false));
                 }
             }
+            /** 复制从期间总账科目事件 */
+            private copyLedgerAccountsEvent(period: bo.PeriodCategory): void {
+                if (ibas.objects.isNull(period)) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("bo_periodledgeraccount_period")
+                    )); return;
+                }
+                let that: this = this;
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.PeriodCategory.PROPERTY_OBJECTKEY_NAME;
+                condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                condition.value = period.objectKey.toString();
+
+                ibas.servicesManager.runChooseService<bo.PeriodCategory>({
+                    chooseType: ibas.emChooseType.SINGLE,
+                    boCode: bo.PeriodCategory.BUSINESS_OBJECT_CODE,
+                    criteria: criteria,
+                    onCompleted(selecteds: ibas.IList<bo.PeriodCategory>): void {
+                        for (let selected of selecteds) {
+                            that.messages({
+                                type: ibas.emMessageType.QUESTION,
+                                message: ibas.i18n.prop("accounting_copy_ledgeraccounts_continue", selected.name, period.name),
+                                actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
+                                onCompleted(action: ibas.emMessageAction): void {
+                                    if (action !== ibas.emMessageAction.YES) {
+                                        return;
+                                    }
+                                    that.busy(true);
+                                    // 加载并保存被复制内容
+                                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                                    let condition: ibas.ICondition = criteria.conditions.create();
+                                    condition.alias = bo.PeriodLedgerAccount.PROPERTY_PERIOD_NAME;
+                                    condition.value = selected.objectKey.toString();
+                                    condition = criteria.conditions.create();
+                                    condition.alias = bo.PeriodLedgerAccount.PROPERTY_ACTIVATED_NAME;
+                                    condition.value = ibas.emYesNo.YES.toString();
+                                    let sort: ibas.ISort = criteria.sorts.create();
+                                    sort.alias = bo.PeriodLedgerAccount.PROPERTY_ORDER_NAME;
+                                    sort.sortType = ibas.emSortType.ASCENDING;
+                                    let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                                    boRepository.fetchPeriodLedgerAccount({
+                                        criteria: criteria,
+                                        onCompleted: (opRslt) => {
+                                            try {
+                                                if (opRslt.resultCode !== 0) {
+                                                    throw new Error(opRslt.message);
+                                                }
+                                                for (let item of opRslt.resultObjects) {
+                                                    item.markNew();
+                                                    item.reset();
+                                                    item.period = period.objectKey;
+                                                }
+                                                // 保存数据
+                                                ibas.queues.execute(opRslt.resultObjects, (data, next) => {
+                                                    boRepository.savePeriodLedgerAccount({
+                                                        beSaved: data,
+                                                        onCompleted(opRslt: ibas.IOperationResult<bo.PeriodLedgerAccount>): void {
+                                                            if (opRslt.resultCode !== 0) {
+                                                                next(new Error(ibas.i18n.prop("shell_data_save_error", data, opRslt.message)));
+                                                            } else {
+                                                                let index: number = opRslt.resultObjects.indexOf(data);
+                                                                if (index >= 0) {
+                                                                    if (data.isDeleted) {
+                                                                        opRslt.resultObjects.remove(data);
+                                                                    } else {
+                                                                        opRslt.resultObjects[index] = opRslt.resultObjects.firstOrDefault();
+                                                                    }
+                                                                }
+                                                                next();
+                                                            }
+                                                        }
+                                                    });
+                                                }, (error) => {
+                                                    // 处理完成
+                                                    if (error instanceof Error) {
+                                                        that.messages(ibas.emMessageType.ERROR, error.message);
+                                                    } else {
+                                                        that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("accounting_copy_sucessful", opRslt.resultObjects.length));
+                                                    }
+                                                    that.busy(false);
+                                                });
+                                            } catch (error) {
+                                                that.messages(error);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
         }
         /** 视图-分类账 */
         export interface ILedgerAccountDeterminationView extends ibas.IView {
@@ -303,6 +397,8 @@ namespace accounting {
             choosePostingPeriodAccountAccountEvent: Function;
             /** 保存过账期间总账科目事件 */
             savePostingPeriodAccountEvent: Function;
+            /** 复制从期间总账科目事件 */
+            copyLedgerAccountsEvent: Function;
         }
     }
 }

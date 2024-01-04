@@ -103,5 +103,8 @@
   "accounting_ledgeraccount_setting": "科目设置",
   "accounting_set_user_branch": "设置当前用户默认分支为[{0} - {1}]",
   "accounting_not_found_branchs": "没有找到有效分支",
+  "accounting_copy_period": "复制从期间",
+  "accounting_copy_ledgeraccounts_continue": "复制并保存期间[{0}]的总账科目设置到期间[{1}]，是否继续？",
+  "accounting_copy_sucessful": "成功复制数据[{0}]条",
   "accounting_closing_delimiter": "----结束----"
 }
