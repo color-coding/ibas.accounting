@@ -14,6 +14,7 @@ import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
 import org.colorcoding.ibas.accounting.bo.currency.Currency;
+import org.colorcoding.ibas.accounting.bo.currency.CurrencyRate;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
 import org.colorcoding.ibas.accounting.bo.journalentry.JournalEntry;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.LedgerAccount;
@@ -523,6 +524,38 @@ public class DataService extends BORepositoryAccounting {
 	public OperationResult<BankAccount> saveBankAccount(BankAccount bo, @QueryParam("token") String token) {
 		return super.saveBankAccount(bo, token);
 	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-货币汇率
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchCurrencyRate")
+	public OperationResult<CurrencyRate> fetchCurrencyRate(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchCurrencyRate(criteria, token);
+	}
+
+	/**
+	 * 保存-货币汇率
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveCurrencyRate")
+	public OperationResult<CurrencyRate> saveCurrencyRate(CurrencyRate bo, @QueryParam("token") String token) {
+		return super.saveCurrencyRate(bo, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 
 }

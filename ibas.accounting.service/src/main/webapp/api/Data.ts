@@ -101,6 +101,8 @@ namespace accounting {
         export const BO_CODE_BANK: string = "${Company}_AC_BANK";
         /** 业务对象编码-银行账户 */
         export const BO_CODE_BANKACCOUNT: string = "${Company}_AC_BANKACONT";
+        /** 业务对象编码-货币汇率 */
+        export const BO_CODE_CURRENCYRATE: string = "${Company}_AC_CURRENCYRATE";
         /**
          * 期间状态
          */

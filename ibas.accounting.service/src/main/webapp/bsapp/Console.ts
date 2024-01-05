@@ -130,6 +130,8 @@ namespace accounting {
                 this.register(new BankLinkServiceMapping());
                 this.register(new BankAccountChooseServiceMapping());
                 this.register(new BankAccountLinkServiceMapping());
+                // 注册常驻应用
+                this.register(new CurrencyRateApplicationMapping());
             }
         }
         /** 模块控制台 */

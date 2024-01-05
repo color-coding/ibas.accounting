@@ -44,6 +44,7 @@
   "accounting_app_currency_choose": "货币选择",
   "accounting_app_currency_view": "货币查看",
   "accounting_app_currency_edit": "货币编辑",
+  "accounting_app_currencyrate_edit": "货币汇率编辑",
   "accounting_func_account": "科目",
   "accounting_app_account_list": "科目列表",
   "accounting_app_account_choose": "科目选择",
@@ -106,5 +107,8 @@
   "accounting_copy_period": "复制从期间",
   "accounting_copy_ledgeraccounts_continue": "复制并保存期间[{0}]的总账科目设置到期间[{1}]，是否继续？",
   "accounting_copy_sucessful": "成功复制数据[{0}]条",
+  "accounting_year_months": "一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月",
+  "accounting_export": "导出",
+  "accounting_import": "导入",
   "accounting_closing_delimiter": "----结束----"
 }

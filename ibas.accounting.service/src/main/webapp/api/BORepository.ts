@@ -159,6 +159,16 @@ namespace accounting {
              * @param saver 保存者
              */
             saveBankAccount(saver: ibas.ISaveCaller<bo.IBankAccount>): void;
+            /**
+             * 查询 货币汇率
+             * @param fetcher 查询者
+             */
+            fetchCurrencyRate(fetcher: ibas.IFetchCaller<bo.ICurrencyRate>): void;
+            /**
+             * 保存 货币汇率
+             * @param saver 保存者
+             */
+            saveCurrencyRate(saver: ibas.ISaveCaller<bo.ICurrencyRate>): void;
 
         }
     }

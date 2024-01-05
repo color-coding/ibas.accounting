@@ -8,6 +8,7 @@ import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.ICostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
 import org.colorcoding.ibas.accounting.bo.currency.ICurrency;
+import org.colorcoding.ibas.accounting.bo.currency.ICurrencyRate;
 import org.colorcoding.ibas.accounting.bo.dimension.IDimension;
 import org.colorcoding.ibas.accounting.bo.journalentry.IJournalEntry;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.ILedgerAccount;
@@ -324,6 +325,24 @@ public interface IBORepositoryAccountingApp extends IBORepositoryApplication {
 	 * @return 操作结果
 	 */
 	IOperationResult<IBankAccount> saveBankAccount(IBankAccount bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-货币汇率
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ICurrencyRate> fetchCurrencyRate(ICriteria criteria);
+
+	/**
+	 * 保存-货币汇率
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ICurrencyRate> saveCurrencyRate(ICurrencyRate bo);
+
 	// --------------------------------------------------------------------------------------------//
 
 }

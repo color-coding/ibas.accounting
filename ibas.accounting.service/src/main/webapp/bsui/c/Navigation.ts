@@ -177,6 +177,9 @@ namespace accounting {
                     case app.BankAccountEditApp.APPLICATION_ID:
                         view = new c.BankAccountEditView();
                         break;
+                    case app.CurrencyRateApp.APPLICATION_ID:
+                        view = new c.CurrencyRateView();
+                        break;
                     default:
                         break;
                 }

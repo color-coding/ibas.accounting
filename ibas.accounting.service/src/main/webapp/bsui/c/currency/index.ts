@@ -8,3 +8,4 @@
 /// <reference path="./CurrencyListView.ts" />
 /// <reference path="./CurrencyChooseView.ts" />
 /// <reference path="./CurrencyEditView.ts" />
+/// <reference path="./CurrencyRateView.ts" />

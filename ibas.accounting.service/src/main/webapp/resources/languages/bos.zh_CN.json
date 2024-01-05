@@ -611,6 +611,27 @@
         "bo_bankaccount_closing_delimiter": "----结束----"
     },
     {
+        "bo_currencyrate": "货币汇率",
+        "bo_currencyrate_currency": "货币",
+        "bo_currencyrate_date": "日期",
+        "bo_currencyrate_rate": "汇率",
+        "bo_currencyrate_objectkey": "编号",
+        "bo_currencyrate_objectcode": "类型",
+        "bo_currencyrate_loginst": "实例号（版本）",
+        "bo_currencyrate_datasource": "数据源",
+        "bo_currencyrate_series": "编号系列",
+        "bo_currencyrate_createdate": "创建日期",
+        "bo_currencyrate_createtime": "创建时间",
+        "bo_currencyrate_updatedate": "修改日期",
+        "bo_currencyrate_updatetime": "修改时间",
+        "bo_currencyrate_createusersign": "创建用户",
+        "bo_currencyrate_updateusersign": "修改用户",
+        "bo_currencyrate_createactionid": "创建动作标识",
+        "bo_currencyrate_updateactionid": "更新动作标识",
+        "bo_currencyrate_remarks": "备注",
+        "bo_currencyrate_closing_delimiter": "----结束----"
+    },
+    {
         "em_periodstatus_open": "打开",
         "em_periodstatus_locked": "关闭",
         "em_periodstatus_closed": "结算"

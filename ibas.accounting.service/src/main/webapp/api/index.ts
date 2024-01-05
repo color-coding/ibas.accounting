@@ -22,4 +22,5 @@
 /// <reference path="./bo/LedgerConditionProperty.ts" />
 /// <reference path="./bo/Bank.ts" />
 /// <reference path="./bo/BankAccount.ts" />
+/// <reference path="./bo/CurrencyRate.ts" />
 /// <reference path="./BORepository.ts" />

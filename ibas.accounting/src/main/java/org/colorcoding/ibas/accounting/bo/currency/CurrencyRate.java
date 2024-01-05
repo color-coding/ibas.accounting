@@ -1,54 +1,148 @@
-package org.colorcoding.ibas.accounting.bo.ledgeraccount;
+package org.colorcoding.ibas.accounting.bo.currency;
+
+import java.math.BigDecimal;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.emConditionOperation;
-import org.colorcoding.ibas.bobas.data.emConditionRelationship;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
-import org.colorcoding.ibas.bobas.rule.IBusinessRule;
-import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 
 /**
- * 期间-分类账-条件
+ * 货币汇率
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = PeriodLedgerAccountCondition.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class PeriodLedgerAccountCondition extends BusinessObject<PeriodLedgerAccountCondition>
-		implements IPeriodLedgerAccountCondition {
+@XmlType(name = CurrencyRate.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@XmlRootElement(name = CurrencyRate.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@BusinessObjectUnit(code = CurrencyRate.BUSINESS_OBJECT_CODE)
+public class CurrencyRate extends BusinessObject<CurrencyRate> implements ICurrencyRate {
 
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = 838065329152291104L;
+	private static final long serialVersionUID = 8423532700952564838L;
 
 	/**
 	 * 当前类型
 	 */
-	private static final Class<?> MY_CLASS = PeriodLedgerAccountCondition.class;
+	private static final Class<?> MY_CLASS = CurrencyRate.class;
 
 	/**
 	 * 数据库表
 	 */
-	public static final String DB_TABLE_NAME = "${Company}_AC_PLA1";
+	public static final String DB_TABLE_NAME = "${Company}_AC_ORTT";
 
 	/**
 	 * 业务对象编码
 	 */
-	public static final String BUSINESS_OBJECT_CODE = "${Company}_AC_PERIODLACCOUNT";
+	public static final String BUSINESS_OBJECT_CODE = "${Company}_AC_CURRENCYRATE";
 
 	/**
 	 * 业务对象名称
 	 */
-	public static final String BUSINESS_OBJECT_NAME = "PeriodLedgerAccountCondition";
+	public static final String BUSINESS_OBJECT_NAME = "CurrencyRate";
+
+	/**
+	 * 属性名称-货币
+	 */
+	private static final String PROPERTY_CURRENCY_NAME = "Currency";
+
+	/**
+	 * 货币 属性
+	 */
+	@DbField(name = "Currency", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
+	public static final IPropertyInfo<String> PROPERTY_CURRENCY = registerProperty(PROPERTY_CURRENCY_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-货币
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_CURRENCY_NAME)
+	public final String getCurrency() {
+		return this.getProperty(PROPERTY_CURRENCY);
+	}
+
+	/**
+	 * 设置-货币
+	 * 
+	 * @param value 值
+	 */
+	public final void setCurrency(String value) {
+		this.setProperty(PROPERTY_CURRENCY, value);
+	}
+
+	/**
+	 * 属性名称-日期
+	 */
+	private static final String PROPERTY_DATE_NAME = "Date";
+
+	/**
+	 * 日期 属性
+	 */
+	@DbField(name = "Date", type = DbFieldType.DATE, table = DB_TABLE_NAME, uniqueKey = true)
+	public static final IPropertyInfo<DateTime> PROPERTY_DATE = registerProperty(PROPERTY_DATE_NAME, DateTime.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-日期
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_DATE_NAME)
+	public final DateTime getDate() {
+		return this.getProperty(PROPERTY_DATE);
+	}
+
+	/**
+	 * 设置-日期
+	 * 
+	 * @param value 值
+	 */
+	public final void setDate(DateTime value) {
+		this.setProperty(PROPERTY_DATE, value);
+	}
+
+	/**
+	 * 属性名称-汇率
+	 */
+	private static final String PROPERTY_RATE_NAME = "Rate";
+
+	/**
+	 * 汇率 属性
+	 */
+	@DbField(name = "Rate", type = DbFieldType.DECIMAL, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<BigDecimal> PROPERTY_RATE = registerProperty(PROPERTY_RATE_NAME, BigDecimal.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-汇率
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_RATE_NAME)
+	public final BigDecimal getRate() {
+		return this.getProperty(PROPERTY_RATE);
+	}
+
+	/**
+	 * 设置-汇率
+	 * 
+	 * @param value 值
+	 */
+	public final void setRate(BigDecimal value) {
+		this.setProperty(PROPERTY_RATE, value);
+	}
 
 	/**
 	 * 属性名称-编号
@@ -82,50 +176,19 @@ public class PeriodLedgerAccountCondition extends BusinessObject<PeriodLedgerAcc
 	}
 
 	/**
-	 * 属性名称-行号
-	 */
-	private static final String PROPERTY_LINEID_NAME = "LineId";
-
-	/**
-	 * 行号 属性
-	 */
-	@DbField(name = "LineId", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = true)
-	public static final IPropertyInfo<Integer> PROPERTY_LINEID = registerProperty(PROPERTY_LINEID_NAME, Integer.class,
-			MY_CLASS);
-
-	/**
-	 * 获取-行号
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_LINEID_NAME)
-	public final Integer getLineId() {
-		return this.getProperty(PROPERTY_LINEID);
-	}
-
-	/**
-	 * 设置-行号
-	 * 
-	 * @param value 值
-	 */
-	public final void setLineId(Integer value) {
-		this.setProperty(PROPERTY_LINEID, value);
-	}
-
-	/**
-	 * 属性名称-对象类型
+	 * 属性名称-类型
 	 */
 	private static final String PROPERTY_OBJECTCODE_NAME = "ObjectCode";
 
 	/**
-	 * 对象类型 属性
+	 * 类型 属性
 	 */
-	@DbField(name = "ObjectCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Object", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_OBJECTCODE = registerProperty(PROPERTY_OBJECTCODE_NAME,
 			String.class, MY_CLASS);
 
 	/**
-	 * 获取-对象类型
+	 * 获取-类型
 	 * 
 	 * @return 值
 	 */
@@ -135,43 +198,12 @@ public class PeriodLedgerAccountCondition extends BusinessObject<PeriodLedgerAcc
 	}
 
 	/**
-	 * 设置-对象类型
+	 * 设置-类型
 	 * 
 	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
-	}
-
-	/**
-	 * 属性名称-显示顺序
-	 */
-	private static final String PROPERTY_VISORDER_NAME = "VisOrder";
-
-	/**
-	 * 显示顺序 属性
-	 */
-	@DbField(name = "VisOrder", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<Integer> PROPERTY_VISORDER = registerProperty(PROPERTY_VISORDER_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-显示顺序
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_VISORDER_NAME)
-	public final Integer getVisOrder() {
-		return this.getProperty(PROPERTY_VISORDER);
-	}
-
-	/**
-	 * 设置-显示顺序
-	 * 
-	 * @param value 值
-	 */
-	public final void setVisOrder(Integer value) {
-		this.setProperty(PROPERTY_VISORDER, value);
 	}
 
 	/**
@@ -234,6 +266,37 @@ public class PeriodLedgerAccountCondition extends BusinessObject<PeriodLedgerAcc
 	 */
 	public final void setDataSource(String value) {
 		this.setProperty(PROPERTY_DATASOURCE, value);
+	}
+
+	/**
+	 * 属性名称-编号系列
+	 */
+	private static final String PROPERTY_SERIES_NAME = "Series";
+
+	/**
+	 * 编号系列 属性
+	 */
+	@DbField(name = "Series", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<Integer> PROPERTY_SERIES = registerProperty(PROPERTY_SERIES_NAME, Integer.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-编号系列
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_SERIES_NAME)
+	public final Integer getSeries() {
+		return this.getProperty(PROPERTY_SERIES);
+	}
+
+	/**
+	 * 设置-编号系列
+	 * 
+	 * @param value 值
+	 */
+	public final void setSeries(Integer value) {
+		this.setProperty(PROPERTY_SERIES, value);
 	}
 
 	/**
@@ -485,192 +548,6 @@ public class PeriodLedgerAccountCondition extends BusinessObject<PeriodLedgerAcc
 	}
 
 	/**
-	 * 属性名称-开括号
-	 */
-	private static final String PROPERTY_BRACKETOPEN_NAME = "BracketOpen";
-
-	/**
-	 * 开括号 属性
-	 */
-	@DbField(name = "BracketOpen", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<Integer> PROPERTY_BRACKETOPEN = registerProperty(PROPERTY_BRACKETOPEN_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-开括号
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_BRACKETOPEN_NAME)
-	public final Integer getBracketOpen() {
-		return this.getProperty(PROPERTY_BRACKETOPEN);
-	}
-
-	/**
-	 * 设置-开括号
-	 * 
-	 * @param value 值
-	 */
-	public final void setBracketOpen(Integer value) {
-		this.setProperty(PROPERTY_BRACKETOPEN, value);
-	}
-
-	/**
-	 * 属性名称-关系
-	 */
-	private static final String PROPERTY_RELATIONSHIP_NAME = "Relationship";
-
-	/**
-	 * 关系 属性
-	 */
-	@DbField(name = "Relationship", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<emConditionRelationship> PROPERTY_RELATIONSHIP = registerProperty(
-			PROPERTY_RELATIONSHIP_NAME, emConditionRelationship.class, MY_CLASS);
-
-	/**
-	 * 获取-关系
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_RELATIONSHIP_NAME)
-	public final emConditionRelationship getRelationship() {
-		return this.getProperty(PROPERTY_RELATIONSHIP);
-	}
-
-	/**
-	 * 设置-关系
-	 * 
-	 * @param value 值
-	 */
-	public final void setRelationship(emConditionRelationship value) {
-		this.setProperty(PROPERTY_RELATIONSHIP, value);
-	}
-
-	/**
-	 * 属性名称-属性
-	 */
-	private static final String PROPERTY_PROPERTYNAME_NAME = "PropertyName";
-
-	/**
-	 * 属性 属性
-	 */
-	@DbField(name = "Property", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<String> PROPERTY_PROPERTYNAME = registerProperty(PROPERTY_PROPERTYNAME_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-属性
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_PROPERTYNAME_NAME)
-	public final String getPropertyName() {
-		return this.getProperty(PROPERTY_PROPERTYNAME);
-	}
-
-	/**
-	 * 设置-属性
-	 * 
-	 * @param value 值
-	 */
-	public final void setPropertyName(String value) {
-		this.setProperty(PROPERTY_PROPERTYNAME, value);
-	}
-
-	/**
-	 * 属性名称-方法
-	 */
-	private static final String PROPERTY_OPERATION_NAME = "Operation";
-
-	/**
-	 * 方法 属性
-	 */
-	@DbField(name = "Operation", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<emConditionOperation> PROPERTY_OPERATION = registerProperty(
-			PROPERTY_OPERATION_NAME, emConditionOperation.class, MY_CLASS);
-
-	/**
-	 * 获取-方法
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_OPERATION_NAME)
-	public final emConditionOperation getOperation() {
-		return this.getProperty(PROPERTY_OPERATION);
-	}
-
-	/**
-	 * 设置-方法
-	 * 
-	 * @param value 值
-	 */
-	public final void setOperation(emConditionOperation value) {
-		this.setProperty(PROPERTY_OPERATION, value);
-	}
-
-	/**
-	 * 属性名称-值
-	 */
-	private static final String PROPERTY_VALUE_NAME = "Value";
-
-	/**
-	 * 值 属性
-	 */
-	@DbField(name = "Value", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<String> PROPERTY_VALUE = registerProperty(PROPERTY_VALUE_NAME, String.class,
-			MY_CLASS);
-
-	/**
-	 * 获取-值
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_VALUE_NAME)
-	public final String getValue() {
-		return this.getProperty(PROPERTY_VALUE);
-	}
-
-	/**
-	 * 设置-值
-	 * 
-	 * @param value 值
-	 */
-	public final void setValue(String value) {
-		this.setProperty(PROPERTY_VALUE, value);
-	}
-
-	/**
-	 * 属性名称-闭括号
-	 */
-	private static final String PROPERTY_BRACKETCLOSE_NAME = "BracketClose";
-
-	/**
-	 * 闭括号 属性
-	 */
-	@DbField(name = "BracketClose", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<Integer> PROPERTY_BRACKETCLOSE = registerProperty(PROPERTY_BRACKETCLOSE_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-闭括号
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_BRACKETCLOSE_NAME)
-	public final Integer getBracketClose() {
-		return this.getProperty(PROPERTY_BRACKETCLOSE);
-	}
-
-	/**
-	 * 设置-闭括号
-	 * 
-	 * @param value 值
-	 */
-	public final void setBracketClose(Integer value) {
-		this.setProperty(PROPERTY_BRACKETCLOSE, value);
-	}
-
-	/**
 	 * 属性名称-备注
 	 */
 	private static final String PROPERTY_REMARKS_NAME = "Remarks";
@@ -711,10 +588,4 @@ public class PeriodLedgerAccountCondition extends BusinessObject<PeriodLedgerAcc
 
 	}
 
-	@Override
-	protected IBusinessRule[] registerRules() {
-		return new IBusinessRule[] { // 注册的业务规则
-				new BusinessRuleRequired(PROPERTY_PROPERTYNAME), // 要求有值
-		};
-	}
 }

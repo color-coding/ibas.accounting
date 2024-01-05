@@ -290,6 +290,21 @@ namespace accounting {
                 super.save(bo.BankAccount.name, saver);
             }
 
+            /**
+             * 查询 货币汇率
+             * @param fetcher 查询者
+             */
+            fetchCurrencyRate(fetcher: ibas.IFetchCaller<bo.CurrencyRate>): void {
+                super.fetch(bo.CurrencyRate.name, fetcher);
+            }
+            /**
+             * 保存 货币汇率
+             * @param saver 保存者
+             */
+            saveCurrencyRate(saver: ibas.ISaveCaller<bo.CurrencyRate>): void {
+                super.save(bo.CurrencyRate.name, saver);
+            }
+
         }
         /**
          * 费用结束者

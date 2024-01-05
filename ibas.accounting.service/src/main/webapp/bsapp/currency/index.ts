@@ -10,3 +10,4 @@
 /// <reference path="./CurrencyChooseApp.ts" />
 /// <reference path="./CurrencyViewApp.ts" />
 /// <reference path="./CurrencyEditApp.ts" />
+/// <reference path="./CurrencyRateApp.ts" />

@@ -428,6 +428,7 @@ namespace accounting {
                                                                                                 let data: any = this.getBindingContext().getObject();
                                                                                                 if (data instanceof bo.PeriodLedgerAccount) {
                                                                                                     let item: bo.IPeriodLedgerAccountCondition = data.periodLedgerAccountConditions.create();
+                                                                                                    item.propertyName = (<sap.m.Select>that.columnProperty.getTemplate())?.getItems()[0]?.getKey();
                                                                                                     this.getBindingContext().getModel().refresh(true);
                                                                                                 }
                                                                                             },
