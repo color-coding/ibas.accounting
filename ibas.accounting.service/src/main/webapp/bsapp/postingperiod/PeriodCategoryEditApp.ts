@@ -41,20 +41,45 @@ namespace accounting {
                 super.viewShowed();
                 if (ibas.objects.isNull(this.editData)) {
                     // 创建编辑对象实例
-                    let year: string = ibas.dates.toString(ibas.dates.today(), "yyyy");
-                    this.editData = new bo.PeriodCategory();
-                    this.editData.name = ibas.dates.today().getFullYear().toString();
-                    this.editData.startDate = ibas.dates.valueOf(new Date(ibas.dates.today().getFullYear(), 1, 1));
-                    this.editData.endDate = ibas.dates.valueOf(new Date(ibas.dates.today().getFullYear(), 11, 31));
-                    this.editData.status = bo.emPeriodStatus.OPEN;
-                    this.editPostingPeriods = new ibas.ArrayList<bo.PostingPeriod>();
-                    this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    criteria.result = 1;
+                    let sort: ibas.ISort = criteria.sorts.create();
+                    sort.alias = bo.PeriodCategory.PROPERTY_ENDDATE_NAME;
+                    sort.sortType = ibas.emSortType.DESCENDING;
+                    let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                    boRepository.fetchPeriodCategory({
+                        criteria: criteria,
+                        onCompleted: (opRslt) => {
+                            let today: Date = null;
+                            for (let item of opRslt.resultObjects) {
+                                if (item.endDate instanceof Date) {
+                                    today = ibas.dates.add(ibas.dates.emDifferenceType.DAY, item.endDate, 1);
+                                }
+                            }
+                            if (ibas.objects.isNull(today)) {
+                                today = ibas.dates.today();
+                            }
+                            this.editData = new bo.PeriodCategory();
+                            this.editData.name = today.getFullYear().toString();
+                            this.editData.startDate = ibas.dates.valueOf(new Date(today.getFullYear(), 0, 1));
+                            this.editData.endDate = ibas.dates.valueOf(new Date(today.getFullYear(), 11, 31));
+                            this.editData.status = bo.emPeriodStatus.OPEN;
+                            this.editPostingPeriods = new ibas.ArrayList<bo.PostingPeriod>();
+                            this.view.showPeriodCategory(this.editData);
+                            if (!(this.editPostingPeriods instanceof Array)) {
+                                this.editPostingPeriods = new ibas.ArrayList<bo.PostingPeriod>();
+                            }
+                            this.view.showPostingPeriods(this.editPostingPeriods.where(c => c.isDeleted === false));
+                            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
+                        }
+                    });
+                } else {
+                    this.view.showPeriodCategory(this.editData);
+                    if (!(this.editPostingPeriods instanceof Array)) {
+                        this.editPostingPeriods = new ibas.ArrayList<bo.PostingPeriod>();
+                    }
+                    this.view.showPostingPeriods(this.editPostingPeriods.where(c => c.isDeleted === false));
                 }
-                this.view.showPeriodCategory(this.editData);
-                if (!(this.editPostingPeriods instanceof Array)) {
-                    this.editPostingPeriods = new ibas.ArrayList<bo.PostingPeriod>();
-                }
-                this.view.showPostingPeriods(this.editPostingPeriods.where(c => c.isDeleted === false));
             }
             run(): void;
             run(data: bo.PeriodCategory): void;
@@ -277,10 +302,9 @@ namespace accounting {
                         let period: bo.PostingPeriod = new bo.PostingPeriod();
                         period.startDate = startDate;
                         period.name = ibas.dates.toString(period.startDate, "yyyy-MM");
-                        this.editPostingPeriods.add(period);
-                        let month: number = startDate.getMonth() + 1;
-                        startDate = new Date(startDate.getFullYear(), month, startDate.getDate());
+                        startDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate());
                         period.endDate = ibas.dates.subtract(ibas.dates.emDifferenceType.DAY, startDate, 1);
+                        this.editPostingPeriods.add(period);
                     }
                 } else if (type === "4quarters") {
                     if (this.editPostingPeriods.length > 0) {
@@ -292,10 +316,9 @@ namespace accounting {
                         let period: bo.PostingPeriod = new bo.PostingPeriod();
                         period.startDate = startDate;
                         period.name = ibas.dates.toString(period.startDate, "yyyy-MM");
-                        this.editPostingPeriods.add(period);
-                        let month: number = startDate.getMonth() + 3;
-                        startDate = new Date(startDate.getFullYear(), month, startDate.getDate());
+                        startDate = new Date(startDate.getFullYear(), startDate.getMonth() + 3, startDate.getDate());
                         period.endDate = ibas.dates.subtract(ibas.dates.emDifferenceType.DAY, startDate, 1);
+                        this.editPostingPeriods.add(period);
                     }
                 } else {
                     let period: bo.PostingPeriod = new bo.PostingPeriod();

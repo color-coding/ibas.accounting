@@ -103,13 +103,17 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 			journal.setBaseDocumentType(contract.getBaseDocumentType());
 			journal.setBaseDocumentEntry(contract.getBaseDocumentEntry());
 			journal.setBaseDocumentLineId(contract.getBaseDocumentLineId());
-
 		}
 		return journal;
 	}
 
 	@Override
 	protected void impact(T contract) {
+		String localCurrency = MyConfiguration
+				.getConfigValue(ApplicationConfigLocalCurrencyService.CONFIG_ITEM_LOCAL_CURRENCY);
+		if (DataConvert.isNullOrEmpty(localCurrency)) {
+			throw new BusinessLogicException(I18N.prop("msg_ac_not_found_local_currency"));
+		}
 		JournalEntryContent jeContent;
 		List<JournalEntryContent> jeContents = new ArrayList<>();
 		for (JournalEntryContent item : contract.getContents()) {
@@ -143,12 +147,36 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 			if (Decimal.isZero(item.getAmount()) && MyConfiguration.isDebugMode()) {
 				continue;
 			}
+			// 判断货币及汇率
+			if (DataConvert.isNullOrEmpty(item.getCurrency())) {
+				throw new BusinessLogicException(
+						I18N.prop("msg_ac_data_not_set_currency", item.getSourceData().toString()));
+			}
+			if (localCurrency.equalsIgnoreCase(item.getCurrency())) {
+				// 与本币相同，但汇率不是1
+				if (item.getRate() != null && Decimal.ZERO.compareTo(item.getRate()) != 0
+						&& Decimal.ONE.compareTo(item.getRate()) != 0) {
+					throw new BusinessLogicException(
+							I18N.prop("msg_ac_data_not_set_currency_rate", item.getSourceData().toString()));
+				}
+				if (item.getRate() == null || Decimal.ZERO.compareTo(item.getRate()) == 0) {
+					item.setRate(Decimal.ONE);
+				}
+			} else {
+				// 与本币不通，未设置汇率
+				if (item.getRate() == null || Decimal.ZERO.compareTo(item.getRate()) >= 0) {
+					throw new BusinessLogicException(
+							I18N.prop("msg_ac_data_not_set_currency_rate", item.getSourceData().toString()));
+				}
+			}
 			// 获取科目
 			if (DataConvert.isNullOrEmpty(item.getAccount())) {
 				item.setAccount(this.accountOf(item));
 			}
 			jeContent = jeContents.firstOrDefault(
-					c -> c.getCategory() == item.getCategory() && c.getAccount().equalsIgnoreCase(item.getAccount()));
+					c -> c.getCategory() == item.getCategory() && c.getAccount().equalsIgnoreCase(item.getAccount())
+							&& (!DataConvert.isNullOrEmpty(c.getShortName())
+									&& c.getShortName().equalsIgnoreCase(item.getShortName())));
 			if (jeContent == null) {
 				jeContent = item.duplicate();
 				jeContents.add(jeContent);
@@ -159,6 +187,7 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 		IJournalEntry journal = this.getBeAffected();
 		journal.setBranch(contract.getBranch());
 		journal.setDocumentDate(contract.getDocumentDate());
+		journal.setDocumentCurrency(localCurrency);
 		// 清理超过的
 		if (journal.getJournalEntryLines().size() > jeContents.size()) {
 			for (int i = jeContents.size(); i < journal.getJournalEntryLines().size(); i++) {
@@ -181,9 +210,11 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 				journalLine.setShortName(jeContent.getShortName());
 			}
 			// 金额保存2位小数
-			journalLine.setDebit(jeContent.getCategory() == Category.Debit ? jeContent.getAmount(2) : Decimal.ZERO);
-			journalLine.setCredit(jeContent.getCategory() == Category.Credit ? jeContent.getAmount(2) : Decimal.ZERO);
-			journalLine.setCurrency(jeContent.getCurrency());
+			journalLine.setDebit(
+					jeContent.getCategory() == Category.Debit ? jeContent.getCurrencyAmount(2) : Decimal.ZERO);
+			journalLine.setCredit(
+					jeContent.getCategory() == Category.Credit ? jeContent.getCurrencyAmount(2) : Decimal.ZERO);
+			journalLine.setCurrency(localCurrency);
 		}
 		// 无分录行，则旧数据删除，新数据不保存
 		if (journal.getJournalEntryLines().where(c -> c.isSavable() && !c.isDeleted()).isEmpty()) {

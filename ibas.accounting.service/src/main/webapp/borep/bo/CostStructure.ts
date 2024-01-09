@@ -351,7 +351,7 @@ namespace accounting {
                 this.entityType = emEntityType.PROJECT;
                 this.status = bo.emCostStatus.OPEN;
                 this.transferable = ibas.emYesNo.NO;
-                this.currency = ibas.config.get(ibas.CONFIG_ITEM_DEFAULT_CURRENCY);
+                this.currency = config.currency("LOCAL");
                 this.budget = 0;
                 this.locked = 0;
                 this.incurred = 0;

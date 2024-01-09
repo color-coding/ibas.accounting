@@ -194,24 +194,28 @@ namespace accounting {
                 private monthSelect: sap.m.Select;
 
                 showLocalCurrency(data: bo.Currency): void {
-                    this.currencyToolbar.setVisible(true);
-                    this.currencyToolbar.addContent(new sap.m.Label("", {
-                        text: ibas.i18n.prop("bo_currency_local"),
-                        showColon: true,
-                    }).addStyleClass("sapUiTinyMarginBegin"));
-                    this.currencyToolbar.addContent(new sap.m.Text("", {
-                        text: ibas.strings.format("{0} {1}", data.code, data.name),
-                    }).addStyleClass("sapUiSmallMarginEnd"));
+                    if (data instanceof bo.Currency) {
+                        this.currencyToolbar.setVisible(true);
+                        this.currencyToolbar.addContent(new sap.m.Label("", {
+                            text: ibas.i18n.prop("bo_currency_local"),
+                            showColon: true,
+                        }).addStyleClass("sapUiTinyMarginBegin"));
+                        this.currencyToolbar.addContent(new sap.m.Text("", {
+                            text: ibas.strings.format("{0} {1}", data.code, data.name),
+                        }).addStyleClass("sapUiSmallMarginEnd"));
+                    }
                 }
                 showSystemCurrency(data: bo.Currency): void {
-                    this.currencyToolbar.setVisible(true);
-                    this.currencyToolbar.addContent(new sap.m.Label("", {
-                        text: ibas.i18n.prop("bo_currency_system"),
-                        showColon: true,
-                    }).addStyleClass("sapUiTinyMarginBegin"));
-                    this.currencyToolbar.addContent(new sap.m.Text("", {
-                        text: ibas.strings.format("{0} {1}", data.code, data.name),
-                    }).addStyleClass("sapUiSmallMarginEnd"));
+                    if (data instanceof bo.Currency) {
+                        this.currencyToolbar.setVisible(true);
+                        this.currencyToolbar.addContent(new sap.m.Label("", {
+                            text: ibas.i18n.prop("bo_currency_system"),
+                            showColon: true,
+                        }).addStyleClass("sapUiTinyMarginBegin"));
+                        this.currencyToolbar.addContent(new sap.m.Text("", {
+                            text: ibas.strings.format("{0} {1}", data.code, data.name),
+                        }).addStyleClass("sapUiSmallMarginEnd"));
+                    }
                 }
                 showCurrencies(datas: bo.Currency[]): void {
                     this.currencyToolbar.addContent(new sap.m.ToolbarSpacer());

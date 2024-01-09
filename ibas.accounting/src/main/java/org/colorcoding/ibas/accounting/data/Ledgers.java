@@ -54,6 +54,10 @@ public class Ledgers {
 	 */
 	public static final String CONDITION_PROPERTY_ORGANIZATION = "Organization";
 	/**
+	 * 数据所属组织类别
+	 */
+	public static final String CONDITION_PROPERTY_ORGANIZATION_CATEGORY = "OrganizationCategory";
+	/**
 	 * 单据类型
 	 */
 	public static final String CONDITION_PROPERTY_ORDERTYPE = "OrderType";
@@ -69,4 +73,8 @@ public class Ledgers {
 	 * 分支
 	 */
 	public static final String CONDITION_PROPERTY_BRANCH = "Branch";
+	/**
+	 * 费用项目
+	 */
+	public static final String CONDITION_PROPERTY_COST_ITEM = "CostItem";
 }

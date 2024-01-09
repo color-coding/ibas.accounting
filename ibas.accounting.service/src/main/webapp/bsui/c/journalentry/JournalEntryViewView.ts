@@ -83,9 +83,16 @@ namespace accounting {
                                         bindingValue: {
                                             path: "account",
                                             type: new sap.extension.data.Alphanumeric(),
+                                        },
+                                        showValueLink: true,
+                                        valueLinkRequest: function (event: sap.ui.base.Event): void {
+                                            ibas.servicesManager.runLinkService({
+                                                boCode: bo.Account.BUSINESS_OBJECT_CODE,
+                                                linkValue: event.getParameter("value")
+                                            });
                                         }
                                     }),
-                                    new sap.extension.m.ObjectAttribute("", {
+                                    new sap.extension.m.ConversionObjectAttribute("", {
                                         bindingValue: {
                                             path: "shortName",
                                             type: new sap.extension.data.Alphanumeric(),
@@ -115,6 +122,20 @@ namespace accounting {
                                                         });
                                                     } else {
                                                         // 查业务伙伴
+                                                        let criteria: ibas.Criteria = new ibas.Criteria();
+                                                        criteria.result = 1;
+                                                        let condition: ibas.ICondition = criteria.conditions.create();
+                                                        condition.alias = bo.Account.PROPERTY_CODE_NAME;
+                                                        condition.value = data.shortName;
+                                                        let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                                                        boRepository.fetchBusinessPartner({
+                                                            criteria: criteria,
+                                                            onCompleted: (opRslt) => {
+                                                                if (opRslt.resultObjects.length > 0) {
+                                                                    source.setText(opRslt.resultObjects.firstOrDefault().name);
+                                                                }
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             }
@@ -290,6 +311,7 @@ namespace accounting {
                             }),
                             actions: [
                                 new sap.extension.m.ObjectNumber("", {
+                                    textAlign: sap.ui.core.TextAlign.Right,
                                     tooltip: ibas.i18n.prop("bo_account_balance"),
                                     number: {
                                         path: "documentTotal",

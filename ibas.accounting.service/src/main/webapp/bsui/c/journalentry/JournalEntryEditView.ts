@@ -243,6 +243,20 @@ namespace accounting {
                                                             });
                                                         } else {
                                                             // 查业务伙伴
+                                                            let criteria: ibas.Criteria = new ibas.Criteria();
+                                                            criteria.result = 1;
+                                                            let condition: ibas.ICondition = criteria.conditions.create();
+                                                            condition.alias = bo.Account.PROPERTY_CODE_NAME;
+                                                            condition.value = data.shortName;
+                                                            let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                                                            boRepository.fetchBusinessPartner({
+                                                                criteria: criteria,
+                                                                onCompleted: (opRslt) => {
+                                                                    if (opRslt.resultObjects.length > 0) {
+                                                                        source.setText(opRslt.resultObjects.firstOrDefault().name);
+                                                                    }
+                                                                }
+                                                            });
                                                         }
                                                     }
                                                 }
@@ -269,16 +283,6 @@ namespace accounting {
                                         }).bindProperty("bindingValue", {
                                             path: "credit",
                                             type: new sap.extension.data.Sum(),
-                                        }),
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_journalentryline_currency"),
-                                        template: new sap.extension.m.CurrencySelect("", {
-                                        }).bindProperty("bindingValue", {
-                                            path: "currency",
-                                            type: new sap.extension.data.Alphanumeric({
-                                                maxLength: 8
-                                            }),
                                         }),
                                     }),
                                     new sap.extension.table.DataColumn("", {
@@ -406,7 +410,7 @@ namespace accounting {
                             }).bindProperty("bindingValue", {
                                 path: "project",
                                 type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 8
+                                    maxLength: 20
                                 }),
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_remarks") }),
@@ -425,6 +429,7 @@ namespace accounting {
                                 type: new sap.extension.data.Sum(),
                             }),
                             new sap.extension.m.CurrencySelect("", {
+                                editable: false,
                             }).bindProperty("bindingValue", {
                                 path: "documentCurrency",
                                 type: new sap.extension.data.Alphanumeric({

@@ -58,7 +58,7 @@ public class ApplicationConfigLocalCurrencyService
 	protected void impact(IApplicationConfigLocalCurrencyContract contract) {
 		IApplicationConfig appConfig = this.getBeAffected();
 		appConfig.setActivated(emYesNo.YES);
-		appConfig.setCategory(emConfigCategory.CLIENT);
+		appConfig.setCategory(emConfigCategory.ALL);
 		appConfig.setConfigValue(contract.getCurrency());
 	}
 

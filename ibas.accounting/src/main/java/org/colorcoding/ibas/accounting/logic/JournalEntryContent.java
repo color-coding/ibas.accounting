@@ -83,6 +83,14 @@ public class JournalEntryContent {
 		return amount;
 	}
 
+	public final BigDecimal getCurrencyAmount(int decimalPlaces) {
+		BigDecimal amount = Decimal.divide(this.amount, this.rate);
+		if (decimalPlaces > 0) {
+			return Decimal.round(amount, decimalPlaces);
+		}
+		return amount;
+	}
+
 	public final void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
@@ -98,6 +106,19 @@ public class JournalEntryContent {
 
 	public final void setCurrency(String currency) {
 		this.currency = currency;
+	}
+
+	/**
+	 * 货币汇率
+	 */
+	private BigDecimal rate;
+
+	public final BigDecimal getRate() {
+		return rate;
+	}
+
+	public final void setRate(BigDecimal rate) {
+		this.rate = rate;
 	}
 
 	/**
@@ -137,6 +158,7 @@ public class JournalEntryContent {
 		nContent.setLedger(this.getLedger());
 		nContent.setAmount(this.getAmount());
 		nContent.setCurrency(this.getCurrency());
+		nContent.setRate(this.getRate());
 		nContent.setAccount(this.getAccount());
 		nContent.setShortName(this.getShortName());
 		return nContent;

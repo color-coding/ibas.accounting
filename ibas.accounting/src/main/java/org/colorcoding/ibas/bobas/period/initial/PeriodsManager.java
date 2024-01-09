@@ -48,7 +48,8 @@ public class PeriodsManager implements IPeriodsManager {
 	}
 
 	public PeriodItem getPeriod(DateTime date) {
-		return this.getPeriods().firstOrDefault(c -> c.getDateFrom().before(date) && c.getDateTo().after(date));
+		return this.getPeriods().firstOrDefault(c -> c.getDateFrom().equals(date) || c.getDateTo().equals(date)
+				|| (c.getDateFrom().before(date) && c.getDateTo().after(date)));
 	}
 
 	public PeriodItem getPeriod(int key) {

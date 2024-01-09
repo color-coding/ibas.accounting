@@ -141,30 +141,6 @@ namespace accounting {
             credit: number;
             /** 货币 */
             currency: string;
-            /** 借方金额（系统） */
-            systemDebit: number;
-            /** 贷方金额（系统） */
-            systemCredit: number;
-            /** 系统币 */
-            systemCurrency: string;
-            /** 系统币汇率 */
-            systemRate: number;
-            /** 借方金额（本币） */
-            localDebit: number;
-            /** 贷方金额（本币） */
-            localCredit: number;
-            /** 本币 */
-            localCurrency: string;
-            /** 本币汇率 */
-            localRate: number;
-            /** 税码 */
-            tax: string;
-            /** 税率 */
-            taxRate: number;
-            /** 基础总额 */
-            baseTotal: number;
-            /** 分支 */
-            branch: string;
             /** 项目代码 */
             project: string;
             /** 成本中心1 */

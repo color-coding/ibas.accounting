@@ -304,7 +304,15 @@ namespace accounting {
             saveCurrencyRate(saver: ibas.ISaveCaller<bo.CurrencyRate>): void {
                 super.save(bo.CurrencyRate.name, saver);
             }
-
+            /**
+             * 查询 业务伙伴
+             * @param fetcher 查询者
+             */
+            fetchBusinessPartner<T extends ibas.IBOMasterData>(fetcher: ibas.IFetchCaller<T>): void {
+                if (fetcher.onCompleted instanceof Function) {
+                    fetcher.onCompleted(new ibas.OperationResult());
+                }
+            }
         }
         /**
          * 费用结束者

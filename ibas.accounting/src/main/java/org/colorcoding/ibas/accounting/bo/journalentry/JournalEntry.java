@@ -1257,14 +1257,14 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		Map<String, BigDecimal> sums = new HashMap<>();
 		for (IJournalEntryLine line : this.getJournalEntryLines()) {
 			// 合计贷方
-			key = String.format("D-%s", line.getBranch());
+			key = String.format("D-%s", "");
 			sum = sums.get(key);
 			if (sum == null) {
 				sum = Decimal.ZERO;
 			}
 			sums.put(key, sum.add(line.getDebit()));
 			// 合计借方
-			key = String.format("C-%s", line.getBranch());
+			key = String.format("C-%s", "");
 			sum = sums.get(key);
 			if (sum == null) {
 				sum = Decimal.ZERO;

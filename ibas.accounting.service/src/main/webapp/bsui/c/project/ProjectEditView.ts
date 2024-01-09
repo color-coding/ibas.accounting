@@ -31,7 +31,7 @@ namespace accounting {
                             }).bindProperty("bindingValue", {
                                 path: "code",
                                 type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 8
+                                    maxLength: 20
                                 })
                             }).bindProperty("editable", {
                                 path: "series",

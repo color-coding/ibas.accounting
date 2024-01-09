@@ -58,7 +58,7 @@ public class ApplicationConfigSystemCurrencyService
 	protected void impact(IApplicationConfigSystemCurrencyContract contract) {
 		IApplicationConfig appConfig = this.getBeAffected();
 		appConfig.setActivated(emYesNo.YES);
-		appConfig.setCategory(emConfigCategory.CLIENT);
+		appConfig.setCategory(emConfigCategory.ALL);
 		appConfig.setConfigValue(contract.getCurrency());
 	}
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE LedgerAccount>
 <ns:LedgerConditionProperty xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
-	<Name>Tax</Name>
-	<Description>税</Description>
-	<Filters>GL-AC-06;GL-AC-07;</Filters>
+	<Name>OrganizationCategory</Name>
+	<Description>数据所属组织类别</Description>
+	<Filters></Filters>
 	<Remarks></Remarks>
 </ns:LedgerConditionProperty>

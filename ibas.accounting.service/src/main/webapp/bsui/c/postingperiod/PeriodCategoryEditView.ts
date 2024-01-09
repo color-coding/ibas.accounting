@@ -198,6 +198,15 @@ namespace accounting {
                                                                 columns: [
                                                                     new sap.extension.table.Column("", {
                                                                         label: ibas.i18n.prop("bo_postingperioditem_documenttype"),
+                                                                        template: new sap.extension.m.Text("", {
+                                                                        }).bindProperty("bindingValue", {
+                                                                            path: "documentType",
+                                                                            type: new sap.extension.data.Alphanumeric(),
+                                                                        }),
+                                                                        width: "60%",
+                                                                    }),
+                                                                    new sap.extension.table.Column("", {
+                                                                        label: ibas.i18n.prop("bo_postingperioditem_document"),
                                                                         template: new sap.extension.m.RepositoryText("", {
                                                                             repository: initialfantasy.bo.BORepositoryInitialFantasy,
                                                                             dataInfo: {
@@ -207,11 +216,9 @@ namespace accounting {
                                                                             },
                                                                         }).bindProperty("bindingValue", {
                                                                             path: "documentType",
-                                                                            type: new sap.extension.data.Alphanumeric({
-                                                                                maxLength: 30
-                                                                            }),
+                                                                            type: new sap.extension.data.Alphanumeric(),
                                                                         }),
-                                                                        width: "100%",
+                                                                        width: "40%",
                                                                     }),
                                                                     new sap.extension.table.Column("", {
                                                                         label: ibas.i18n.prop("bo_postingperioditem_status"),

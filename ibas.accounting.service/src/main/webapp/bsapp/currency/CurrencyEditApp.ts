@@ -143,6 +143,7 @@ namespace accounting {
                 }
                 let beSaveds: ibas.ArrayList<bo.Currency> = ibas.arrays.create(others);
                 beSaveds.add(this.editData);
+                let that: this = this;
                 let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
                 ibas.queues.execute(beSaveds, (data, next) => {
                     // 处理数据
@@ -152,6 +153,20 @@ namespace accounting {
                             if (opRslt.resultCode !== 0) {
                                 next(new Error(opRslt.message));
                             } else {
+                                if (that.editData === data) {
+                                    if (opRslt.resultObjects.length > 0) {
+                                        that.editData = opRslt.resultObjects.firstOrDefault();
+                                        if (that.editData.system === ibas.emYesNo.YES) {
+                                            ibas.config.set(ibas.strings.format("{0}|{1}",
+                                                CONSOLE_ID, config.CONFIG_ITEM_SYSTEM_CURRENCY), that.editData.code);
+                                        }
+                                        if (that.editData.local === ibas.emYesNo.YES) {
+                                            ibas.config.set(ibas.strings.format("{0}|{1}",
+                                                CONSOLE_ID, config.CONFIG_ITEM_LOCAL_CURRENCY), that.editData.code);
+                                        }
+                                        that.view.showCurrency(that.editData);
+                                    }
+                                }
                                 next();
                             }
                         }

@@ -82,7 +82,8 @@ namespace accounting {
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
                                 width: "18rem",
-                            }),],
+                            }),
+                        ],
                         nextDataSet(event: sap.ui.base.Event): void {
                             // 查询下一个数据集
                             let data: any = event.getParameter("data");
@@ -98,6 +99,9 @@ namespace accounting {
                             }
                             ibas.logger.log(ibas.emMessageLevel.DEBUG, "result: {0}", criteria.toString());
                             that.fireViewEvents(that.fetchDataEvent, criteria);
+                        },
+                        rowDoubleClick(event: sap.ui.base.Event): void {
+                            that.fireViewEvents(that.chooseDataEvent, event.getParameter("row")?.getBindingContext()?.getObject());
                         }
                     });
                     return new sap.m.Dialog("", {

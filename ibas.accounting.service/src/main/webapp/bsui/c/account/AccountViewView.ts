@@ -100,6 +100,7 @@ namespace accounting {
                                     negative: true,
                                 }),
                                 new sap.extension.m.ObjectNumber("", {
+                                    textAlign: sap.ui.core.TextAlign.Right,
                                     tooltip: ibas.i18n.prop("bo_account_balance"),
                                     number: {
                                         path: "balance",

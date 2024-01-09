@@ -191,6 +191,7 @@ namespace accounting {
                                     }
                                 }),
                                 new sap.m.Label("", {
+                                    showColon: true,
                                     text: ibas.i18n.prop("bo_coststructure_name"),
                                 }),
                                 new sap.extension.m.Input("", {
@@ -521,7 +522,10 @@ namespace accounting {
                         floatingFooter: true,
                         footer: new sap.m.Toolbar("", {
                             content: [
-                                new sap.m.Label("", { text: ibas.i18n.prop("bo_coststructure_budget") }),
+                                new sap.m.Label("", {
+                                    showColon: true,
+                                    text: ibas.i18n.prop("bo_coststructure_budget")
+                                }),
                                 new sap.extension.m.Text("", {
                                     text: {
                                         parts: [

@@ -53,7 +53,7 @@ namespace accounting {
          */
         export function currency(type: "LOCAL" | "SYSTEM"): string {
             let currency: string;
-            if (type === "LOCAL") {
+            if (type === "LOCAL" || type === undefined) {
                 currency = get(CONFIG_ITEM_LOCAL_CURRENCY);
             } else if (type === "SYSTEM") {
                 currency = get(CONFIG_ITEM_SYSTEM_CURRENCY);
