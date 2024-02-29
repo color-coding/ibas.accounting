@@ -93,7 +93,8 @@ namespace accounting {
             }
             /** 选中过账期间 */
             protected selectLedgerAccount(ledger: bo.LedgerAccount, period: bo.PeriodCategory): void {
-                if (this.periodAccounts.filter(c => c.isDirty === true).length > 0) {
+                if (this.periodAccounts.filter(c => c.isDirty === true).length > 0
+                    && ibas.config.get<boolean>(ibas.CONFIG_ITEM_DEBUG_MODE, false) === false) {
                     this.messages({
                         type: ibas.emMessageType.QUESTION,
                         title: ibas.i18n.prop(this.name),
