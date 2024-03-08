@@ -321,6 +321,12 @@ namespace accounting {
                                         path: "documentCurrency",
                                         type: new sap.extension.data.Alphanumeric()
                                     },
+                                    state: {
+                                        path: "dataSource",
+                                        formatter(data: any): sap.ui.core.ValueState {
+                                            return data === "JES-OFF" ? sap.ui.core.ValueState.Error : sap.ui.core.ValueState.None;
+                                        }
+                                    }
                                 }).addStyleClass("sapMObjectNumberLarge"),
                             ]
                         }),

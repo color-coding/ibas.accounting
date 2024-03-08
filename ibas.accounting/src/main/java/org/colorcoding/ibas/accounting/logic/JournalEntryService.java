@@ -39,7 +39,7 @@ import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.message.MessageLevel;
 
 @LogicContract(IJournalEntryCreationContract.class)
-public class JournalEntryService<T extends IJournalEntryCreationContract> extends BusinessLogic<T, IJournalEntry> {
+public class JournalEntryService extends BusinessLogic<IJournalEntryCreationContract, IJournalEntry> {
 
 	/**
 	 * 正常分录
@@ -93,7 +93,7 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 	}
 
 	@Override
-	protected IJournalEntry fetchBeAffected(T contract) {
+	protected IJournalEntry fetchBeAffected(IJournalEntryCreationContract contract) {
 		ICriteria criteria = new Criteria();
 		criteria.setResultCount(1);
 		ICondition condition = criteria.getConditions().create();
@@ -144,7 +144,7 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 	}
 
 	@Override
-	protected void impact(T contract) {
+	protected void impact(IJournalEntryCreationContract contract) {
 		String localCurrency = MyConfiguration
 				.getConfigValue(ApplicationConfigLocalCurrencyService.CONFIG_ITEM_LOCAL_CURRENCY);
 		if (DataConvert.isNullOrEmpty(localCurrency)) {
@@ -201,7 +201,7 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 						jeContent.setAmount(journalLine.getCredit());
 					} else {
 						// 无效数据
-						continue;
+						jeContent.setAmount(Decimal.ZERO);
 					}
 					contractContents[i] = jeContent;
 				}
@@ -215,6 +215,9 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 		List<JournalEntryContent> jeContents = new ArrayList<>();
 		if (contractContents != null) {
 			for (JournalEntryContent item : contractContents) {
+				if (item == null) {
+					continue;
+				}
 				// 计算金额
 				if (item instanceof JournalEntrySmartContent) {
 					((JournalEntrySmartContent) item).setService(new IBusinessLogicServiceInformation() {
@@ -242,7 +245,7 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 					}
 				}
 				// 调试模式，0金额过滤
-				if (Decimal.isZero(item.getAmount()) && MyConfiguration.isDebugMode()) {
+				if (Decimal.isZero(item.getAmount()) && !MyConfiguration.isDebugMode()) {
 					continue;
 				}
 				// 判断货币及汇率
@@ -292,12 +295,6 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 		if (journal.getDocumentStatus() == emDocumentStatus.PLANNED) {
 			journal.setDocumentStatus(emDocumentStatus.RELEASED);
 		}
-		// 清理超过的
-		if (journal.getJournalEntryLines().size() > jeContents.size()) {
-			for (int i = jeContents.size(); i < journal.getJournalEntryLines().size(); i++) {
-				journal.getJournalEntryLines().get(i).delete();
-			}
-		}
 		// 重新赋值
 		IJournalEntryLine journalLine;
 		for (int i = 0; i < jeContents.size(); i++) {
@@ -327,11 +324,23 @@ public class JournalEntryService<T extends IJournalEntryCreationContract> extend
 			} else {
 				journal.delete();
 			}
+		} else {
+			if (journal.isNew()) {
+				((BusinessObject<?>) journal).markNew();
+			} else {
+				((BusinessObject<?>) journal).undelete();
+			}
+		}
+		// 清理超过的，移到此处
+		if (journal.getJournalEntryLines().size() > jeContents.size()) {
+			for (int i = jeContents.size(); i < journal.getJournalEntryLines().size(); i++) {
+				journal.getJournalEntryLines().get(i).delete();
+			}
 		}
 	}
 
 	@Override
-	protected void revoke(T contract) {
+	protected void revoke(IJournalEntryCreationContract contract) {
 		// 反向逻辑
 		IJournalEntry journal = this.getBeAffected();
 		if (journal.getJournalEntryLines().where(c -> c.isSavable() && !c.isDeleted()).isEmpty()) {
