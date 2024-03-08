@@ -149,6 +149,10 @@ namespace accounting {
                 this.register(new CostItemChooseServiceMapping());
                 this.register(new BankChooseServiceMapping());
                 this.register(new BankAccountChooseServiceMapping());
+                // 注册常驻应用
+                if (config.isEnableBranch()) {
+                    this.register(new BranchSettingApplicationMapping());
+                }
             }
         }
     }

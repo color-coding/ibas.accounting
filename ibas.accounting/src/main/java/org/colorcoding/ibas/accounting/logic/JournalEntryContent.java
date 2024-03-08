@@ -130,7 +130,7 @@ public class JournalEntryContent {
 		return account;
 	}
 
-	final void setAccount(String account) {
+	protected final void setAccount(String account) {
 		this.account = account;
 	}
 

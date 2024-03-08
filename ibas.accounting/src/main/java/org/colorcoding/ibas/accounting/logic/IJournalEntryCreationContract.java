@@ -1,6 +1,7 @@
 package org.colorcoding.ibas.accounting.logic;
 
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 
 /**
@@ -60,14 +61,18 @@ public interface IJournalEntryCreationContract extends IBusinessLogicContract {
 	 * 
 	 * @return 值
 	 */
-	String getReference1();
+	default String getReference1() {
+		return null;
+	}
 
 	/**
 	 * 参考2
 	 * 
 	 * @return 值
 	 */
-	String getReference2();
+	default String getReference2() {
+		return null;
+	}
 
 	/**
 	 * 分录内容
@@ -89,6 +94,15 @@ public interface IJournalEntryCreationContract extends IBusinessLogicContract {
 			contents = new JournalEntryContent[0];
 		}
 		for (JournalEntryContent item : contents) {
+			if (item == null) {
+				continue;
+			}
+			if (item.getAmount() == null) {
+				continue;
+			}
+			if (Decimal.isZero(item.getAmount())) {
+				continue;
+			}
 			item.setAmount(item.getAmount().negate());
 		}
 		return contents;

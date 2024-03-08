@@ -88,6 +88,10 @@ namespace accounting {
                                 }
                             }
                         }
+                    } else {
+                        if (this.table.getItems().length > 0) {
+                            this.table.setSelectedItem(this.table.getItems()[0]);
+                        }
                     }
                 }
             }
