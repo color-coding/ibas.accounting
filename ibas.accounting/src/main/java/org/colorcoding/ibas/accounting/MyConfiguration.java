@@ -64,5 +64,9 @@ public class MyConfiguration extends org.colorcoding.ibas.initialfantasy.MyConfi
 	 * 配置项目-开启分支
 	 */
 	public final static String CONFIG_ITEM_ENABLE_BRANCH = "enableBranch";
+	/**
+	 * 配置项目-本位币
+	 */
+	public final static String CONFIG_ITEM_LOCAL_CURRENCY = "localCurrency";
 
 }

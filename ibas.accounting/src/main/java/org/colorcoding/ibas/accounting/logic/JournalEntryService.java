@@ -26,6 +26,7 @@ import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.core.IBORepository;
 import org.colorcoding.ibas.bobas.data.ArrayList;
+import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
@@ -131,6 +132,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		}
 		if (journal == null) {
 			journal = new JournalEntry();
+			journal.setPostingDate(DateTime.getToday());
 			if (contract.isOffsetting()) {
 				journal.setDataSource(DATASOURCE_SIGN_OFFSETTING_ENTRY);
 			} else {
@@ -145,8 +147,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 
 	@Override
 	protected void impact(IJournalEntryCreationContract contract) {
-		String localCurrency = MyConfiguration
-				.getConfigValue(ApplicationConfigLocalCurrencyService.CONFIG_ITEM_LOCAL_CURRENCY);
+		String localCurrency = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_LOCAL_CURRENCY);
 		if (DataConvert.isNullOrEmpty(localCurrency)) {
 			throw new BusinessLogicException(I18N.prop("msg_ac_not_found_local_currency"));
 		}

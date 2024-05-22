@@ -170,7 +170,7 @@ namespace accounting {
                 builder.append("&");
                 builder.append("token");
                 builder.append("=");
-                builder.append(this.token);
+                builder.append(ibas.tokens.content(this.token));
                 boRepository.callRemoteMethod(builder.toString(), undefined, (opRslt) => {
                     closer.onCompleted.call(ibas.objects.isNull(closer.caller) ? closer : closer.caller, opRslt);
                 });

@@ -21,8 +21,6 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 public class ApplicationConfigLocalCurrencyService
 		extends BusinessLogic<IApplicationConfigLocalCurrencyContract, IApplicationConfig> {
 
-	public final static String CONFIG_ITEM_LOCAL_CURRENCY = "localCurrency";
-
 	@Override
 	protected IApplicationConfig fetchBeAffected(IApplicationConfigLocalCurrencyContract contract) {
 		ICriteria criteria = new Criteria();
@@ -33,7 +31,7 @@ public class ApplicationConfigLocalCurrencyService
 		condition = criteria.getConditions().create();
 		condition.setAlias(ApplicationConfig.PROPERTY_CONFIGKEY.getName());
 		condition.setOperation(ConditionOperation.EQUAL);
-		condition.setValue(CONFIG_ITEM_LOCAL_CURRENCY);
+		condition.setValue(MyConfiguration.CONFIG_ITEM_LOCAL_CURRENCY);
 
 		IApplicationConfig appConfig = this.fetchBeAffected(criteria, IApplicationConfig.class);
 		if (appConfig == null) {
@@ -48,7 +46,7 @@ public class ApplicationConfigLocalCurrencyService
 		if (appConfig == null) {
 			appConfig = new ApplicationConfig();
 			appConfig.setConfigGroup(MyConfiguration.MODULE_ID);
-			appConfig.setConfigKey(CONFIG_ITEM_LOCAL_CURRENCY);
+			appConfig.setConfigKey(MyConfiguration.CONFIG_ITEM_LOCAL_CURRENCY);
 			appConfig.setConfigDescription(I18N.prop("msg_ac_local_currency"));
 		}
 		return appConfig;

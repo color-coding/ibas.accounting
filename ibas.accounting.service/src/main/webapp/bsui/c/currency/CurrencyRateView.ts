@@ -45,7 +45,18 @@ namespace accounting {
                                 }),
                                 width: "8rem",
                             })
-                        ]
+                        ],
+                        rowSettingsTemplate: new sap.ui.table.RowSettings("", {
+                        }).bindProperty("highlight", {
+                            path: "date",
+                            formatter(value: any): string {
+                                if (ibas.dates.equals(ibas.dates.today(), value)) {
+                                    return sap.ui.core.MessageType.Success;
+                                } else {
+                                    return sap.ui.core.MessageType.None;
+                                }
+                            }
+                        }),
                     });
                     return this.dialog = new sap.m.Dialog("", {
                         title: this.title,
@@ -234,7 +245,7 @@ namespace accounting {
                         count++;
                     }
                     this.currencyToolbar.addContent(this.monthSelect);
-                    this.monthSelect.setSelectedKey("0");
+                    this.monthSelect.setSelectedKey(String(ibas.dates.today().getMonth()));
                     this.yearSelect = new sap.extension.m.Select("", {
                         change(): void {
                             that.fireViewEvents(that.selectYearMonthEvent, that.yearSelect.getSelectedKey(), that.monthSelect.getSelectedKey());

@@ -221,7 +221,7 @@ namespace accounting {
                                         label: ibas.i18n.prop("bo_journalentryline_shortdescription"),
                                         template: new sap.extension.m.ConversionText("", {
                                             convert(event: sap.ui.base.Event): void {
-                                                let source: any = event.getSource();
+                                                let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                                                 let data: any = source.getBindingContext()?.getObject();
                                                 if (data instanceof bo.JournalEntryLine) {
                                                     if (!ibas.strings.isEmpty(data.shortName)) {
