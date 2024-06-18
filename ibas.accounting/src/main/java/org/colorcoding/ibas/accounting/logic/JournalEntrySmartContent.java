@@ -31,14 +31,17 @@ public class JournalEntrySmartContent extends JournalEntryContent {
 	 * @return 值，未找到时：$NULL$
 	 */
 	public Object getSourceDataPropertyValue(String property) {
+		// 优先使用接口返回值
 		if (this.getSourceData() instanceof IJECPropertyValueGetter) {
 			Object ptyValue = ((IJECPropertyValueGetter) this.getSourceData()).getValue(property);
 			if (ptyValue != null) {
 				return ptyValue;
 			}
-		} else if (this.getSourceData() instanceof IManagedFields) {
+		}
+		// 自主查询属性名称值
+		if (this.getSourceData() instanceof IManagedFields) {
 			IFieldData fieldData = ((IManagedFields) this.getSourceData()).getField(property);
-			if (fieldData != null) {
+			if (fieldData != null && fieldData.getValue() != null) {
 				return fieldData.getValue();
 			}
 		}

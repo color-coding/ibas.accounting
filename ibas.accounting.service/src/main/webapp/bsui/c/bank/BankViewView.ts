@@ -101,17 +101,26 @@ namespace accounting {
                             ]
                         }),
                         headerContent: [
-                            new sap.extension.m.ObjectAttribute("", {
-                                title: ibas.i18n.prop("bo_bank_swiftcode"),
-                                bindingValue: {
-                                    path: "swiftCode",
-                                    type: new sap.extension.data.Alphanumeric(),
-                                }
-                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
-                                showTitle: false,
+                                title: ibas.i18n.prop("accounting_title_general"),
+                                subSections: [
+                                    new sap.uxap.ObjectPageSubSection("", {
+                                        blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_bank_swiftcode"),
+                                                bindingValue: {
+                                                    path: "swiftCode",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                        ],
+                                    }),
+                                ]
+                            }),
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("accounting_title_others"),
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [

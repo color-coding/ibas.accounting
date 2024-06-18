@@ -77,4 +77,32 @@ public class Ledgers {
 	 * 费用项目
 	 */
 	public static final String CONDITION_PROPERTY_COST_ITEM = "CostItem";
+	/**
+	 * 成本中心1
+	 */
+	public static final String CONDITION_PROPERTY_DISTRIBUTION_RULE_1 = "DistributionRule1";
+	/**
+	 * 成本中心2
+	 */
+	public static final String CONDITION_PROPERTY_DISTRIBUTION_RULE_2 = "DistributionRule2";
+	/**
+	 * 成本中心3
+	 */
+	public static final String CONDITION_PROPERTY_DISTRIBUTION_RULE_3 = "DistributionRule3";
+	/**
+	 * 成本中心4
+	 */
+	public static final String CONDITION_PROPERTY_DISTRIBUTION_RULE_4 = "DistributionRule4";
+	/**
+	 * 成本中心5
+	 */
+	public static final String CONDITION_PROPERTY_DISTRIBUTION_RULE_5 = "DistributionRule5";
+	/**
+	 * 参考1
+	 */
+	public static final String CONDITION_PROPERTY_REFERENCE_1 = "Reference1";
+	/**
+	 * 参考2
+	 */
+	public static final String CONDITION_PROPERTY_REFERENCE_2 = "Reference2";
 }

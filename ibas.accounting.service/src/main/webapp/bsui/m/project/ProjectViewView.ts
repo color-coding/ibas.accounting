@@ -61,20 +61,27 @@ namespace accounting {
                             ]
                         }),
                         headerContent: [
+                            new sap.extension.m.UserObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_project_manager"),
+                                bindingValue: {
+                                    path: "manager",
+                                    type: new sap.extension.data.Numeric(),
+                                }
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_project_teammembers"),
+                                bindingValue: {
+                                    path: "teamMembers",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }
+                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
-                                showTitle: false,
+                                title: ibas.i18n.prop("accounting_title_general"),
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
-                                            new sap.extension.m.UserObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_project_manager"),
-                                                bindingValue: {
-                                                    path: "manager",
-                                                    type: new sap.extension.data.Numeric(),
-                                                }
-                                            }),
                                             new sap.extension.m.ObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_project_startdate"),
                                                 bindingValue: {
@@ -93,13 +100,6 @@ namespace accounting {
                                     }),
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_project_teammembers"),
-                                                bindingValue: {
-                                                    path: "teamMembers",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
                                             new sap.extension.m.UserObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_project_dataowner"),
                                                 bindingValue: {
@@ -115,7 +115,12 @@ namespace accounting {
                                                 }
                                             }),
                                         ],
-                                    }),
+                                    })
+                                ]
+                            }),
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("accounting_title_others"),
+                                subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
                                             new sap.extension.m.ObjectAttribute("", {

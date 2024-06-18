@@ -108,24 +108,39 @@ namespace accounting {
                                     type: new sap.extension.data.Alphanumeric(),
                                 }
                             }),
-                            new sap.extension.m.RepositoryObjectAttribute("", {
-                                repository: bo.BORepositoryAccounting,
-                                dataInfo: {
-                                    type: bo.Bank,
-                                    key: bo.Bank.PROPERTY_CODE_NAME,
-                                    text: bo.Bank.PROPERTY_NAME_NAME
-                                },
-                                title: ibas.i18n.prop("bo_bankaccount_bank"),
-                                bindingValue: {
-                                    path: "bank",
-                                    type: new sap.extension.data.Alphanumeric(),
-                                }
-                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
-                                showTitle: false,
-                                title: ibas.i18n.prop("bo_bankaccount"),
+                                title: ibas.i18n.prop("accounting_title_general"),
+                                subSections: [
+                                    new sap.uxap.ObjectPageSubSection("", {
+                                        blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_bankaccount_openingbank"),
+                                                bindingValue: {
+                                                    path: "openingBank",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.RepositoryObjectAttribute("", {
+                                                repository: bo.BORepositoryAccounting,
+                                                dataInfo: {
+                                                    type: bo.Bank,
+                                                    key: bo.Bank.PROPERTY_CODE_NAME,
+                                                    text: bo.Bank.PROPERTY_NAME_NAME
+                                                },
+                                                title: ibas.i18n.prop("bo_bankaccount_bank"),
+                                                bindingValue: {
+                                                    path: "bank",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                        ],
+                                    }),
+                                ]
+                            }),
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("accounting_title_others"),
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
@@ -133,13 +148,6 @@ namespace accounting {
                                                 title: ibas.i18n.prop("bo_bankaccount_remarks"),
                                                 bindingValue: {
                                                     path: "remarks",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_bankaccount_openingbank"),
-                                                bindingValue: {
-                                                    path: "openingBank",
                                                     type: new sap.extension.data.Alphanumeric(),
                                                 }
                                             }),
