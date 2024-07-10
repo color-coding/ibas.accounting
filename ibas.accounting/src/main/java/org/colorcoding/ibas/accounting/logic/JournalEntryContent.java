@@ -84,7 +84,7 @@ public class JournalEntryContent {
 	}
 
 	public final BigDecimal getCurrencyAmount(int decimalPlaces) {
-		BigDecimal amount = Decimal.divide(this.amount, this.rate);
+		BigDecimal amount = Decimal.multiply(this.amount, this.rate);
 		if (decimalPlaces > 0) {
 			return Decimal.round(amount, decimalPlaces);
 		}

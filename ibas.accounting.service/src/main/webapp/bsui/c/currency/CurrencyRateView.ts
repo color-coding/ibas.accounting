@@ -203,6 +203,7 @@ namespace accounting {
                 private currencyToolbar: sap.m.Toolbar;
                 private yearSelect: sap.m.Select;
                 private monthSelect: sap.m.Select;
+                private localCurrency: bo.Currency;
 
                 showLocalCurrency(data: bo.Currency): void {
                     if (data instanceof bo.Currency) {
@@ -215,6 +216,7 @@ namespace accounting {
                             text: ibas.strings.format("{0} {1}", data.code, data.name),
                         }).addStyleClass("sapUiSmallMarginEnd"));
                     }
+                    this.localCurrency = data;
                 }
                 showSystemCurrency(data: bo.Currency): void {
                     if (data instanceof bo.Currency) {
@@ -273,6 +275,22 @@ namespace accounting {
                             tooltip: ibas.strings.format("{0} - {1}", data.code, data.name),
                             template: new sap.extension.m.Input("", {
                                 textAlign: sap.ui.core.TextAlign.Right,
+                                tooltip: {
+                                    path: "",
+                                    formatter(this: sap.m.Input, data: any): string {
+                                        if (ibas.objects.isNull(data)) {
+                                            return undefined;
+                                        }
+                                        let paths: string[] = this.getBindingPath("bindingValue")?.split("/");
+                                        if (paths.length === 2) {
+                                            return ibas.strings.format("{0}/{1} = {2}",
+                                                paths[0],
+                                                that.localCurrency?.code,
+                                                data[paths[0]][paths[1]]);
+                                        }
+                                        return undefined;
+                                    },
+                                }
                             }).bindProperty("bindingValue", {
                                 path: ibas.strings.format("{0}/rate", data.code),
                                 type: new sap.extension.data.Rate(),
