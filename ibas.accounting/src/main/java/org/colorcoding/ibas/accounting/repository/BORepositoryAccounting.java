@@ -231,7 +231,9 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<IDimension> saveDimension(IDimension bo) {
 		return new OperationResult<IDimension>(this.saveDimension((Dimension) bo, this.getUserToken()));
-	} // --------------------------------------------------------------------------------------------//
+	}
+
+	// --------------------------------------------------------------------------------------------//
 
 	/**
 	 * 查询-税收组

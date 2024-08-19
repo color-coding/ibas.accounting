@@ -130,7 +130,9 @@ namespace accounting {
             /** 销项税 */
             OUTPUT,
             /** 进项税 */
-            INPUT
+            INPUT,
+            /** 运费税 */
+            FREIGHT,
         }
         /**
          * 费用状态
@@ -438,7 +440,7 @@ namespace accounting {
                 // 未初始化
                 TAX_GROUPS = null;
                 try {
-                    let boReposiorty: bo.IBORepositoryAccounting = ibas.boFactory.create(bo.BO_REPOSITORY_ACCOUNTING);
+                    let boReposiorty: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
                     boReposiorty.fetchTaxGroup({
                         criteria: app.conditions.taxgroup.create(),
                         onCompleted: (opRslt) => {

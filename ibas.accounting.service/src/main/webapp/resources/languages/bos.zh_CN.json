@@ -643,7 +643,8 @@
     },
     {
         "em_taxgroupcategory_input": "进项税",
-        "em_taxgroupcategory_output": "销项税"
+        "em_taxgroupcategory_output": "销项税",
+        "em_taxgroupcategory_freight": "运费税"
     },
     {
         "em_coststatus_open": "打开",

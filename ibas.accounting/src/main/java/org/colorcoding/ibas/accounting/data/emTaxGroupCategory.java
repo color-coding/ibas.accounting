@@ -23,5 +23,10 @@ public enum emTaxGroupCategory {
 	 * 进项税
 	 */
 	@Value(value = "I")
-	INPUT
+	INPUT,
+	/** 
+	 * 运费税
+	 */
+	@Value(value = "F")
+	FREIGHT
 }
