@@ -302,6 +302,15 @@ namespace accounting {
                 }
                 showCurrencyRates(datas: app.CurrencyRateDay[]): void {
                     this.table.setModel(new sap.extension.model.JSONModel(datas));
+                    let today: Date = ibas.dates.today();
+                    for (let i: number = 0; i < datas.length; i++) {
+                        if (ibas.dates.equals(datas[i].date, today)) {
+                            setTimeout(() => {
+                                this.table.setFirstVisibleRow(i);
+                            }, 100);
+                            break;
+                        }
+                    }
                 }
             }
         }

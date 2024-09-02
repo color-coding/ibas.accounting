@@ -246,6 +246,17 @@ namespace accounting {
                 this.setProperty(TaxGroup.PROPERTY_UPDATEACTIONID_NAME, value);
             }
 
+            /** 映射的属性名称-已引用 */
+            static PROPERTY_REFERENCED_NAME: string = "Referenced";
+            /** 获取-已引用 */
+            get referenced(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Bank.PROPERTY_REFERENCED_NAME);
+            }
+            /** 设置-已引用 */
+            set referenced(value: ibas.emYesNo) {
+                this.setProperty(Bank.PROPERTY_REFERENCED_NAME, value);
+            }
+
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(TaxGroup.BUSINESS_OBJECT_CODE);

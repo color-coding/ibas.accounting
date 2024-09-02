@@ -99,6 +99,10 @@ namespace accounting {
                 }
                 // 标记删除对象
                 beDeleteds.forEach((value) => {
+                    if (value.referenced === ibas.emYesNo.YES) {
+                        this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_referenced", value));
+                        return;
+                    }
                     value.delete();
                 });
                 let that: this = this;
@@ -114,17 +118,18 @@ namespace accounting {
                         let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
                         ibas.queues.execute(beDeleteds, (data, next) => {
                             // 处理数据
-                            boRepository.saveTaxGroup({
-                                beSaved: data,
-                                onCompleted(opRslt: ibas.IOperationResult<bo.TaxGroup>): void {
-                                    if (opRslt.resultCode !== 0) {
-                                        next(new Error(ibas.i18n.prop("shell_data_delete_error", data, opRslt.message)));
-                                    } else {
-                                        next();
+                            if (data.isDeleted === true) {
+                                boRepository.saveTaxGroup({
+                                    beSaved: data,
+                                    onCompleted(opRslt: ibas.IOperationResult<bo.TaxGroup>): void {
+                                        if (opRslt.resultCode !== 0) {
+                                            next(new Error(ibas.i18n.prop("shell_data_delete_error", data, opRslt.message)));
+                                        } else {
+                                            next();
+                                        }
                                     }
-                                }
-                            });
-                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_deleting", data));
+                                });
+                            }
                         }, (error) => {
                             // 处理完成
                             if (error instanceof Error) {

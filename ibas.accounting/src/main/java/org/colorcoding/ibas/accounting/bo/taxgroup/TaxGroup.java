@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.data.emTaxGroupCategory;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOTagReferenced;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.Decimal;
@@ -27,7 +28,7 @@ import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 @XmlType(name = TaxGroup.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = TaxGroup.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = TaxGroup.BUSINESS_OBJECT_CODE)
-public class TaxGroup extends BusinessObject<TaxGroup> implements ITaxGroup {
+public class TaxGroup extends BusinessObject<TaxGroup> implements ITaxGroup, IBOTagReferenced {
 	/**
 	 * 序列化版本标记
 	 */
@@ -729,6 +730,37 @@ public class TaxGroup extends BusinessObject<TaxGroup> implements ITaxGroup {
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);
+	}
+
+	/**
+	 * 属性名称-已引用
+	 */
+	private static final String PROPERTY_REFERENCED_NAME = "Referenced";
+
+	/**
+	 * 已引用 属性
+	 */
+	@DbField(name = "Refed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<emYesNo> PROPERTY_REFERENCED = registerProperty(PROPERTY_REFERENCED_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-已引用
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_REFERENCED_NAME)
+	public final emYesNo getReferenced() {
+		return this.getProperty(PROPERTY_REFERENCED);
+	}
+
+	/**
+	 * 设置-已引用
+	 * 
+	 * @param value 值
+	 */
+	public final void setReferenced(emYesNo value) {
+		this.setProperty(PROPERTY_REFERENCED, value);
 	}
 
 	/**

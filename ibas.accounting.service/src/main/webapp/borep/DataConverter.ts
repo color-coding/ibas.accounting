@@ -60,6 +60,8 @@ namespace accounting {
                 } else if (boName === bo.TaxGroup.name) {
                     if (property === bo.TaxGroup.PROPERTY_CATEGORY_NAME) {
                         return ibas.enums.toString(emTaxGroupCategory, value);
+                    } else if (property === bo.TaxGroup.PROPERTY_REFERENCED_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
                     }
                 } else if (boName === bo.CostStructure.name) {
                     if (property === bo.CostStructure.PROPERTY_STATUS_NAME) {
@@ -150,6 +152,8 @@ namespace accounting {
                 } else if (boName === bo.TaxGroup.name) {
                     if (property === bo.TaxGroup.PROPERTY_CATEGORY_NAME) {
                         return ibas.enums.valueOf(emTaxGroupCategory, value);
+                    } else if (property === bo.TaxGroup.PROPERTY_REFERENCED_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
                     }
                 } else if (boName === bo.CostStructure.name) {
                     if (property === bo.CostStructure.PROPERTY_STATUS_NAME) {

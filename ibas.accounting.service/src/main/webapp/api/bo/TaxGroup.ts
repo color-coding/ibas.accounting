@@ -51,6 +51,8 @@ namespace accounting {
             createActionId: string;
             /** 更新动作标识 */
             updateActionId: string;
+            /** 已引用 */
+            referenced: ibas.emYesNo;
 
         }
 

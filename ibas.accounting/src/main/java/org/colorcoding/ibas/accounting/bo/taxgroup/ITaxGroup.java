@@ -328,4 +328,18 @@ public interface ITaxGroup extends IBOMasterData {
 	 */
 	void setUpdateActionId(String value);
 
+	/**
+	 * 获取-已引用
+	 * 
+	 * @return 值
+	 */
+	emYesNo getReferenced();
+
+	/**
+	 * 设置-已引用
+	 * 
+	 * @param value 值
+	 */
+	void setReferenced(emYesNo value);
+
 }

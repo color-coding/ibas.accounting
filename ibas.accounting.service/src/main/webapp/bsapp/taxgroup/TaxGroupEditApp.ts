@@ -122,6 +122,10 @@ namespace accounting {
             }
             /** 删除数据 */
             protected deleteData(): void {
+                if (this.editData.referenced === ibas.emYesNo.YES) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_referenced", this.editData));
+                    return;
+                }
                 let that: this = this;
                 this.messages({
                     type: ibas.emMessageType.QUESTION,
