@@ -17,8 +17,6 @@ import org.colorcoding.ibas.bobas.mapping.LogicContract;
 @LogicContract(ITaxGroupCheckContract.class)
 public class TaxGroupCheckService extends BusinessLogic<ITaxGroupCheckContract, ITaxGroup> {
 
-	private final static ITaxGroup EMPTY_TAX = new _TaxGroup();
-
 	public TaxGroupCheckService() {
 		super();
 	}

@@ -478,4 +478,118 @@ namespace accounting {
             }
         }
     }
+    export namespace currency {
+        export interface ICurrencyValue {
+            /** 货币 */
+            currency: string;
+            /** 金额 */
+            amount: number;
+        }
+        /**
+         * 兑换货币（默认币种为本币）
+         * @param sourceCurrency 原币种
+         * @param amount 金额
+         * @param targetCurrency 目标币种
+         * @param onCompeleted 兑换完成
+         * @param date 日期
+         */
+        export function exchange(source: ICurrencyValue, targetCurrency: string, onCompeleted: (result: ICurrencyValue | Error) => void, date?: Date): void;
+        export function exchange(sources: ICurrencyValue[], targetCurrency: string, onCompeleted: (results: ICurrencyValue[] | Error) => void, date?: Date): void;
+        export function exchange(): void {
+            let sources: ICurrencyValue[] = ibas.arrays.create(arguments[0]);
+            let targetCurrency: string = ibas.strings.isEmpty(arguments[1]) ? config.currency("LOCAL") : arguments[1];
+            let onCompeleted: (results: ICurrencyValue | ICurrencyValue[] | Error) => void = arguments[2];
+            let rateDate: Date = !(arguments[3] instanceof Date) ? ibas.dates.today() : arguments[3];
+            let criteria: ibas.ICriteria = new ibas.Criteria();
+            let condition: ibas.ICondition = criteria.conditions.create();
+            condition.alias = bo.CurrencyRate.PROPERTY_DATE_NAME;
+            condition.value = ibas.dates.toString(rateDate);
+            for (let source of sources) {
+                if (ibas.strings.isEmpty(source.currency)) {
+                    source.currency = config.currency("LOCAL");
+                }
+                condition = criteria.conditions.create();
+                condition.alias = bo.CurrencyRate.PROPERTY_CURRENCY_NAME;
+                condition.value = source.currency;
+                if (criteria.conditions.length > 2) {
+                    condition.relationship = ibas.emConditionRelationship.OR;
+                }
+            }
+            if (!ibas.strings.isEmpty(targetCurrency)) {
+                condition = criteria.conditions.create();
+                condition.alias = bo.CurrencyRate.PROPERTY_CURRENCY_NAME;
+                condition.value = targetCurrency;
+                if (criteria.conditions.length > 2) {
+                    condition.relationship = ibas.emConditionRelationship.OR;
+                }
+            }
+            if (criteria.conditions.length > 2) {
+                criteria.conditions[1].bracketOpen += 1;
+                criteria.conditions[criteria.conditions.length - 1].bracketClose += 1;
+            }
+            let boReposiorty: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+            boReposiorty.fetchCurrencyRate({
+                criteria: criteria,
+                onCompleted: (opRslt) => {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        let rate: bo.CurrencyRate = null;
+                        let results: ICurrencyValue[] = new Array();
+                        for (let source of sources) {
+                            // 货币相同
+                            if (ibas.strings.equalsIgnoreCase(source.currency, targetCurrency)) {
+                                results[sources.indexOf(source)] = {
+                                    currency: targetCurrency,
+                                    amount: source.amount,
+                                }; continue;
+                            }
+                            // 目标是本币，则直接使用汇率
+                            if (targetCurrency === config.currency("LOCAL")) {
+                                rate = opRslt.resultObjects.firstOrDefault(c => c.currency === source.currency);
+                                if (ibas.objects.isNull(rate)) {
+                                    throw new Error(ibas.i18n.prop("accounting_currency_exchange_not_found_rate", ibas.dates.toString(rateDate, "yyyy-MM-dd"), source.currency));
+                                }
+                                results[sources.indexOf(source)] = {
+                                    currency: targetCurrency,
+                                    amount: ibas.numbers.round(source.amount / rate.rate),
+                                }; continue;
+                            }
+                            // 目标非本币，则原到本币，再到目标
+                            let target: ICurrencyValue = {
+                                currency: source.currency,
+                                amount: source.amount,
+                            };
+                            if (!ibas.strings.equalsIgnoreCase(target.currency, config.currency("LOCAL"))) {
+                                rate = opRslt.resultObjects.firstOrDefault(c => c.currency === target.currency);
+                                if (ibas.objects.isNull(rate)) {
+                                    throw new Error(ibas.i18n.prop("accounting_currency_exchange_not_found_rate", ibas.dates.toString(rateDate, "yyyy-MM-dd"), target.currency));
+                                }
+                                target.currency = config.currency("LOCAL");
+                                target.amount = ibas.numbers.round(target.amount * rate.rate);
+                            }
+                            rate = opRslt.resultObjects.firstOrDefault(c => c.currency === targetCurrency);
+                            if (ibas.objects.isNull(rate)) {
+                                throw new Error(ibas.i18n.prop("accounting_currency_exchange_not_found_rate", ibas.dates.toString(rateDate, "yyyy-MM-dd"), targetCurrency));
+                            }
+                            target.currency = targetCurrency;
+                            target.amount = ibas.numbers.round(target.amount / rate.rate);
+                            results[sources.indexOf(source)] = target;
+                        }
+                        if (results.length === 0) {
+                            throw new Error(ibas.i18n.prop("accounting_currency_exchange_faild"));
+                        }
+                        if (arguments[0] instanceof Array) {
+                            onCompeleted(results);
+                        } else {
+                            onCompeleted(results[0]);
+                        }
+                    } catch (error) {
+                        onCompeleted(error);
+                    }
+                }
+            });
+        }
+    }
 }
