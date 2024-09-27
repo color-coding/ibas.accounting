@@ -110,5 +110,7 @@
   "accounting_year_months": "一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月",
   "accounting_export": "导出",
   "accounting_import": "导入",
+  "accounting_currency_exchange_faild": "货币转换失败",
+  "accounting_currency_exchange_not_found_rate": "未找到日期[{0}]，货币[{1}]的汇率",
   "accounting_closing_delimiter": "----结束----"
 }
