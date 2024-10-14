@@ -392,6 +392,37 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine> implement
 	}
 
 	/**
+	 * 属性名称-已引用
+	 */
+	private static final String PROPERTY_REFERENCED_NAME = "Referenced";
+
+	/**
+	 * 已引用 属性
+	 */
+	@DbField(name = "Refed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_REFERENCED = registerProperty(PROPERTY_REFERENCED_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-已引用
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_REFERENCED_NAME)
+	public final emYesNo getReferenced() {
+		return this.getProperty(PROPERTY_REFERENCED);
+	}
+
+	/**
+	 * 设置-已引用
+	 * 
+	 * @param value 值
+	 */
+	public final void setReferenced(emYesNo value) {
+		this.setProperty(PROPERTY_REFERENCED, value);
+	}
+
+	/**
 	 * 属性名称-版本
 	 */
 	private static final String PROPERTY_LOGINST_NAME = "LogInst";

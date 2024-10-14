@@ -190,6 +190,11 @@ namespace accounting {
                                             type: new sap.extension.data.Alphanumeric({
                                                 maxLength: 15
                                             }),
+                                        }).bindProperty("editable", {
+                                            path: "referenced",
+                                            formatter(data: any): boolean {
+                                                return data === ibas.emYesNo.YES ? false : true;
+                                            }
                                         }),
                                     }),
                                     new sap.extension.table.DataColumn("", {
@@ -214,6 +219,11 @@ namespace accounting {
                                             type: new sap.extension.data.Alphanumeric({
                                                 maxLength: 20
                                             }),
+                                        }).bindProperty("editable", {
+                                            path: "referenced",
+                                            formatter(data: any): boolean {
+                                                return data === ibas.emYesNo.YES ? false : true;
+                                            }
                                         }),
                                         width: "12rem",
                                     }),
@@ -275,6 +285,11 @@ namespace accounting {
                                         }).bindProperty("bindingValue", {
                                             path: "debit",
                                             type: new sap.extension.data.Sum(),
+                                        }).bindProperty("editable", {
+                                            path: "referenced",
+                                            formatter(data: any): boolean {
+                                                return data === ibas.emYesNo.YES ? false : true;
+                                            }
                                         }),
                                     }),
                                     new sap.extension.table.DataColumn("", {
@@ -283,6 +298,11 @@ namespace accounting {
                                         }).bindProperty("bindingValue", {
                                             path: "credit",
                                             type: new sap.extension.data.Sum(),
+                                        }).bindProperty("editable", {
+                                            path: "referenced",
+                                            formatter(data: any): boolean {
+                                                return data === ibas.emYesNo.YES ? false : true;
+                                            }
                                         }),
                                     }),
                                     new sap.extension.table.DataColumn("", {

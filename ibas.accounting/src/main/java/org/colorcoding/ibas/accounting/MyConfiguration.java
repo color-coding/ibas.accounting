@@ -61,6 +61,10 @@ public class MyConfiguration extends org.colorcoding.ibas.initialfantasy.MyConfi
 	 */
 	public final static String CONFIG_ITEM_ENABLE_JOURNAL_ENTRY_SERVICE = "enableJournalEntryService";
 	/**
+	 * 配置项目-允许不平分录
+	 */
+	public final static String CONFIG_ITEM_ALLOW_UNBLANCE_JOURNAL_ENTRY = "allowUnblanceJournalEntry";
+	/**
 	 * 配置项目-开启分支
 	 */
 	public final static String CONFIG_ITEM_ENABLE_BRANCH = "enableBranch";

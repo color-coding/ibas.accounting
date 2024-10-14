@@ -169,6 +169,20 @@ public interface IJournalEntryLine extends IBODocumentLine {
 	void setUpdateTime(Short value);
 
 	/**
+	 * 获取-已引用
+	 * 
+	 * @return 值
+	 */
+	emYesNo getReferenced();
+
+	/**
+	 * 设置-已引用
+	 * 
+	 * @param value 值
+	 */
+	void setReferenced(emYesNo value);
+
+	/**
 	 * 获取-版本
 	 * 
 	 * @return 值
