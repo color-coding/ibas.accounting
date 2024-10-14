@@ -1,8 +1,6 @@
 package org.colorcoding.ibas.accounting.bo.journalentry;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -661,6 +659,37 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 	}
 
 	/**
+	 * 属性名称-已引用
+	 */
+	private static final String PROPERTY_REFERENCED_NAME = "Referenced";
+
+	/**
+	 * 已引用 属性
+	 */
+	@DbField(name = "Refed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_REFERENCED = registerProperty(PROPERTY_REFERENCED_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-已引用
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_REFERENCED_NAME)
+	public final emYesNo getReferenced() {
+		return this.getProperty(PROPERTY_REFERENCED);
+	}
+
+	/**
+	 * 设置-已引用
+	 * 
+	 * @param value 值
+	 */
+	public final void setReferenced(emYesNo value) {
+		this.setProperty(PROPERTY_REFERENCED, value);
+	}
+
+	/**
 	 * 属性名称-数据所有者
 	 */
 	private static final String PROPERTY_DATAOWNER_NAME = "DataOwner";
@@ -1252,43 +1281,35 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 
 	@Override
 	public void check() throws BusinessRuleException {
-		String key;
-		BigDecimal sum;
-		Map<String, BigDecimal> sums = new HashMap<>();
+		// 合计借贷方
+		BigDecimal debit = Decimal.ZERO, credit = Decimal.ZERO;
 		for (IJournalEntryLine line : this.getJournalEntryLines()) {
-			// 合计贷方
-			key = String.format("D-%s", "");
-			sum = sums.get(key);
-			if (sum == null) {
-				sum = Decimal.ZERO;
-			}
-			sums.put(key, sum.add(line.getDebit()));
-			// 合计借方
-			key = String.format("C-%s", "");
-			sum = sums.get(key);
-			if (sum == null) {
-				sum = Decimal.ZERO;
-			}
-			sums.put(key, sum.add(line.getCredit()));
+			debit = Decimal.add(debit, line.getDebit());
+			credit = Decimal.add(credit, line.getCredit());
 		}
-		BigDecimal cSum, dSum;
-		for (String sKey : sums.keySet()) {
-			cSum = sums.get("C" + sKey.substring(1));
-			dSum = sums.get("D" + sKey.substring(1));
-			if (cSum != null && dSum != null && cSum.compareTo(dSum) == 0) {
-				continue;
+		// 比较前，把小数位统一
+		if (debit.scale() > credit.scale()) {
+			debit = Decimal.round(debit, credit.scale());
+		} else if (debit.scale() < credit.scale()) {
+			credit = Decimal.round(credit, debit.scale());
+		}
+		// 2位以上的小数位不比较
+		if (debit.scale() > 2) {
+			debit = Decimal.round(debit, 2);
+		}
+		if (credit.scale() > 2) {
+			credit = Decimal.round(credit, 2);
+		}
+		if (debit.compareTo(credit) != 0) {
+			// 分支的借贷方不平
+			if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOW_UNBLANCE_JOURNAL_ENTRY, false)) {
+				// 调试模式，生成无效单据
+				this.setDocumentStatus(emDocumentStatus.PLANNED);
 			} else {
-				// 分支的借贷方不平
-				if (MyConfiguration.isDebugMode()) {
-					// 调试模式，生成无效单据
-					this.setDocumentStatus(emDocumentStatus.PLANNED);
-				} else {
-					// 抛出错误
-					throw new BusinessRuleException(I18N.prop("msg_ac_business_rule_debit_credit_imbalance"));
-				}
+				// 抛出错误
+				throw new BusinessRuleException(I18N.prop("msg_ac_business_rule_debit_credit_imbalance"));
 			}
 		}
-
 	}
 
 	@Override

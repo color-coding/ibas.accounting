@@ -147,6 +147,17 @@ namespace accounting {
                 this.setProperty(JournalEntry.PROPERTY_UPDATETIME_NAME, value);
             }
 
+            /** 映射的属性名称-已引用 */
+            static PROPERTY_REFERENCED_NAME: string = "Referenced";
+            /** 获取-已引用 */
+            get referenced(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(JournalEntry.PROPERTY_REFERENCED_NAME);
+            }
+            /** 设置-已引用 */
+            set referenced(value: ibas.emYesNo) {
+                this.setProperty(JournalEntry.PROPERTY_REFERENCED_NAME, value);
+            }
+
             /** 映射的属性名称-版本 */
             static PROPERTY_LOGINST_NAME: string = "LogInst";
             /** 获取-版本 */
@@ -577,6 +588,17 @@ namespace accounting {
             /** 设置-修改时间 */
             set updateTime(value: number) {
                 this.setProperty(JournalEntryLine.PROPERTY_UPDATETIME_NAME, value);
+            }
+
+            /** 映射的属性名称-已引用 */
+            static PROPERTY_REFERENCED_NAME: string = "Referenced";
+            /** 获取-已引用 */
+            get referenced(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(JournalEntryLine.PROPERTY_REFERENCED_NAME);
+            }
+            /** 设置-已引用 */
+            set referenced(value: ibas.emYesNo) {
+                this.setProperty(JournalEntryLine.PROPERTY_REFERENCED_NAME, value);
             }
 
             /** 映射的属性名称-版本 */

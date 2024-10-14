@@ -33,6 +33,8 @@ namespace accounting {
             updateDate: Date;
             /** 修改时间 */
             updateTime: number;
+            /** 已引用 */
+            referenced: ibas.emYesNo;
             /** 版本 */
             logInst: number;
             /** 服务系列 */
@@ -117,6 +119,8 @@ namespace accounting {
             updateDate: Date;
             /** 修改时间 */
             updateTime: number;
+            /** 已引用 */
+            referenced: ibas.emYesNo;
             /** 版本 */
             logInst: number;
             /** 服务系列 */

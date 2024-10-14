@@ -292,6 +292,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		}
 		// 创建分录
 		IJournalEntry journal = this.getBeAffected();
+		journal.setReferenced(emYesNo.YES);
 		journal.setBranch(contract.getBranch());
 		journal.setDocumentDate(contract.getDocumentDate());
 		journal.setDocumentCurrency(localCurrency);
@@ -313,12 +314,18 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			} else {
 				journalLine.setShortName(jeContent.getShortName());
 			}
-			// 金额保存2位小数
 			journalLine.setDebit(
-					jeContent.getCategory() == Category.Debit ? jeContent.getCurrencyAmount(2) : Decimal.ZERO);
+					jeContent.getCategory() == Category.Debit ? jeContent.getCurrencyAmount(6) : Decimal.ZERO);
 			journalLine.setCredit(
-					jeContent.getCategory() == Category.Credit ? jeContent.getCurrencyAmount(2) : Decimal.ZERO);
+					jeContent.getCategory() == Category.Credit ? jeContent.getCurrencyAmount(6) : Decimal.ZERO);
 			journalLine.setCurrency(localCurrency);
+			journalLine.setReferenced(emYesNo.YES);
+		}
+		// 清理超过的，移到此处
+		if (journal.getJournalEntryLines().size() > jeContents.size()) {
+			for (int i = jeContents.size(); i < journal.getJournalEntryLines().size(); i++) {
+				journal.getJournalEntryLines().get(i).delete();
+			}
 		}
 		// 无分录行，则旧数据删除，新数据不保存
 		if (journal.getJournalEntryLines().where(c -> c.isSavable() && !c.isDeleted()).isEmpty()) {
@@ -334,12 +341,6 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 				((BusinessObject<?>) journal).undelete();
 			}
 		}
-		// 清理超过的，移到此处
-		if (journal.getJournalEntryLines().size() > jeContents.size()) {
-			for (int i = jeContents.size(); i < journal.getJournalEntryLines().size(); i++) {
-				journal.getJournalEntryLines().get(i).delete();
-			}
-		}
 	}
 
 	@Override
@@ -350,7 +351,20 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			if (journal.isNew()) {
 				((BusinessObject<?>) journal).unsavable();
 			} else {
+				journal.setReferenced(emYesNo.NO);
+				journal.getJournalEntryLines().forEach(c -> c.setReferenced(emYesNo.NO));
 				journal.delete();
+			}
+		}
+		// 已存在分录，触发对象不能变成无效
+		if (journal != null && journal.isDirty() == false) {
+			if (this.checkDataStatus(this.getLogicChain().getTrigger()) == false) {
+				throw new BusinessLogicException(I18N.prop("msg_ac_document_has_journalentry_not_allowed_change_status",
+						String.format("{[%s].[DocEntry = %s]%s}", journal.getBaseDocumentType(),
+								journal.getBaseDocumentEntry(),
+								journal.getBaseDocumentLineId() > 0
+										? String.format("&&[LineId = %s]", journal.getBaseDocumentLineId())
+										: "")));
 			}
 		}
 	}
