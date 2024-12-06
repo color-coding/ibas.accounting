@@ -1279,6 +1279,9 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		};
 	}
 
+	// 分录误差范围
+	private final static BigDecimal PERMITTED_DIFFERENCES = Decimal.valueOf("0.01");
+
 	@Override
 	public void check() throws BusinessRuleException {
 		// 合计借贷方
@@ -1300,7 +1303,7 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		if (credit.scale() > 2) {
 			credit = Decimal.round(credit, 2);
 		}
-		if (debit.compareTo(credit) != 0) {
+		if (debit.subtract(credit).abs().compareTo(PERMITTED_DIFFERENCES) >= 0) {
 			// 分支的借贷方不平
 			if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOW_UNBLANCE_JOURNAL_ENTRY, false)) {
 				// 调试模式，生成无效单据

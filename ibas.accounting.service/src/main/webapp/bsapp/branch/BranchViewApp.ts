@@ -103,7 +103,7 @@ namespace accounting {
                     criteria = new ibas.Criteria();
                     criteria.result = 1;
                     condition = criteria.conditions.create();
-                    condition.alias = bo.Branch.PROPERTY_DOCENTRY_NAME;
+                    condition.alias = bo.Branch.PROPERTY_CODE_NAME;
                     condition.value = value;
                 }
                 let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();

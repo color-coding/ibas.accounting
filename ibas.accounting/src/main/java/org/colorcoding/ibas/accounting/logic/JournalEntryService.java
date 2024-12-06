@@ -26,7 +26,6 @@ import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.core.IBORepository;
 import org.colorcoding.ibas.bobas.data.ArrayList;
-import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
@@ -132,7 +131,8 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		}
 		if (journal == null) {
 			journal = new JournalEntry();
-			journal.setPostingDate(DateTime.getToday());
+			journal.setDocumentDate(contract.getDocumentDate());
+			journal.setPostingDate(contract.getDocumentDate());
 			if (contract.isOffsetting()) {
 				journal.setDataSource(DATASOURCE_SIGN_OFFSETTING_ENTRY);
 			} else {
@@ -295,6 +295,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		journal.setReferenced(emYesNo.YES);
 		journal.setBranch(contract.getBranch());
 		journal.setDocumentDate(contract.getDocumentDate());
+		journal.setPostingDate(contract.getDocumentDate());
 		journal.setDocumentCurrency(localCurrency);
 		if (journal.getDocumentStatus() == emDocumentStatus.PLANNED) {
 			journal.setDocumentStatus(emDocumentStatus.RELEASED);

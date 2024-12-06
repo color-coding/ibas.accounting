@@ -108,36 +108,32 @@ namespace accounting {
                             ]
                         }),
                         headerContent: [
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_branch_foreignname"),
+                                bindingValue: {
+                                    path: "foreignName",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_branch_validdate"),
+                                bindingValue: {
+                                    path: "validDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_branch_invaliddate"),
+                                bindingValue: {
+                                    path: "invalidDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
-                                showTitle: false,
+                                title: ibas.i18n.prop("accounting_title_general"),
                                 subSections: [
-                                    new sap.uxap.ObjectPageSubSection("", {
-                                        blocks: [
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_branch_foreignname"),
-                                                bindingValue: {
-                                                    path: "foreignName",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_branch_validdate"),
-                                                bindingValue: {
-                                                    path: "validDate",
-                                                    type: new sap.extension.data.Date(),
-                                                }
-                                            }),
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_branch_invaliddate"),
-                                                bindingValue: {
-                                                    path: "invalidDate",
-                                                    type: new sap.extension.data.Date(),
-                                                }
-                                            }),
-                                        ],
-                                    }),
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
                                             new sap.extension.m.ObjectAttribute("", {
@@ -196,7 +192,11 @@ namespace accounting {
                                                 }
                                             }),
                                         ],
-                                    }),
+                                    }),]
+                            }),
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("accounting_title_others"),
+                                subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
                                             new sap.extension.m.ObjectAttribute("", {
@@ -207,8 +207,7 @@ namespace accounting {
                                                 }
                                             }),
                                         ],
-                                    })
-                                ]
+                                    })]
                             }),
                         ]
                     });
