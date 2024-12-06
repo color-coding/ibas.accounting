@@ -260,6 +260,7 @@ namespace accounting {
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(TaxGroup.BUSINESS_OBJECT_CODE);
+                this.activated = ibas.emYesNo.YES;
             }
         }
 

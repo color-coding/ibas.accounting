@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emBOStatus;
@@ -23,7 +24,7 @@ import org.colorcoding.ibas.bobas.mapping.DbFieldType;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = JournalEntryLine.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class JournalEntryLine extends BusinessObject<JournalEntryLine> implements IJournalEntryLine {
+public class JournalEntryLine extends BusinessObject<JournalEntryLine> implements IJournalEntryLine, IBOUserFields {
 
 	/**
 	 * 序列化版本标记
