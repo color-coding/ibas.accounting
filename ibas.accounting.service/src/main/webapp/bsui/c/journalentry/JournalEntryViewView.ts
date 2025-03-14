@@ -381,6 +381,25 @@ namespace accounting {
                                     }),
                                 ]
                             }),
+                            new sap.ui.layout.VerticalLayout("", {
+                                width: "30%",
+                                content: [
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        title: ibas.i18n.prop("bo_journalentry_reference1"),
+                                        bindingValue: {
+                                            path: "reference1",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        title: ibas.i18n.prop("bo_journalentry_reference2"),
+                                        bindingValue: {
+                                            path: "reference2",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                ]
+                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
@@ -402,20 +421,6 @@ namespace accounting {
                                                 title: ibas.i18n.prop("bo_journalentry_remarks"),
                                                 bindingValue: {
                                                     path: "remarks",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_journalentry_reference1"),
-                                                bindingValue: {
-                                                    path: "reference1",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_journalentry_reference2"),
-                                                bindingValue: {
-                                                    path: "reference2",
                                                     type: new sap.extension.data.Alphanumeric(),
                                                 }
                                             }),

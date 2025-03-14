@@ -434,6 +434,8 @@
         "bo_journalentryline_credit": "Credit Amount",
         "bo_journalentryline_currency": "Currency",
         "bo_journalentryline_project": "Project Code",
+        "bo_journalentryline_customer": "Customer",
+        "bo_journalentryline_supplier": "Supplier",
         "bo_journalentryline_distributionrule1": "Cost Center 1",
         "bo_journalentryline_distributionrule2": "Cost Center 2",
         "bo_journalentryline_distributionrule3": "Cost Center 3",

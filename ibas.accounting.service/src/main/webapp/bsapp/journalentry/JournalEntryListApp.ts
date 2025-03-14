@@ -116,6 +116,18 @@ namespace accounting {
                     ));
                     return;
                 }
+                let tmpDeleteds: ibas.ArrayList<bo.JournalEntry> = new ibas.ArrayList<any>();
+                beDeleteds.forEach((value) => {
+                    if (value.referenced === ibas.emYesNo.YES) {
+                        this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_referenced", value.toString()));
+                    } else {
+                        tmpDeleteds.add(value);
+                    }
+                });
+                beDeleteds = tmpDeleteds;
+                if (beDeleteds.length === 0) {
+                    return;
+                }
                 let that: this = this;
                 this.messages({
                     type: ibas.emMessageType.QUESTION,

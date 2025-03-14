@@ -430,6 +430,8 @@
         "bo_journalentryline_shortname": "业务伙伴/科目代码",
         "bo_journalentryline_businesspartner": "业务伙伴",
         "bo_journalentryline_shortdescription": "业务伙伴/科目名称",
+        "bo_journalentryline_customer": "客户",
+        "bo_journalentryline_supplier": "供应商",
         "bo_journalentryline_debit": "借方金额",
         "bo_journalentryline_credit": "贷方金额",
         "bo_journalentryline_currency": "货币",

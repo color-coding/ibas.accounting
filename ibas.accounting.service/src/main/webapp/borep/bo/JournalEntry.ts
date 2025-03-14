@@ -438,6 +438,7 @@ namespace accounting {
             protected init(): void {
                 this.journalEntryLines = new JournalEntryLines(this);
                 this.objectCode = ibas.config.applyVariables(JournalEntry.BUSINESS_OBJECT_CODE);
+                this.documentStatus = ibas.emDocumentStatus.RELEASED;
             }
             /** 重置 */
             reset(): void {

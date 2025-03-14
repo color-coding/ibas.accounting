@@ -34,6 +34,7 @@ namespace accounting {
                 this.view.chooseJournalEntryLineAccountEvent = this.chooseJournalEntryLineAccount;
                 this.view.chooseJournalEntryLineShortNameEvent = this.chooseJournalEntryLineShortName;
                 this.view.chooseJournalEntryLineDistributionRuleEvent = this.chooseJournalEntryLineDistributionRule;
+                this.view.reverseJournalEntryEvent = this.reverseJournalEntry;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -42,6 +43,8 @@ namespace accounting {
                 if (ibas.objects.isNull(this.editData)) {
                     // 创建编辑对象实例
                     this.editData = new bo.JournalEntry();
+                    // 默认引用，不允许删除
+                    this.editData.referenced = ibas.emYesNo.YES;
                     this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
                 }
                 this.view.showJournalEntry(this.editData);
@@ -153,11 +156,15 @@ namespace accounting {
                     if (clone) {
                         // 克隆对象
                         that.editData = that.editData.clone();
+                        // 默认引用，不允许删除
+                        that.editData.referenced = ibas.emYesNo.YES;
                         that.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_cloned_new"));
                         that.viewShowed();
                     } else {
                         // 新建对象
                         that.editData = new bo.JournalEntry();
+                        // 默认引用，不允许删除
+                        that.editData.referenced = ibas.emYesNo.YES;
                         that.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
                         that.viewShowed();
                     }
@@ -179,11 +186,13 @@ namespace accounting {
                 }
             }
             /** 添加日记账分录-行事件 */
-            protected addJournalEntryLine(type: "ACCOUNT" | "BUSINESSPARTNER"): void {
+            protected addJournalEntryLine(type: "ACCOUNT" | "CUSTOMER" | "SUPPLIER"): void {
                 if (type === "ACCOUNT") {
-                    this.chooseJournalEntryLineAccount(undefined);
-                } else if (type === "BUSINESSPARTNER") {
-
+                    this.chooseJournalEntryLineAccount(undefined, false);
+                } else if (type === "CUSTOMER") {
+                    this.chooseJournalEntryLineShortName(undefined, type);
+                } else if (type === "SUPPLIER") {
+                    this.chooseJournalEntryLineShortName(undefined, type);
                 } else {
                     this.editData.journalEntryLines.create();
                     this.view.showJournalEntryLines(this.editData.journalEntryLines.filterDeleted());
@@ -214,70 +223,152 @@ namespace accounting {
                 this.view.showJournalEntryLines(this.editData.journalEntryLines.filterDeleted());
             }
             /** 选择日记账分录-行科目 */
-            protected chooseJournalEntryLineAccount(caller: bo.JournalEntryLine): void {
-                let that: this = this;
-                let conditions: ibas.ICondition[] = app.conditions.account.create();
-                ibas.servicesManager.runChooseService<bo.Account>({
-                    boCode: bo.Account.BUSINESS_OBJECT_CODE,
-                    criteria: conditions,
-                    onCompleted(selecteds: ibas.IList<bo.Account>): void {
-                        // 获取触发的对象
-                        let index: number = that.editData.journalEntryLines.indexOf(caller);
-                        let item: bo.JournalEntryLine = that.editData.journalEntryLines[index];
-                        // 选择返回数量多于触发数量时,自动创建新的项目
-                        let created: boolean = false;
-                        for (let selected of selecteds) {
-                            if (ibas.objects.isNull(item)) {
-                                item = that.editData.journalEntryLines.create();
-                                created = true;
-                            }
-                            item.account = selected.code;
-                            item.shortName = selected.code;
-                            item.currency = selected.currency;
-                            item = null;
+            protected chooseJournalEntryLineAccount(caller: bo.JournalEntryLine, control: boolean): void {
+                if ((!ibas.strings.isEmpty(caller.shortName) && caller.account !== caller.shortName) && ibas.objects.isNull(control)) {
+                    // 判断是否为科目
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    criteria.noChilds = true;
+                    criteria.result = 1;
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.Account.PROPERTY_CODE_NAME;
+                    condition.value = caller.shortName;
+                    let boReposiorty: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                    boReposiorty.fetchAccount({
+                        criteria: criteria,
+                        onCompleted: (opRslt) => {
+                            // 非科目，则是客户或供应商，则使用控制科目
+                            this.chooseJournalEntryLineAccount(caller, !(opRslt.resultObjects.length > 0));
                         }
-                        if (created) {
-                            // 创建了新的行项目
-                            that.view.showJournalEntryLines(that.editData.journalEntryLines.filterDeleted());
-                        }
+                    });
+                } else {
+                    let that: this = this;
+                    let conditions: ibas.ICondition[] = app.conditions.account.create();
+                    if (control === true) {
+                        let condition: ibas.Condition = new ibas.Condition();
+                        condition.alias = bo.Account.PROPERTY_CONTROL_NAME;
+                        condition.value = ibas.emYesNo.YES.toString();
+                        condition.operation = ibas.emConditionOperation.EQUAL;
+                        conditions.push(condition);
                     }
-                });
+                    ibas.servicesManager.runChooseService<bo.Account>({
+                        boCode: bo.Account.BUSINESS_OBJECT_CODE,
+                        criteria: conditions,
+                        onCompleted(selecteds: ibas.IList<bo.Account>): void {
+                            // 获取触发的对象
+                            let index: number = that.editData.journalEntryLines.indexOf(caller);
+                            let item: bo.JournalEntryLine = that.editData.journalEntryLines[index];
+                            // 选择返回数量多于触发数量时,自动创建新的项目
+                            let created: boolean = false;
+                            for (let selected of selecteds) {
+                                if (ibas.objects.isNull(item)) {
+                                    item = that.editData.journalEntryLines.create();
+                                    created = true;
+                                }
+                                item.account = selected.code;
+                                if (control !== true) {
+                                    item.shortName = selected.code;
+                                }
+                                item.currency = selected.currency;
+                                item = null;
+                            }
+                            if (created) {
+                                // 创建了新的行项目
+                                that.view.showJournalEntryLines(that.editData.journalEntryLines.filterDeleted());
+                            }
+                        }
+                    });
+                }
             }
             /** 选择日记账分录-行业务伙伴/科目 */
-            protected chooseJournalEntryLineShortName(caller: bo.JournalEntryLine): void {
-                let that: this = this;
-                let criteria: ibas.ICriteria = new ibas.Criteria();
-                // 激活的
-                let condition: ibas.ICondition = new ibas.Condition();
-                condition.alias = bo.Account.PROPERTY_ACTIVE_NAME;
-                condition.value = ibas.emYesNo.YES.toString();
-                condition.operation = ibas.emConditionOperation.EQUAL;
-                ibas.servicesManager.runChooseService<bo.Account>({
-                    boCode: bo.Account.BUSINESS_OBJECT_CODE,
-                    criteria: criteria,
-                    onCompleted(selecteds: ibas.IList<bo.Account>): void {
-                        // 获取触发的对象
-                        let index: number = that.editData.journalEntryLines.indexOf(caller);
-                        let item: bo.JournalEntryLine = that.editData.journalEntryLines[index];
-                        // 选择返回数量多于触发数量时,自动创建新的项目
-                        let created: boolean = false;
-                        for (let selected of selecteds) {
-                            if (ibas.objects.isNull(item)) {
-                                item = that.editData.journalEntryLines.create();
-                                created = true;
+            protected chooseJournalEntryLineShortName(caller: bo.JournalEntryLine, type?: "ACCOUNT" | "CUSTOMER" | "SUPPLIER"): void {
+                if (type === "CUSTOMER") {
+                    let that: this = this;
+                    let conditions: ibas.ICondition[] = businesspartner.app.conditions.customer.create();
+                    ibas.servicesManager.runChooseService<businesspartner.bo.Customer>({
+                        boCode: businesspartner.bo.Customer.BUSINESS_OBJECT_CODE,
+                        criteria: conditions,
+                        onCompleted(selecteds: ibas.IList<businesspartner.bo.Customer>): void {
+                            // 获取触发的对象
+                            let index: number = that.editData.journalEntryLines.indexOf(caller);
+                            let item: bo.JournalEntryLine = that.editData.journalEntryLines[index];
+                            // 选择返回数量多于触发数量时,自动创建新的项目
+                            let created: boolean = false;
+                            for (let selected of selecteds) {
+                                if (ibas.objects.isNull(item)) {
+                                    item = that.editData.journalEntryLines.create();
+                                    created = true;
+                                }
+                                item.shortName = selected.code;
+                                item = null;
                             }
-                            item.shortName = selected.code;
-                            item = null;
+                            if (created) {
+                                // 创建了新的行项目
+                                that.view.showJournalEntryLines(that.editData.journalEntryLines.filterDeleted());
+                            }
                         }
-                        if (created) {
-                            // 创建了新的行项目
-                            that.view.showJournalEntryLines(that.editData.journalEntryLines.filterDeleted());
+                    });
+                } else if (type === "SUPPLIER") {
+                    let that: this = this;
+                    let conditions: ibas.ICondition[] = businesspartner.app.conditions.supplier.create();
+                    ibas.servicesManager.runChooseService<businesspartner.bo.Supplier>({
+                        boCode: businesspartner.bo.Supplier.BUSINESS_OBJECT_CODE,
+                        criteria: conditions,
+                        onCompleted(selecteds: ibas.IList<businesspartner.bo.Supplier>): void {
+                            // 获取触发的对象
+                            let index: number = that.editData.journalEntryLines.indexOf(caller);
+                            let item: bo.JournalEntryLine = that.editData.journalEntryLines[index];
+                            // 选择返回数量多于触发数量时,自动创建新的项目
+                            let created: boolean = false;
+                            for (let selected of selecteds) {
+                                if (ibas.objects.isNull(item)) {
+                                    item = that.editData.journalEntryLines.create();
+                                    created = true;
+                                }
+                                item.shortName = selected.code;
+                                item = null;
+                            }
+                            if (created) {
+                                // 创建了新的行项目
+                                that.view.showJournalEntryLines(that.editData.journalEntryLines.filterDeleted());
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    let that: this = this;
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    // 激活的
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.Account.PROPERTY_ACTIVE_NAME;
+                    condition.value = ibas.emYesNo.YES.toString();
+                    condition.operation = ibas.emConditionOperation.EQUAL;
 
+                    ibas.servicesManager.runChooseService<bo.Account>({
+                        boCode: bo.Account.BUSINESS_OBJECT_CODE,
+                        criteria: criteria,
+                        onCompleted(selecteds: ibas.IList<bo.Account>): void {
+                            // 获取触发的对象
+                            let index: number = that.editData.journalEntryLines.indexOf(caller);
+                            let item: bo.JournalEntryLine = that.editData.journalEntryLines[index];
+                            // 选择返回数量多于触发数量时,自动创建新的项目
+                            let created: boolean = false;
+                            for (let selected of selecteds) {
+                                if (ibas.objects.isNull(item)) {
+                                    item = that.editData.journalEntryLines.create();
+                                    created = true;
+                                }
+                                item.account = selected.code;
+                                item.shortName = selected.code;
+                                item = null;
+                            }
+                            if (created) {
+                                // 创建了新的行项目
+                                that.view.showJournalEntryLines(that.editData.journalEntryLines.filterDeleted());
+                            }
+                        }
+                    });
+                }
             }
-            private chooseJournalEntryLineDistributionRule(type: emDimensionType, caller: bo.JournalEntryLine): void {
+            protected chooseJournalEntryLineDistributionRule(type: emDimensionType, caller: bo.JournalEntryLine): void {
                 if (ibas.objects.isNull(type)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_dimension_invaild", ""));
                     return;
@@ -297,6 +388,59 @@ namespace accounting {
                             caller.distributionRule4 = result;
                         } else if (type === emDimensionType.DIMENSION_5) {
                             caller.distributionRule5 = result;
+                        }
+                    }
+                });
+            }
+            /** 冲销分录 */
+            protected reverseJournalEntry(): void {
+                if (ibas.objects.isNull(this.editData) || this.editData.isDirty === true) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_saved_first"));
+                    return;
+                }
+                if (!ibas.strings.isEmpty(this.editData.baseDocumentType) && this.editData.baseDocumentEntry > 0) {
+                    throw new Error(ibas.i18n.prop("accounting_invaild_status_not_support_turn_to_operation"));
+                }
+                let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                boRepository.fetchJournalEntry({
+                    criteria: this.editData.criteria(),
+                    onCompleted: (opRslt) => {
+                        try {
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
+                            }
+                            if (opRslt.resultObjects.length === 0) {
+                                throw new Error(ibas.i18n.prop("shell_data_deleted"));
+                            }
+                            this.editData = opRslt.resultObjects.firstOrDefault();
+                            this.view.showJournalEntry(this.editData);
+                            this.view.showJournalEntryLines(this.editData.journalEntryLines.filterDeleted());
+                            if ((this.editData.approvalStatus !== ibas.emApprovalStatus.APPROVED && this.editData.approvalStatus !== ibas.emApprovalStatus.UNAFFECTED)
+                                || this.editData.canceled === ibas.emYesNo.YES
+                                || this.editData.documentStatus === ibas.emDocumentStatus.PLANNED
+                            ) {
+                                throw new Error(ibas.i18n.prop("accounting_invaild_status_not_support_turn_to_operation"));
+                            }
+                            let target: bo.JournalEntry = this.editData.clone();
+                            target.referenced = ibas.emYesNo.YES;
+                            target.baseDocumentType = this.editData.objectCode;
+                            target.baseDocumentEntry = this.editData.docEntry;
+                            if (ibas.objects.isNull(target.reference1)) {
+                                target.reference1 = "";
+                            }
+                            target.reference1 += ibas.i18n.prop("accounting_reverse_remarks", this.editData.docEntry);
+                            for (let item of target.journalEntryLines) {
+                                item.debit = -item.debit;
+                                item.credit = -item.credit;
+                            }
+
+                            let app: JournalEntryEditApp = new JournalEntryEditApp();
+                            app.navigation = this.navigation;
+                            app.viewShower = this.viewShower;
+                            app.run(target);
+
+                        } catch (error) {
+                            this.messages(error);
                         }
                     }
                 });
@@ -322,6 +466,8 @@ namespace accounting {
             chooseJournalEntryLineShortNameEvent: Function;
             /** 选择日记账分录-行成本中心事件 */
             chooseJournalEntryLineDistributionRuleEvent: Function;
+            /** 冲销分录事件 */
+            reverseJournalEntryEvent: Function;
         }
     }
 }

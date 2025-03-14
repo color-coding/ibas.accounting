@@ -293,6 +293,8 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		// 创建分录
 		IJournalEntry journal = this.getBeAffected();
 		journal.setReferenced(emYesNo.YES);
+		journal.setReference1(contract.getReference1());
+		journal.setReference2(contract.getReference2());
 		journal.setBranch(contract.getBranch());
 		journal.setDocumentDate(contract.getDocumentDate());
 		journal.setPostingDate(contract.getDocumentDate());

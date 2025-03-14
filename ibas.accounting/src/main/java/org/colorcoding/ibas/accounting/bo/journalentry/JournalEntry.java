@@ -1272,7 +1272,8 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 
 	@Override
 	protected IBusinessRule[] registerRules() {
-		return new IBusinessRule[] { // 注册的业务规则
+		return new IBusinessRule[] {
+				// 注册的业务规则
 				new BusinessRuleRequiredElements(PROPERTY_JOURNALENTRYLINES), // 要求有元素
 				new BusinessRuleSumElements(PROPERTY_DOCUMENTTOTAL, PROPERTY_JOURNALENTRYLINES,
 						JournalEntryLine.PROPERTY_DEBIT), // 计算单据总计
@@ -1280,7 +1281,7 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 	}
 
 	// 分录误差范围
-	private final static BigDecimal PERMITTED_DIFFERENCES = Decimal.valueOf("0.01");
+	private final static BigDecimal PERMITTED_DIFFERENCES = Decimal.valueOf("0.005");
 
 	@Override
 	public void check() throws BusinessRuleException {
@@ -1289,12 +1290,6 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		for (IJournalEntryLine line : this.getJournalEntryLines()) {
 			debit = Decimal.add(debit, line.getDebit());
 			credit = Decimal.add(credit, line.getCredit());
-		}
-		// 比较前，把小数位统一
-		if (debit.scale() > credit.scale()) {
-			debit = Decimal.round(debit, credit.scale());
-		} else if (debit.scale() < credit.scale()) {
-			credit = Decimal.round(credit, debit.scale());
 		}
 		// 2位以上的小数位不比较
 		if (debit.scale() > 2) {

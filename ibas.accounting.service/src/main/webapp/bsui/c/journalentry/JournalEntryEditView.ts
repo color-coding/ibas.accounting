@@ -24,6 +24,8 @@ namespace accounting {
                 chooseJournalEntryLineShortNameEvent: Function;
                 /** 选择日记账分录-行成本中心事件 */
                 chooseJournalEntryLineDistributionRuleEvent: Function;
+                /** 冲销分录事件 */
+                reverseJournalEntryEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -63,7 +65,7 @@ namespace accounting {
                                     return ibas.businessobjects.describe(ibas.strings.format("{[{0}].[DocEntry = {1}]}", type, entry));
                                 }
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference12") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference1") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
                                 path: "reference1",
@@ -71,6 +73,7 @@ namespace accounting {
                                     maxLength: 100
                                 }),
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_reference2") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
                                 path: "reference2",
@@ -93,6 +96,53 @@ namespace accounting {
                             }).bindProperty("bindingValue", {
                                 path: "docEntry",
                                 type: new sap.extension.data.Numeric(),
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_documentstatus") }),
+                            new sap.extension.m.Select("", {
+                                items: [
+                                    new sap.extension.m.SelectItem("", {
+                                        key: ibas.emDocumentStatus.PLANNED,
+                                        text: ibas.enums.describe(ibas.emDocumentStatus, ibas.emDocumentStatus.PLANNED),
+                                        enabled: true,
+                                    }),
+                                    new sap.extension.m.SelectItem("", {
+                                        key: ibas.emDocumentStatus.RELEASED,
+                                        text: ibas.enums.describe(ibas.emDocumentStatus, ibas.emDocumentStatus.RELEASED),
+                                        enabled: true,
+                                    }),
+                                    new sap.extension.m.SelectItem("", {
+                                        key: ibas.emDocumentStatus.FINISHED,
+                                        text: ibas.enums.describe(ibas.emDocumentStatus, ibas.emDocumentStatus.FINISHED),
+                                        enabled: false,
+                                    }),
+                                    new sap.extension.m.SelectItem("", {
+                                        key: ibas.emDocumentStatus.CLOSED,
+                                        text: ibas.enums.describe(ibas.emDocumentStatus, ibas.emDocumentStatus.CLOSED),
+                                        enabled: false,
+                                    })
+                                ],
+                                editable: {
+                                    parts: [
+                                        {
+                                            path: "documentStatus",
+                                        },
+                                        {
+                                            path: "isNew",
+                                        }
+                                    ],
+                                    formatter(data: any, isNew: any): boolean {
+                                        if (isNew === true) {
+                                            return true;
+                                        }
+                                        if (data === ibas.emDocumentStatus.PLANNED) {
+                                            return true;
+                                        }
+                                        return false;
+                                    }
+                                }
+                            }).bindProperty("bindingValue", {
+                                path: "documentStatus",
+                                type: new sap.extension.data.DocumentStatus()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_journalentry_postingdate") }),
                             new sap.extension.m.DatePicker("", {
@@ -140,9 +190,15 @@ namespace accounting {
                                                         },
                                                     }),
                                                     new sap.m.MenuItem("", {
-                                                        text: ibas.i18n.prop("bo_journalentryline_businesspartner"),
+                                                        text: ibas.i18n.prop("bo_journalentryline_customer"),
                                                         press: function (): void {
-                                                            that.fireViewEvents(that.addJournalEntryLineEvent, "BUSINESSPARTNER");
+                                                            that.fireViewEvents(that.addJournalEntryLineEvent, "CUSTOMER");
+                                                        },
+                                                    }),
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.i18n.prop("bo_journalentryline_supplier"),
+                                                        press: function (): void {
+                                                            that.fireViewEvents(that.addJournalEntryLineEvent, "SUPPLIER");
                                                         },
                                                     }),
                                                 ]
@@ -201,11 +257,57 @@ namespace accounting {
                                         label: ibas.i18n.prop("bo_journalentryline_shortname"),
                                         template: new sap.extension.m.Input("", {
                                             showValueHelp: true,
+                                            showSuggestion: true,
                                             valueHelpRequest: function (): void {
-                                                that.fireViewEvents(that.chooseJournalEntryLineShortNameEvent,
-                                                    // 获取当前对象
-                                                    this.getBindingContext().getObject()
-                                                );
+                                                let data: any = this.getBindingContext().getObject();
+                                                let popover: sap.m.Popover = new sap.m.Popover("", {
+                                                    placement: sap.m.PlacementType.HorizontalPreferredRight,
+                                                    contentWidth: "auto",
+                                                    contentHeight: "auto",
+                                                    showHeader: false,
+                                                    verticalScrolling: false,
+                                                    modal: false,
+                                                    content: [
+                                                        new sap.m.List("", {
+                                                            items: [
+                                                                new sap.m.ActionListItem("", {
+                                                                    text: ibas.i18n.prop("bo_journalentryline_account"),
+                                                                    press: function (this: sap.m.Button): void {
+                                                                        if (popover?.isOpen()) {
+                                                                            popover.destroy();
+                                                                        }
+                                                                        that.fireViewEvents(that.chooseJournalEntryLineShortNameEvent, data, "ACCOUNT");
+                                                                    },
+                                                                    highlight: sap.ui.core.MessageType.Information,
+                                                                    unread: true,
+                                                                }),
+                                                                new sap.m.ActionListItem("", {
+                                                                    text: ibas.i18n.prop("bo_journalentryline_customer"),
+                                                                    press: function (this: sap.m.Button): void {
+                                                                        if (popover?.isOpen()) {
+                                                                            popover.destroy();
+                                                                        }
+                                                                        that.fireViewEvents(that.chooseJournalEntryLineShortNameEvent, data, "CUSTOMER");
+                                                                    },
+                                                                    highlight: sap.ui.core.MessageType.Warning,
+                                                                    unread: true,
+                                                                }),
+                                                                new sap.m.ActionListItem("", {
+                                                                    text: ibas.i18n.prop("bo_journalentryline_supplier"),
+                                                                    press: function (this: sap.m.Button): void {
+                                                                        if (popover?.isOpen()) {
+                                                                            popover.destroy();
+                                                                        }
+                                                                        that.fireViewEvents(that.chooseJournalEntryLineShortNameEvent, data, "SUPPLIER");
+                                                                    },
+                                                                    highlight: sap.ui.core.MessageType.Success,
+                                                                    unread: true,
+                                                                }),
+                                                            ]
+                                                        })
+                                                    ]
+                                                });
+                                                popover.openBy(this, true);
                                             },
                                             showValueLink: true,
                                             valueLinkRequest: function (event: sap.ui.base.Event): void {
@@ -504,6 +606,24 @@ namespace accounting {
                                                     // 复制当前对象
                                                     that.fireViewEvents(that.createDataEvent, true);
                                                 }
+                                            }),
+                                        ],
+                                    })
+                                }),
+                                new sap.m.ToolbarSeparator(""),
+                                new sap.extension.m.MenuButton("", {
+                                    autoHide: true,
+                                    text: ibas.i18n.prop("shell_quick_to"),
+                                    icon: "sap-icon://generate-shortcut",
+                                    type: sap.m.ButtonType.Transparent,
+                                    menu: new sap.m.Menu("", {
+                                        items: [
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.i18n.prop("accounting_reverse_journalentry"),
+                                                icon: "sap-icon://doc-attachment",
+                                                press: function (): void {
+                                                    that.fireViewEvents(that.reverseJournalEntryEvent);
+                                                },
                                             }),
                                         ],
                                     })
