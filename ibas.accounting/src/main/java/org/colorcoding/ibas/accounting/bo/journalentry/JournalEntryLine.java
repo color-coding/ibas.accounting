@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
+import org.colorcoding.ibas.accounting.logic.IAccountBalanceContract;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
@@ -15,6 +16,8 @@ import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emBOStatus;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
@@ -26,7 +29,8 @@ import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = JournalEntryLine.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class JournalEntryLine extends BusinessObject<JournalEntryLine> implements IJournalEntryLine, IBOUserFields {
+public class JournalEntryLine extends BusinessObject<JournalEntryLine>
+		implements IJournalEntryLine, IBOUserFields, IBusinessLogicsHost {
 
 	/**
 	 * 序列化版本标记
@@ -1095,4 +1099,39 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine> implement
 		};
 	}
 
+	@Override
+	public IBusinessLogicContract[] getContracts() {
+		return new IBusinessLogicContract[] {
+				// 科目余额逻辑
+				new IAccountBalanceContract() {
+
+					@Override
+					public String getIdentifiers() {
+						return JournalEntryLine.this.toString();
+					}
+
+					@Override
+					public String getAccount() {
+						return JournalEntryLine.this.getAccount();
+					}
+
+					@Override
+					public BigDecimal getDebit() {
+						return JournalEntryLine.this.getDebit();
+					}
+
+					@Override
+					public BigDecimal getCredit() {
+						return JournalEntryLine.this.getCredit();
+					}
+
+					@Override
+					public String getCurrency() {
+						return JournalEntryLine.this.getCurrency();
+					}
+
+				}
+
+		};
+	}
 }

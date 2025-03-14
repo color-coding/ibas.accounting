@@ -224,7 +224,7 @@ namespace accounting {
             }
             /** 选择日记账分录-行科目 */
             protected chooseJournalEntryLineAccount(caller: bo.JournalEntryLine, control: boolean): void {
-                if ((!ibas.strings.isEmpty(caller.shortName) && caller.account !== caller.shortName) && ibas.objects.isNull(control)) {
+                if ((!ibas.strings.isEmpty(caller?.shortName) && caller?.account !== caller?.shortName) && ibas.objects.isNull(control)) {
                     // 判断是否为科目
                     let criteria: ibas.ICriteria = new ibas.Criteria();
                     criteria.noChilds = true;
