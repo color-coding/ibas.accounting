@@ -1,6 +1,7 @@
 package org.colorcoding.ibas.accounting.bo.journalentry;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -1281,7 +1282,7 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 	}
 
 	// 分录误差范围
-	private final static BigDecimal PERMITTED_DIFFERENCES = Decimal.valueOf("0.005");
+	private final static BigDecimal PERMITTED_DIFFERENCES = Decimal.valueOf("0.01");
 
 	@Override
 	public void check() throws BusinessRuleException {
@@ -1293,10 +1294,10 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		}
 		// 2位以上的小数位不比较
 		if (debit.scale() > 2) {
-			debit = Decimal.round(debit, 2);
+			debit = Decimal.round(debit, 2, RoundingMode.DOWN);
 		}
 		if (credit.scale() > 2) {
-			credit = Decimal.round(credit, 2);
+			credit = Decimal.round(credit, 2, RoundingMode.DOWN);
 		}
 		if (debit.subtract(credit).abs().compareTo(PERMITTED_DIFFERENCES) >= 0) {
 			// 分支的借贷方不平
