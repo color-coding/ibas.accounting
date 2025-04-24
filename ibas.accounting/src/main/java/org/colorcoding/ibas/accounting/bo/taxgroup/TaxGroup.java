@@ -14,11 +14,11 @@ import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOTagReferenced;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.Decimal;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 
 /**
  * 税收组
@@ -246,7 +246,7 @@ public class TaxGroup extends BusinessObject<TaxGroup> implements ITaxGroup, IBO
 	 * @param value 值
 	 */
 	public final void setRate(String value) {
-		this.setRate(Decimal.valueOf(value));
+		this.setRate(Decimals.valueOf(value));
 	}
 
 	/**
@@ -255,7 +255,7 @@ public class TaxGroup extends BusinessObject<TaxGroup> implements ITaxGroup, IBO
 	 * @param value 值
 	 */
 	public final void setRate(int value) {
-		this.setRate(Decimal.valueOf(value));
+		this.setRate(Decimals.valueOf(value));
 	}
 
 	/**
@@ -264,7 +264,7 @@ public class TaxGroup extends BusinessObject<TaxGroup> implements ITaxGroup, IBO
 	 * @param value 值
 	 */
 	public final void setRate(double value) {
-		this.setRate(Decimal.valueOf(value));
+		this.setRate(Decimals.valueOf(value));
 	}
 
 	/**

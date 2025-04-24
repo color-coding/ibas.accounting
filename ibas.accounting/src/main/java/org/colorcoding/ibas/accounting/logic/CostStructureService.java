@@ -8,22 +8,22 @@ import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructureNode;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructureNodeItem;
-import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.accounting.data.emJournalCategory;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.bobas.data.Decimal;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.logic.BusinessLogic;
-import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
-import org.colorcoding.ibas.bobas.mapping.LogicContract;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.message.MessageLevel;
+import org.colorcoding.ibas.bobas.logic.BusinessLogic;
+import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
+import org.colorcoding.ibas.bobas.logic.LogicContract;
 
 @LogicContract(ICostStructureContract.class)
 public class CostStructureService extends BusinessLogic<ICostStructureContract, ICostStructure> {
@@ -36,15 +36,16 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 		condition.setOperation(ConditionOperation.EQUAL);
 		condition.setValue(contract.getStructure());
 
-		ICostStructure structure = this.fetchBeAffected(criteria, ICostStructure.class);
+		ICostStructure structure = this.fetchBeAffected(ICostStructure.class, criteria);
 		if (structure == null) {
-			BORepositoryAccounting boRepository = new BORepositoryAccounting();
-			boRepository.setRepository(super.getRepository());
-			IOperationResult<ICostStructure> operationResult = boRepository.fetchCostStructure(criteria);
-			if (operationResult.getError() != null) {
-				throw new BusinessLogicException(operationResult.getError());
+			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+				boRepository.setTransaction(this.getTransaction());
+				IOperationResult<ICostStructure> operationResult = boRepository.fetchCostStructure(criteria);
+				if (operationResult.getError() != null) {
+					throw new BusinessLogicException(operationResult.getError());
+				}
+				structure = operationResult.getResultObjects().firstOrDefault();
 			}
-			structure = operationResult.getResultObjects().firstOrDefault();
 		}
 		if (structure == null) {
 			throw new BusinessLogicException(I18N.prop("msg_ac_coststructure_is_not_exist", contract.getStructure()));
@@ -82,7 +83,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 			throw new BusinessLogicException(I18N.prop("msg_ac_coststructurenode_is_not_exist",
 					this.getBeAffected().getName(), contract.getStructureNode()));
 		}
-		if (!DataConvert.isNullOrEmpty(contract.getItem())) {
+		if (!Strings.isNullOrEmpty(contract.getItem())) {
 			// 处理项目
 			ICostStructureNodeItem nodeItem = node.getCostStructureNodeItems()
 					.firstOrDefault(c -> c.getItem().equals(contract.getItem()));
@@ -93,26 +94,28 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 				ICondition condition = criteria.getConditions().create();
 				condition.setAlias(CostItem.PROPERTY_CODE.getName());
 				condition.setValue(name);
-				BORepositoryAccounting boRepository = new BORepositoryAccounting();
-				boRepository.setRepository(this.getRepository());
-				for (ICostItem item : boRepository.fetchCostItem(criteria).getResultObjects()) {
-					name = item.getName();
+				try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+					boRepository.setTransaction(this.getTransaction());
+					for (ICostItem item : boRepository.fetchCostItem(criteria).getResultObjects()) {
+						name = item.getName();
+					}
+					if (contract.getCategory() != emJournalCategory.INCREASE
+							&& node.getRestrictedItem() == emYesNo.YES) {
+						throw new BusinessLogicException(I18N.prop("msg_ac_coststructurenode_not_allow_item",
+								this.getBeAffected().getName(), node.getName(), name));
+					}
+					nodeItem = node.getCostStructureNodeItems().create();
+					nodeItem.setAdditional(emYesNo.YES);
+					nodeItem.setCurrency(node.getCurrency());
+					nodeItem.setItem(contract.getItem());
+					nodeItem.setName(name);
 				}
-				if (contract.getCategory() != emJournalCategory.INCREASE && node.getRestrictedItem() == emYesNo.YES) {
-					throw new BusinessLogicException(I18N.prop("msg_ac_coststructurenode_not_allow_item",
-							this.getBeAffected().getName(), node.getName(), name));
-				}
-				nodeItem = node.getCostStructureNodeItems().create();
-				nodeItem.setAdditional(emYesNo.YES);
-				nodeItem.setCurrency(node.getCurrency());
-				nodeItem.setItem(contract.getItem());
-				nodeItem.setName(name);
 			}
 			if (contract.getCategory() == emJournalCategory.CONSUME) {
 				// 消耗费用
 				BigDecimal amount = nodeItem.getIncurred();
 				if (amount == null) {
-					amount = Decimal.ZERO;
+					amount = Decimals.VALUE_ZERO;
 				}
 				amount = amount.add(contract.getAmount());
 				nodeItem.setIncurred(amount);
@@ -120,7 +123,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 				// 增加预算
 				BigDecimal amount = nodeItem.getBudget();
 				if (amount == null) {
-					amount = Decimal.ZERO;
+					amount = Decimals.VALUE_ZERO;
 				}
 				amount = amount.add(contract.getAmount());
 				nodeItem.setBudget(amount);
@@ -129,7 +132,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 				// 锁定费用
 				BigDecimal amount = nodeItem.getLocked();
 				if (amount == null) {
-					amount = Decimal.ZERO;
+					amount = Decimals.VALUE_ZERO;
 				}
 				amount = amount.add(contract.getAmount());
 				nodeItem.setLocked(amount);
@@ -142,7 +145,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 			// 消耗费用
 			BigDecimal amount = node.getIncurred();
 			if (amount == null) {
-				amount = Decimal.ZERO;
+				amount = Decimals.VALUE_ZERO;
 			}
 			amount = amount.add(contract.getAmount());
 			node.setIncurred(amount);
@@ -150,7 +153,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 			// 增加预算
 			BigDecimal amount = node.getBudget();
 			if (amount == null) {
-				amount = Decimal.ZERO;
+				amount = Decimals.VALUE_ZERO;
 			}
 			amount = amount.add(contract.getAmount());
 			node.setBudget(amount);
@@ -158,7 +161,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 			// 锁定费用
 			BigDecimal amount = node.getLocked();
 			if (amount == null) {
-				amount = Decimal.ZERO;
+				amount = Decimals.VALUE_ZERO;
 			}
 			amount = amount.add(contract.getAmount());
 			node.setLocked(amount);
@@ -175,7 +178,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 					contract.getStructureNode());
 			return;
 		}
-		if (!DataConvert.isNullOrEmpty(contract.getItem())) {
+		if (!Strings.isNullOrEmpty(contract.getItem())) {
 			// 处理项目
 			ICostStructureNodeItem nodeItem = node.getCostStructureNodeItems()
 					.firstOrDefault(c -> c.getItem().equals(contract.getItem()));
@@ -184,7 +187,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 					// 消耗费用
 					BigDecimal amount = nodeItem.getIncurred();
 					if (amount == null) {
-						amount = Decimal.ZERO;
+						amount = Decimals.VALUE_ZERO;
 					}
 					amount = amount.subtract(contract.getAmount());
 					nodeItem.setIncurred(amount);
@@ -192,7 +195,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 					// 增加预算
 					BigDecimal amount = nodeItem.getBudget();
 					if (amount == null) {
-						amount = Decimal.ZERO;
+						amount = Decimals.VALUE_ZERO;
 					}
 					amount = amount.subtract(contract.getAmount());
 					nodeItem.setBudget(amount);
@@ -201,7 +204,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 					// 锁定费用
 					BigDecimal amount = nodeItem.getLocked();
 					if (amount == null) {
-						amount = Decimal.ZERO;
+						amount = Decimals.VALUE_ZERO;
 					}
 					amount = amount.subtract(contract.getAmount());
 					nodeItem.setLocked(amount);
@@ -219,7 +222,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 			// 消耗费用
 			BigDecimal amount = node.getIncurred();
 			if (amount == null) {
-				amount = Decimal.ZERO;
+				amount = Decimals.VALUE_ZERO;
 			}
 			amount = amount.subtract(contract.getAmount());
 			node.setIncurred(amount);
@@ -227,7 +230,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 			// 增加预算
 			BigDecimal amount = node.getBudget();
 			if (amount == null) {
-				amount = Decimal.ZERO;
+				amount = Decimals.VALUE_ZERO;
 			}
 			amount = amount.subtract(contract.getAmount());
 			node.setBudget(amount);
@@ -235,7 +238,7 @@ public class CostStructureService extends BusinessLogic<ICostStructureContract, 
 			// 锁定费用
 			BigDecimal amount = node.getLocked();
 			if (amount == null) {
-				amount = Decimal.ZERO;
+				amount = Decimals.VALUE_ZERO;
 			}
 			amount = amount.subtract(contract.getAmount());
 			node.setLocked(amount);

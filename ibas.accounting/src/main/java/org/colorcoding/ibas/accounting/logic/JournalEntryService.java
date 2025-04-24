@@ -11,7 +11,6 @@ import org.colorcoding.ibas.accounting.bo.ledgeraccount.IPeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.ledgeraccount.PeriodLedgerAccount;
 import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
-import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.accounting.logic.JournalEntryContent.Category;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
@@ -19,24 +18,25 @@ import org.colorcoding.ibas.bobas.bo.IBOTagCanceled;
 import org.colorcoding.ibas.bobas.bo.IBOTagDeleted;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.SortType;
-import org.colorcoding.ibas.bobas.core.IBORepository;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.data.ArrayList;
-import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.expression.JudmentOperationException;
 import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.logic.BusinessLogic;
-import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
-import org.colorcoding.ibas.bobas.mapping.LogicContract;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.message.MessageLevel;
+import org.colorcoding.ibas.bobas.logic.BusinessLogic;
+import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
+import org.colorcoding.ibas.bobas.logic.LogicContract;
+import org.colorcoding.ibas.bobas.repository.ITransaction;
 
 @LogicContract(IJournalEntryCreationContract.class)
 public class JournalEntryService extends BusinessLogic<IJournalEntryCreationContract, IJournalEntry> {
@@ -119,15 +119,16 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			condition.setValue(DATASOURCE_SIGN_REGULAR_ENTRY);
 		}
 
-		IJournalEntry journal = this.fetchBeAffected(criteria, IJournalEntry.class);
+		IJournalEntry journal = this.fetchBeAffected(IJournalEntry.class, criteria);
 		if (journal == null) {
-			BORepositoryAccounting boRepository = new BORepositoryAccounting();
-			boRepository.setRepository(super.getRepository());
-			IOperationResult<IJournalEntry> operationResult = boRepository.fetchJournalEntry(criteria);
-			if (operationResult.getError() != null) {
-				throw new BusinessLogicException(operationResult.getError());
+			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+				boRepository.setTransaction(this.getTransaction());
+				IOperationResult<IJournalEntry> operationResult = boRepository.fetchJournalEntry(criteria);
+				if (operationResult.getError() != null) {
+					throw new BusinessLogicException(operationResult.getError());
+				}
+				journal = operationResult.getResultObjects().firstOrDefault();
 			}
-			journal = operationResult.getResultObjects().firstOrDefault();
 		}
 		if (journal == null) {
 			journal = new JournalEntry();
@@ -148,7 +149,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 	@Override
 	protected void impact(IJournalEntryCreationContract contract) {
 		String localCurrency = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_LOCAL_CURRENCY);
-		if (DataConvert.isNullOrEmpty(localCurrency)) {
+		if (Strings.isNullOrEmpty(localCurrency)) {
 			throw new BusinessLogicException(I18N.prop("msg_ac_not_found_local_currency"));
 		}
 		JournalEntryContent jeContent;
@@ -175,36 +176,37 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			condition.setAlias(JournalEntry.PROPERTY_DATASOURCE.getName());
 			condition.setOperation(ConditionOperation.EQUAL);
 			condition.setValue(DATASOURCE_SIGN_REGULAR_ENTRY);
-			BORepositoryAccounting boRepository = new BORepositoryAccounting();
-			boRepository.setRepository(super.getRepository());
-			IOperationResult<IJournalEntry> operationResult = boRepository.fetchJournalEntry(criteria);
-			if (operationResult.getError() != null) {
-				throw new BusinessLogicException(operationResult.getError());
-			}
-			if (!operationResult.getResultObjects().isEmpty()) {
-				IJournalEntryLine journalLine;
-				IJournalEntry journalEntry = operationResult.getResultObjects().firstOrDefault();
-				contractContents = new JournalEntryContent[journalEntry.getJournalEntryLines().size()];
-				for (int i = 0; i < contractContents.length; i++) {
-					journalLine = journalEntry.getJournalEntryLines().get(i);
-					jeContent = new JournalEntryContent();
-					jeContent.setAccount(journalLine.getAccount());
-					jeContent.setShortName(journalLine.getShortName());
-					jeContent.setCurrency(journalEntry.getDocumentCurrency());
-					jeContent.setRate(Decimal.ONE);
-					if (!Decimal.isZero(journalLine.getDebit())) {
-						// 非0，是借方
-						jeContent.setCategory(Category.Debit);
-						jeContent.setAmount(journalLine.getDebit());
-					} else if (!Decimal.isZero(journalLine.getCredit())) {
-						// 非0，是贷方
-						jeContent.setCategory(Category.Credit);
-						jeContent.setAmount(journalLine.getCredit());
-					} else {
-						// 无效数据
-						jeContent.setAmount(Decimal.ZERO);
+			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+				boRepository.setTransaction(this.getTransaction());
+				IOperationResult<IJournalEntry> operationResult = boRepository.fetchJournalEntry(criteria);
+				if (operationResult.getError() != null) {
+					throw new BusinessLogicException(operationResult.getError());
+				}
+				if (!operationResult.getResultObjects().isEmpty()) {
+					IJournalEntryLine journalLine;
+					IJournalEntry journalEntry = operationResult.getResultObjects().firstOrDefault();
+					contractContents = new JournalEntryContent[journalEntry.getJournalEntryLines().size()];
+					for (int i = 0; i < contractContents.length; i++) {
+						journalLine = journalEntry.getJournalEntryLines().get(i);
+						jeContent = new JournalEntryContent();
+						jeContent.setAccount(journalLine.getAccount());
+						jeContent.setShortName(journalLine.getShortName());
+						jeContent.setCurrency(journalEntry.getDocumentCurrency());
+						jeContent.setRate(Decimals.VALUE_ONE);
+						if (!Decimals.isZero(journalLine.getDebit())) {
+							// 非0，是借方
+							jeContent.setCategory(Category.Debit);
+							jeContent.setAmount(journalLine.getDebit());
+						} else if (!Decimals.isZero(journalLine.getCredit())) {
+							// 非0，是贷方
+							jeContent.setCategory(Category.Credit);
+							jeContent.setAmount(journalLine.getCredit());
+						} else {
+							// 无效数据
+							jeContent.setAmount(Decimals.VALUE_ZERO);
+						}
+						contractContents[i] = jeContent;
 					}
-					contractContents[i] = jeContent;
 				}
 			}
 			contractContents = contract.reverseContents(contractContents);
@@ -229,13 +231,13 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 						}
 
 						@Override
-						public IBORepository getRepository() {
-							return JournalEntryService.this.getRepository();
+						public BusinessLogic<?, ?> getInstance() {
+							return JournalEntryService.this;
 						}
 
 						@Override
-						public BusinessLogic<?, ?> getInstance() {
-							return JournalEntryService.this;
+						public ITransaction getTransaction() {
+							return JournalEntryService.this.getTransaction();
 						}
 					});
 					try {
@@ -247,40 +249,40 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 					}
 				}
 				// 调试模式，0金额过滤
-				if (Decimal.isZero(item.getAmount()) && !MyConfiguration.isDebugMode()) {
+				if (Decimals.isZero(item.getAmount()) && !MyConfiguration.isDebugMode()) {
 					continue;
 				}
 				// 判断货币及汇率
-				if (DataConvert.isNullOrEmpty(item.getCurrency())) {
+				if (Strings.isNullOrEmpty(item.getCurrency())) {
 					throw new BusinessLogicException(
 							I18N.prop("msg_ac_data_not_set_currency", item.getSourceData().toString()));
 				}
 				if (localCurrency.equalsIgnoreCase(item.getCurrency())) {
 					// 与本币相同，但汇率不是1
-					if (item.getRate() != null && Decimal.ZERO.compareTo(item.getRate()) != 0
-							&& Decimal.ONE.compareTo(item.getRate()) != 0) {
+					if (item.getRate() != null && Decimals.VALUE_ZERO.compareTo(item.getRate()) != 0
+							&& Decimals.VALUE_ONE.compareTo(item.getRate()) != 0) {
 						throw new BusinessLogicException(
 								I18N.prop("msg_ac_data_not_set_currency_rate", item.getSourceData().toString()));
 					}
-					if (item.getRate() == null || Decimal.ZERO.compareTo(item.getRate()) == 0) {
-						item.setRate(Decimal.ONE);
+					if (item.getRate() == null || Decimals.VALUE_ZERO.compareTo(item.getRate()) == 0) {
+						item.setRate(Decimals.VALUE_ONE);
 					}
 				} else {
 					// 与本币不通，未设置汇率
-					if (item.getRate() == null || Decimal.ZERO.compareTo(item.getRate()) >= 0) {
+					if (item.getRate() == null || Decimals.VALUE_ZERO.compareTo(item.getRate()) >= 0) {
 						throw new BusinessLogicException(
 								I18N.prop("msg_ac_data_not_set_currency_rate", item.getSourceData().toString()));
 					}
 				}
 				// 获取科目
-				if (DataConvert.isNullOrEmpty(item.getAccount())) {
+				if (Strings.isNullOrEmpty(item.getAccount())) {
 					item.setAccount(this.accountOf(item));
 				}
 				jeContent = jeContents.firstOrDefault(
 						c -> c.getCategory() == item.getCategory() && c.getAccount().equalsIgnoreCase(item.getAccount())
-								&& ((!DataConvert.isNullOrEmpty(item.getShortName())
+								&& ((!Strings.isNullOrEmpty(item.getShortName())
 										&& item.getShortName().equalsIgnoreCase(c.getShortName()))
-										|| DataConvert.isNullOrEmpty(item.getShortName()))
+										|| Strings.isNullOrEmpty(item.getShortName()))
 								&& (String.valueOf(c.getLedger()).equalsIgnoreCase(String.valueOf(item.getLedger()))));
 				if (jeContent == null) {
 					jeContent = item.duplicate();
@@ -312,15 +314,15 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			}
 			jeContent = jeContents.get(i);
 			journalLine.setAccount(jeContent.getAccount());
-			if (DataConvert.isNullOrEmpty(jeContent.getShortName())) {
+			if (Strings.isNullOrEmpty(jeContent.getShortName())) {
 				journalLine.setShortName(jeContent.getAccount());
 			} else {
 				journalLine.setShortName(jeContent.getShortName());
 			}
 			journalLine.setDebit(
-					jeContent.getCategory() == Category.Debit ? jeContent.getCurrencyAmount(6) : Decimal.ZERO);
+					jeContent.getCategory() == Category.Debit ? jeContent.getCurrencyAmount(6) : Decimals.VALUE_ZERO);
 			journalLine.setCredit(
-					jeContent.getCategory() == Category.Credit ? jeContent.getCurrencyAmount(6) : Decimal.ZERO);
+					jeContent.getCategory() == Category.Credit ? jeContent.getCurrencyAmount(6) : Decimals.VALUE_ZERO);
 			journalLine.setCurrency(localCurrency);
 			journalLine.setReferenced(emYesNo.YES);
 		}
@@ -361,7 +363,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		}
 		// 已存在分录，触发对象不能变成无效
 		if (journal != null && journal.isDirty() == false) {
-			if (this.checkDataStatus(this.getLogicChain().getTrigger()) == false) {
+			if (this.checkDataStatus(this.getTrigger()) == false) {
 				throw new BusinessLogicException(I18N.prop("msg_ac_document_has_journalentry_not_allowed_change_status",
 						String.format("{[%s].[DocEntry = %s]%s}", journal.getBaseDocumentType(),
 								journal.getBaseDocumentEntry(),
@@ -396,7 +398,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			sort.setAlias(PeriodCategory.PROPERTY_OBJECTKEY.getName());
 			sort.setSortType(SortType.DESCENDING);
 			boRepository = new BORepositoryAccounting();
-			boRepository.setRepository(this.getRepository());
+			boRepository.setTransaction(this.getTransaction());
 			IOperationResult<IPeriodCategory> opRslt = boRepository.fetchPeriodCategory(criteria);
 			if (opRslt.getError() != null) {
 				throw new BusinessLogicException(opRslt.getError());
@@ -424,7 +426,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			sort.setSortType(SortType.DESCENDING);
 			if (boRepository == null) {
 				boRepository = new BORepositoryAccounting();
-				boRepository.setRepository(this.getRepository());
+				boRepository.setTransaction(this.getTransaction());
 			}
 			IOperationResult<IPeriodLedgerAccount> opRsltLedger = boRepository.fetchPeriodLedgerAccount(criteria);
 			if (opRsltLedger.getError() != null) {
@@ -435,7 +437,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		JudgmentLink judgmentLink;
 		List<IPeriodLedgerAccount> ledgerAccounts = this.ledgerAccounts.get(jeContent.getLedger());
 		for (IPeriodLedgerAccount plAccount : ledgerAccounts) {
-			if (DataConvert.isNullOrEmpty(plAccount.getAccount())) {
+			if (Strings.isNullOrEmpty(plAccount.getAccount())) {
 				continue;
 			}
 			if (plAccount.getActivated() == emYesNo.NO) {

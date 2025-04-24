@@ -1,5 +1,6 @@
 package org.colorcoding.ibas.accounting.rule;
 
+import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
@@ -69,13 +70,13 @@ public class BusinessRuleStatusDate extends BusinessRuleCommon {
 		emDocumentStatus status = (emDocumentStatus) context.getInputValues().get(this.getStatus());
 		if (status == emDocumentStatus.RELEASED) {
 			Object date = context.getInputValues().get((this.getStartDate()));
-			if (date == null || DateTime.MIN_VALUE.equals(date) || DateTime.MAX_VALUE.equals(date)) {
-				context.getOutputValues().put(this.getStartDate(), DateTime.getToday());
+			if (date == null || DateTimes.VALUE_MIN.equals(date) || DateTimes.VALUE_MAX.equals(date)) {
+				context.getOutputValues().put(this.getStartDate(), DateTimes.today());
 			}
 		} else if (status == emDocumentStatus.FINISHED || status == emDocumentStatus.CLOSED) {
 			Object date = context.getInputValues().get((this.getCloseDate()));
-			if (date == null || DateTime.MIN_VALUE.equals(date) || DateTime.MAX_VALUE.equals(date)) {
-				context.getOutputValues().put(this.getCloseDate(), DateTime.getToday());
+			if (date == null || DateTimes.VALUE_MIN.equals(date) || DateTimes.VALUE_MAX.equals(date)) {
+				context.getOutputValues().put(this.getCloseDate(), DateTimes.today());
 			}
 		}
 	}

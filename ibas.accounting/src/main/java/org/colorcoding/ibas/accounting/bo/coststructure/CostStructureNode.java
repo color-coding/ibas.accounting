@@ -15,10 +15,10 @@ import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.Decimal;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleSumElements;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleSummation;
@@ -1122,15 +1122,15 @@ public class CostStructureNode extends BusinessObject<CostStructureNode> impleme
 	public void reset() {
 		super.reset();
 		this.setStatus(emCostStatus.OPEN);
-		this.setBudget(Decimal.ZERO);
-		this.setIncurred(Decimal.ZERO);
-		this.setLocked(Decimal.ZERO);
-		this.setBudgetItemTotal(Decimal.ZERO);
-		this.setBudgetNodeTotal(Decimal.ZERO);
-		this.setLockedItemTotal(Decimal.ZERO);
-		this.setLockedNodeTotal(Decimal.ZERO);
-		this.setIncurredItemTotal(Decimal.ZERO);
-		this.setIncurredNodeTotal(Decimal.ZERO);
+		this.setBudget(Decimals.VALUE_ZERO);
+		this.setIncurred(Decimals.VALUE_ZERO);
+		this.setLocked(Decimals.VALUE_ZERO);
+		this.setBudgetItemTotal(Decimals.VALUE_ZERO);
+		this.setBudgetNodeTotal(Decimals.VALUE_ZERO);
+		this.setLockedItemTotal(Decimals.VALUE_ZERO);
+		this.setLockedNodeTotal(Decimals.VALUE_ZERO);
+		this.setIncurredItemTotal(Decimals.VALUE_ZERO);
+		this.setIncurredNodeTotal(Decimals.VALUE_ZERO);
 	}
 
 	@Override

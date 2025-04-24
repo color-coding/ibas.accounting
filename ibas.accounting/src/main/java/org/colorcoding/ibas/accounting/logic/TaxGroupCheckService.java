@@ -2,17 +2,17 @@ package org.colorcoding.ibas.accounting.logic;
 
 import org.colorcoding.ibas.accounting.bo.taxgroup.ITaxGroup;
 import org.colorcoding.ibas.accounting.bo.taxgroup.TaxGroup;
-import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.bobas.data.Decimal;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.BusinessLogic;
 import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
-import org.colorcoding.ibas.bobas.mapping.LogicContract;
+import org.colorcoding.ibas.bobas.logic.LogicContract;
 
 @LogicContract(ITaxGroupCheckContract.class)
 public class TaxGroupCheckService extends BusinessLogic<ITaxGroupCheckContract, ITaxGroup> {
@@ -29,7 +29,7 @@ public class TaxGroupCheckService extends BusinessLogic<ITaxGroupCheckContract, 
 	@Override
 	protected ITaxGroup fetchBeAffected(ITaxGroupCheckContract contract) {
 		ITaxGroup taxGroup = null;
-		if (DataConvert.isNullOrEmpty(contract.getTax())) {
+		if (Strings.isNullOrEmpty(contract.getTax())) {
 			taxGroup = new _TaxGroup();
 			taxGroup.setCode("$EMPTY");
 			taxGroup.setRate(contract.getTaxRate());
@@ -39,16 +39,17 @@ public class TaxGroupCheckService extends BusinessLogic<ITaxGroupCheckContract, 
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(TaxGroup.PROPERTY_CODE.getName());
 		condition.setValue(contract.getTax());
-		taxGroup = super.fetchBeAffected(criteria, ITaxGroup.class);
+		taxGroup = this.fetchBeAffected(ITaxGroup.class, criteria);
 		if (taxGroup == null) {
-			BORepositoryAccounting boRepository = new BORepositoryAccounting();
-			boRepository.setRepository(super.getRepository());
-			IOperationResult<TaxGroup> operationResult = boRepository.fetchTaxGroup(criteria,
-					boRepository.getUserToken());
-			if (operationResult.getError() != null) {
-				throw new BusinessLogicException(operationResult.getError());
+			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+				boRepository.setTransaction(this.getTransaction());
+				IOperationResult<TaxGroup> operationResult = boRepository.fetchTaxGroup(criteria,
+						boRepository.getUserToken());
+				if (operationResult.getError() != null) {
+					throw new BusinessLogicException(operationResult.getError());
+				}
+				taxGroup = operationResult.getResultObjects().firstOrDefault();
 			}
-			taxGroup = operationResult.getResultObjects().firstOrDefault();
 		}
 		if (taxGroup == null) {
 			taxGroup = new _TaxGroup();
@@ -81,7 +82,7 @@ class _TaxGroup extends TaxGroup {
 		super();
 		this.setSavable(false);
 		this.setCode("$EMPTY");
-		this.setRate(Decimal.ZERO);
+		this.setRate(Decimals.VALUE_ZERO);
 	}
 
 }

@@ -13,10 +13,10 @@ import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.Decimal;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 
 /**
@@ -791,8 +791,8 @@ public class CostStructureNodeItem extends BusinessObject<CostStructureNodeItem>
 	@Override
 	public void reset() {
 		super.reset();
-		this.setBudget(Decimal.ZERO);
-		this.setIncurred(Decimal.ZERO);
-		this.setLocked(Decimal.ZERO);
+		this.setBudget(Decimals.VALUE_ZERO);
+		this.setIncurred(Decimals.VALUE_ZERO);
+		this.setLocked(Decimals.VALUE_ZERO);
 	}
 }

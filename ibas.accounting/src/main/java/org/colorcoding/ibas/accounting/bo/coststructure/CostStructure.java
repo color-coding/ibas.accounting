@@ -13,14 +13,14 @@ import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.data.emCostStatus;
 import org.colorcoding.ibas.accounting.data.emEntityType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleSumElements;
@@ -984,13 +984,13 @@ public class CostStructure extends BusinessObject<CostStructure>
 		return new IBusinessRule[] {
 				// 计算合计 预算
 				new BusinessRuleSumElements(PROPERTY_BUDGET, PROPERTY_COSTSTRUCTURENODES,
-						CostStructureNodeItem.PROPERTY_BUDGET),
+						CostStructureNode.PROPERTY_BUDGET),
 				// 计算合计 锁定
 				new BusinessRuleSumElements(PROPERTY_LOCKED, PROPERTY_COSTSTRUCTURENODES,
-						CostStructureNodeItem.PROPERTY_LOCKED),
+						CostStructureNode.PROPERTY_LOCKED),
 				// 计算合计 消耗
 				new BusinessRuleSumElements(PROPERTY_INCURRED, PROPERTY_COSTSTRUCTURENODES,
-						CostStructureNodeItem.PROPERTY_INCURRED),
+						CostStructureNode.PROPERTY_INCURRED),
 
 		};
 	}
@@ -999,8 +999,8 @@ public class CostStructure extends BusinessObject<CostStructure>
 	public void reset() {
 		super.reset();
 		this.setStatus(emCostStatus.OPEN);
-		this.setBudget(Decimal.ZERO);
-		this.setIncurred(Decimal.ZERO);
-		this.setLocked(Decimal.ZERO);
+		this.setBudget(Decimals.VALUE_ZERO);
+		this.setIncurred(Decimals.VALUE_ZERO);
+		this.setLocked(Decimals.VALUE_ZERO);
 	}
 }

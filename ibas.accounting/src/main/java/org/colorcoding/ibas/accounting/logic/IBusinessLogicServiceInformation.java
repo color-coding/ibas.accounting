@@ -1,7 +1,7 @@
 package org.colorcoding.ibas.accounting.logic;
 
-import org.colorcoding.ibas.bobas.core.IBORepository;
 import org.colorcoding.ibas.bobas.logic.BusinessLogic;
+import org.colorcoding.ibas.bobas.repository.ITransaction;
 
 /**
  * 业务逻辑服务信息
@@ -27,5 +27,5 @@ public interface IBusinessLogicServiceInformation {
 	 * 
 	 * @return
 	 */
-	IBORepository getRepository();
+	ITransaction getTransaction();
 }

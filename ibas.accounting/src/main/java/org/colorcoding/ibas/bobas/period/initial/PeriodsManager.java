@@ -5,6 +5,7 @@ import org.colorcoding.ibas.accounting.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.accounting.data.emPeriodStatus;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISort;
@@ -15,10 +16,9 @@ import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.period.IPeriodData;
-import org.colorcoding.ibas.bobas.period.IPeriodsManager;
 import org.colorcoding.ibas.bobas.period.PeriodException;
 
-public class PeriodsManager implements IPeriodsManager {
+public class PeriodsManager extends org.colorcoding.ibas.bobas.period.PeriodsManager {
 
 	@Override
 	public void initialize() {
@@ -27,11 +27,12 @@ public class PeriodsManager implements IPeriodsManager {
 			ISort sort = criteria.getSorts().create();
 			sort.setAlias(PostingPeriod.PROPERTY_OBJECTKEY.getName());
 			sort.setSortType(SortType.DESCENDING);
-			BORepositoryAccounting boRepository = new BORepositoryAccounting();
-			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<IPostingPeriod> operationResult = boRepository.fetchPostingPeriod(criteria);
-			for (IPostingPeriod item : operationResult.getResultObjects()) {
-				this.getPeriods().add(new PeriodItem(item));
+			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+				boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+				IOperationResult<IPostingPeriod> operationResult = boRepository.fetchPostingPeriod(criteria);
+				for (IPostingPeriod item : operationResult.getResultObjects()) {
+					this.getPeriods().add(new PeriodItem(item));
+				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -58,8 +59,8 @@ public class PeriodsManager implements IPeriodsManager {
 
 	@Override
 	public void applyPeriod(IPeriodData bo) throws PeriodException {
-		if (bo.getPostingDate() == null || bo.getPostingDate().equals(DateTime.MIN_VALUE)) {
-			bo.setPostingDate(DateTime.getToday());
+		if (bo.getPostingDate() == null || bo.getPostingDate().equals(DateTimes.VALUE_MIN)) {
+			bo.setPostingDate(DateTimes.today());
 		}
 		PeriodItem periodItem = this.getPeriod(bo.getPostingDate());
 		if (periodItem == null) {

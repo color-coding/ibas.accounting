@@ -3,7 +3,6 @@ package org.colorcoding.ibas.accounting.logic;
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.branch.IBranch;
-import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
@@ -11,13 +10,14 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.logic.BusinessLogic;
-import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
-import org.colorcoding.ibas.bobas.mapping.LogicContract;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.message.MessageLevel;
+import org.colorcoding.ibas.bobas.logic.BusinessLogic;
+import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
+import org.colorcoding.ibas.bobas.logic.LogicContract;
 
 @LogicContract(IBranchCheckContract.class)
 public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBranch> {
@@ -51,7 +51,7 @@ public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBra
 
 	@Override
 	protected IBranch fetchBeAffected(IBranchCheckContract contract) {
-		if (DataConvert.isNullOrEmpty(contract.getBranch())) {
+		if (Strings.isNullOrEmpty(contract.getBranch())) {
 			return EMPTY_BRANCH;
 		}
 		ICriteria criteria = new Criteria();
@@ -74,15 +74,16 @@ public class BranchCheckService extends BusinessLogic<IBranchCheckContract, IBra
 		condition.setAlias(Branch.PROPERTY_DELETED.getName());
 		condition.setOperation(ConditionOperation.IS_NULL);
 		condition.setRelationship(ConditionRelationship.OR);
-		IBranch branch = super.fetchBeAffected(criteria, IBranch.class);
+		IBranch branch = this.fetchBeAffected(IBranch.class, criteria);
 		if (branch == null) {
-			BORepositoryAccounting boRepository = new BORepositoryAccounting();
-			boRepository.setRepository(super.getRepository());
-			IOperationResult<IBranch> operationResult = boRepository.fetchBranch(criteria);
-			if (operationResult.getError() != null) {
-				throw new BusinessLogicException(operationResult.getError());
+			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+				boRepository.setTransaction(this.getTransaction());
+				IOperationResult<IBranch> operationResult = boRepository.fetchBranch(criteria);
+				if (operationResult.getError() != null) {
+					throw new BusinessLogicException(operationResult.getError());
+				}
+				branch = operationResult.getResultObjects().firstOrDefault();
 			}
-			branch = operationResult.getResultObjects().firstOrDefault();
 		}
 		// 分支不存在
 		if (branch == null) {

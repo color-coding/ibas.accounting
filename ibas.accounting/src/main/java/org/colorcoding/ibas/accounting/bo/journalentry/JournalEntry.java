@@ -13,20 +13,21 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.logic.IBranchCheckContract;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
+import org.colorcoding.ibas.bobas.common.DateTimes;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emBOStatus;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
-import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.BusinessRuleException;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
@@ -1257,9 +1258,9 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		super.initialize();// 基类初始化，不可去除
 		this.setJournalEntryLines(new JournalEntryLines(this));
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-		this.setPostingDate(DateTime.getToday());
-		this.setDocumentDate(DateTime.getToday());
-		this.setDeliveryDate(DateTime.getToday());
+		this.setPostingDate(DateTimes.today());
+		this.setDocumentDate(DateTimes.today());
+		this.setDeliveryDate(DateTimes.today());
 		this.setDocumentStatus(emDocumentStatus.RELEASED);
 
 	}
@@ -1282,22 +1283,22 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 	}
 
 	// 分录误差范围
-	private final static BigDecimal PERMITTED_DIFFERENCES = Decimal.valueOf("0.01");
+	private final static BigDecimal PERMITTED_DIFFERENCES = Decimals.valueOf("0.01");
 
 	@Override
 	public void check() throws BusinessRuleException {
 		// 合计借贷方
-		BigDecimal debit = Decimal.ZERO, credit = Decimal.ZERO;
+		BigDecimal debit = Decimals.VALUE_ZERO, credit = Decimals.VALUE_ZERO;
 		for (IJournalEntryLine line : this.getJournalEntryLines()) {
-			debit = Decimal.add(debit, line.getDebit());
-			credit = Decimal.add(credit, line.getCredit());
+			debit = Decimals.add(debit, line.getDebit());
+			credit = Decimals.add(credit, line.getCredit());
 		}
 		// 2位以上的小数位不比较
 		if (debit.scale() > 2) {
-			debit = Decimal.round(debit, 2, RoundingMode.DOWN);
+			debit = Decimals.round(debit, 2, RoundingMode.DOWN);
 		}
 		if (credit.scale() > 2) {
-			credit = Decimal.round(credit, 2, RoundingMode.DOWN);
+			credit = Decimals.round(credit, 2, RoundingMode.DOWN);
 		}
 		if (debit.subtract(credit).abs().compareTo(PERMITTED_DIFFERENCES) >= 0) {
 			// 分支的借贷方不平
