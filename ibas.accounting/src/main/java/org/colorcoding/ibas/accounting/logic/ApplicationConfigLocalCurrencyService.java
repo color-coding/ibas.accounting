@@ -1,17 +1,17 @@
 package org.colorcoding.ibas.accounting.logic;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
-import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.BusinessLogic;
 import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
-import org.colorcoding.ibas.bobas.mapping.LogicContract;
+import org.colorcoding.ibas.bobas.logic.LogicContract;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
@@ -33,15 +33,16 @@ public class ApplicationConfigLocalCurrencyService
 		condition.setOperation(ConditionOperation.EQUAL);
 		condition.setValue(MyConfiguration.CONFIG_ITEM_LOCAL_CURRENCY);
 
-		IApplicationConfig appConfig = this.fetchBeAffected(criteria, IApplicationConfig.class);
+		IApplicationConfig appConfig = this.fetchBeAffected(IApplicationConfig.class, criteria);
 		if (appConfig == null) {
-			BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
-			boRepository.setRepository(super.getRepository());
-			IOperationResult<IApplicationConfig> operationResult = boRepository.fetchApplicationConfig(criteria);
-			if (operationResult.getError() != null) {
-				throw new BusinessLogicException(operationResult.getError());
+			try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
+				boRepository.setTransaction(this.getTransaction());
+				IOperationResult<IApplicationConfig> operationResult = boRepository.fetchApplicationConfig(criteria);
+				if (operationResult.getError() != null) {
+					throw new BusinessLogicException(operationResult.getError());
+				}
+				appConfig = operationResult.getResultObjects().firstOrDefault();
 			}
-			appConfig = operationResult.getResultObjects().firstOrDefault();
 		}
 		if (appConfig == null) {
 			appConfig = new ApplicationConfig();
@@ -63,7 +64,7 @@ public class ApplicationConfigLocalCurrencyService
 	@Override
 	protected void revoke(IApplicationConfigLocalCurrencyContract contract) {
 		IApplicationConfig appConfig = this.getBeAffected();
-		appConfig.setConfigValue(DataConvert.STRING_VALUE_EMPTY);
+		appConfig.setConfigValue(Strings.VALUE_EMPTY);
 	}
 
 }
