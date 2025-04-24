@@ -1,7 +1,7 @@
 package org.colorcoding.ibas.accounting.logic;
 
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.Decimal;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 
 /**
@@ -100,7 +100,7 @@ public interface IJournalEntryCreationContract extends IBusinessLogicContract {
 			if (item.getAmount() == null) {
 				continue;
 			}
-			if (Decimal.isZero(item.getAmount())) {
+			if (Decimals.isZero(item.getAmount())) {
 				continue;
 			}
 			item.setAmount(item.getAmount().negate());

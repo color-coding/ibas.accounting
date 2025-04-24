@@ -50,7 +50,7 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.data.ArrayList;
-import org.colorcoding.ibas.bobas.data.Decimal;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
@@ -70,7 +70,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<PeriodCategory> fetchPeriodCategory(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, PeriodCategory.class);
+		return super.fetch(PeriodCategory.class, criteria, token);
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<PostingPeriod> fetchPostingPeriod(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, PostingPeriod.class);
+		return super.fetch(PostingPeriod.class, criteria, token);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Project> fetchProject(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Project.class);
+		return super.fetch(Project.class, criteria, token);
 	}
 
 	/**
@@ -199,7 +199,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Dimension> fetchDimension(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Dimension.class);
+		return super.fetch(Dimension.class, criteria, token);
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<TaxGroup> fetchTaxGroup(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, TaxGroup.class);
+		return super.fetch(TaxGroup.class, criteria, token);
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<CostStructure> fetchCostStructure(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, CostStructure.class);
+		return super.fetch(CostStructure.class, criteria, token);
 	}
 
 	/**
@@ -381,7 +381,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 								if (action == emCostStatus.CLOSED && item.getStatus() != emCostStatus.CLOSED
 										&& costStructure.getTransferable() == emYesNo.YES) {
 									// 需要结转预算
-									if (item.getLocked().compareTo(Decimal.ZERO) > 0) {
+									if (item.getLocked().compareTo(Decimals.VALUE_ZERO) > 0) {
 										// 自动结转时，结转节点存在锁定金额不许结转
 										throw new BusinessLogicException(I18N.prop(
 												"msg_ac_coststructurenode_closed_locked_greater_zero", item.getName()));
@@ -412,7 +412,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 										if (i < nodes.size() - 1) {
 											nItem.setBudget(nItem.getIncurred());
 										}
-										if (journal.getAmount().compareTo(Decimal.ZERO) <= 0) {
+										if (journal.getAmount().compareTo(Decimals.VALUE_ZERO) <= 0) {
 											// 跳过可用金额小于等于0
 											continue;
 										}
@@ -535,7 +535,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<CostItem> fetchCostItem(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, CostItem.class);
+		return super.fetch(CostItem.class, criteria, token);
 	}
 
 	/**
@@ -578,7 +578,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<CostItemJournal> fetchCostItemJournal(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, CostItemJournal.class);
+		return super.fetch(CostItemJournal.class, criteria, token);
 	}
 
 	/**
@@ -622,7 +622,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Currency> fetchCurrency(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Currency.class);
+		return super.fetch(Currency.class, criteria, token);
 	}
 
 	/**
@@ -665,7 +665,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Account> fetchAccount(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Account.class);
+		return super.fetch(Account.class, criteria, token);
 	}
 
 	/**
@@ -708,7 +708,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Branch> fetchBranch(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Branch.class);
+		return super.fetch(Branch.class, criteria, token);
 	}
 
 	/**
@@ -751,7 +751,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<JournalEntry> fetchJournalEntry(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, JournalEntry.class);
+		return super.fetch(JournalEntry.class, criteria, token);
 	}
 
 	/**
@@ -794,7 +794,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<LedgerAccount> fetchLedgerAccount(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, LedgerAccount.class);
+		return super.fetch(LedgerAccount.class, criteria, token);
 	}
 
 	/**
@@ -837,7 +837,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<PeriodLedgerAccount> fetchPeriodLedgerAccount(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, PeriodLedgerAccount.class);
+		return super.fetch(PeriodLedgerAccount.class, criteria, token);
 	}
 
 	/**
@@ -881,7 +881,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<LedgerConditionProperty> fetchLedgerConditionProperty(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, LedgerConditionProperty.class);
+		return super.fetch(LedgerConditionProperty.class, criteria, token);
 	}
 
 	/**
@@ -927,7 +927,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Bank> fetchBank(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Bank.class);
+		return super.fetch(Bank.class, criteria, token);
 	}
 
 	/**
@@ -970,7 +970,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BankAccount> fetchBankAccount(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BankAccount.class);
+		return super.fetch(BankAccount.class, criteria, token);
 	}
 
 	/**
@@ -1013,7 +1013,7 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<CurrencyRate> fetchCurrencyRate(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, CurrencyRate.class);
+		return super.fetch(CurrencyRate.class, criteria, token);
 	}
 
 	/**

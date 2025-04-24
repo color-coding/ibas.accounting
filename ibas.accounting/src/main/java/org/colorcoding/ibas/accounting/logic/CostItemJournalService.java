@@ -10,11 +10,11 @@ import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.emApprovalStatus;
+import org.colorcoding.ibas.bobas.logging.Logger;
+import org.colorcoding.ibas.bobas.logging.LoggingLevel;
 import org.colorcoding.ibas.bobas.logic.BusinessLogic;
 import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
-import org.colorcoding.ibas.bobas.mapping.LogicContract;
-import org.colorcoding.ibas.bobas.message.Logger;
-import org.colorcoding.ibas.bobas.message.MessageLevel;
+import org.colorcoding.ibas.bobas.logic.LogicContract;
 
 @LogicContract(ICostItemJournalContract.class)
 public class CostItemJournalService extends BusinessLogic<ICostItemJournalContract, ICostItemJournal> {
@@ -29,7 +29,7 @@ public class CostItemJournalService extends BusinessLogic<ICostItemJournalContra
 		}
 		if (data instanceof ICostItemJournalContract) {
 			if (((ICostItemJournalContract) data).getCategory() == null) {
-				Logger.log(MessageLevel.DEBUG, MSG_LOGICS_SKIP_LOGIC_EXECUTION, this.getClass().getName(), "Category",
+				Logger.log(LoggingLevel.DEBUG, MSG_LOGICS_SKIP_LOGIC_EXECUTION, this.getClass().getName(), "Category",
 						"NONE");
 				return false;
 			}
@@ -53,15 +53,16 @@ public class CostItemJournalService extends BusinessLogic<ICostItemJournalContra
 		condition.setOperation(ConditionOperation.EQUAL);
 		condition.setValue(contract.getDocumentLineId());
 
-		ICostItemJournal journal = this.fetchBeAffected(criteria, ICostItemJournal.class);
+		ICostItemJournal journal = this.fetchBeAffected(ICostItemJournal.class, criteria);
 		if (journal == null) {
-			BORepositoryAccounting boRepository = new BORepositoryAccounting();
-			boRepository.setRepository(super.getRepository());
-			IOperationResult<ICostItemJournal> operationResult = boRepository.fetchCostItemJournal(criteria);
-			if (operationResult.getError() != null) {
-				throw new BusinessLogicException(operationResult.getError());
+			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
+				boRepository.setTransaction(this.getTransaction());
+				IOperationResult<ICostItemJournal> operationResult = boRepository.fetchCostItemJournal(criteria);
+				if (operationResult.getError() != null) {
+					throw new BusinessLogicException(operationResult.getError());
+				}
+				journal = operationResult.getResultObjects().firstOrDefault();
 			}
-			journal = operationResult.getResultObjects().firstOrDefault();
 		}
 		if (journal == null) {
 			journal = new CostItemJournal();
