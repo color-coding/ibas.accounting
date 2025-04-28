@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
@@ -23,7 +24,7 @@ import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 @XmlType(name = Bank.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = Bank.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = Bank.BUSINESS_OBJECT_CODE)
-public class Bank extends BusinessObject<Bank> implements IBank {
+public class Bank extends BusinessObject<Bank> implements IBank, IBOUserFields {
 
 	/**
 	 * 序列化版本标记

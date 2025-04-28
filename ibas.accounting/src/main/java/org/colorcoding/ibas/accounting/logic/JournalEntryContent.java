@@ -2,6 +2,7 @@ package org.colorcoding.ibas.accounting.logic;
 
 import java.math.BigDecimal;
 
+import org.colorcoding.ibas.accounting.data.DataConvert;
 import org.colorcoding.ibas.bobas.data.Decimal;
 
 /**
@@ -60,6 +61,9 @@ public class JournalEntryContent {
 	private String ledger;
 
 	public final String getLedger() {
+		if (this.ledger == null) {
+			return DataConvert.STRING_VALUE_EMPTY;
+		}
 		return ledger;
 	}
 
@@ -127,6 +131,9 @@ public class JournalEntryContent {
 	private String account;
 
 	public final String getAccount() {
+		if (this.account == null) {
+			return DataConvert.STRING_VALUE_EMPTY;
+		}
 		return account;
 	}
 
@@ -140,6 +147,9 @@ public class JournalEntryContent {
 	private String shortName;
 
 	public final String getShortName() {
+		if (this.shortName == null) {
+			return DataConvert.STRING_VALUE_EMPTY;
+		}
 		return shortName;
 	}
 

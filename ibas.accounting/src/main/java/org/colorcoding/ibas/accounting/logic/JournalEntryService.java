@@ -49,6 +49,18 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 	 * 冲销分录
 	 */
 	public static final String DATASOURCE_SIGN_OFFSETTING_ENTRY = "JES-OFF";
+	/**
+	 * 行合并方式，不合并
+	 */
+	public static final String LINE_MERGE_METHOD_NONE = "NONE";
+	/**
+	 * 行合并方式，科目合并
+	 */
+	public static final String LINE_MERGE_METHOD_ACCOUNT = "ACCOUNT";
+	/**
+	 * 行合并方式，余额合并
+	 */
+	public static final String LINE_MERGE_METHOD_BALANCE = "BALANCE";
 
 	public JournalEntryService() {
 		super();
@@ -290,6 +302,56 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 				jeContent.setAmount(jeContent.getAmount().add(item.getAmount()));
 			}
 		}
+		// 合并分录内容
+		String method = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_MERGE_JOURNAL_ENTRY_LINE_METHOD,
+				LINE_MERGE_METHOD_NONE);
+		// 科目合并
+		if (LINE_MERGE_METHOD_ACCOUNT.equalsIgnoreCase(method) || LINE_MERGE_METHOD_BALANCE.equalsIgnoreCase(method)) {
+			List<JournalEntryContent> newJeContents = new ArrayList<>(jeContents.size());
+			for (JournalEntryContent item : jeContents) {
+				jeContent = newJeContents.firstOrDefault(
+						c -> c.getCategory() == item.getCategory() && c.getAccount().equalsIgnoreCase(item.getAccount())
+								&& c.getShortName().equalsIgnoreCase(item.getShortName()));
+				if (jeContent == null) {
+					jeContent = item.duplicate();
+					newJeContents.add(jeContent);
+				} else {
+					jeContent.setAmount(Decimal.add(jeContent.getAmount(), item.getAmount()));
+				}
+			}
+			jeContents = newJeContents;
+		}
+		// 接科目合并，仅保留余额
+		if (LINE_MERGE_METHOD_BALANCE.equalsIgnoreCase(method)) {
+			List<JournalEntryContent> tmpContents;
+			List<JournalEntryContent> newJeContents = new ArrayList<>(jeContents.size());
+			for (JournalEntryContent item : jeContents) {
+				tmpContents = jeContents.where(c -> c.getAccount().equalsIgnoreCase(item.getAccount())
+						&& c.getShortName().equalsIgnoreCase(item.getShortName()));
+				if (tmpContents.size() > 1) {
+					if (tmpContents.size() != 2) {
+						// 没有科目合并，不支持操作
+						throw new BusinessLogicException(
+								I18N.prop("msg_ac_operation_not_supported", LINE_MERGE_METHOD_BALANCE));
+					}
+					JournalEntryContent creditContent = tmpContents
+							.firstOrDefault(c -> c.getCategory() == Category.Credit);
+					JournalEntryContent debitContent = tmpContents
+							.firstOrDefault(c -> c.getCategory() == Category.Debit);
+					int compared = creditContent.getAmount().abs().compareTo(debitContent.getAmount().abs());
+					if (compared > 0) {
+						creditContent.setAmount(Decimal.subtract(creditContent.getAmount(), debitContent.getAmount()));
+						newJeContents.add(creditContent);
+					} else if (compared < 0) {
+						debitContent.setAmount(Decimal.subtract(debitContent.getAmount(), creditContent.getAmount()));
+						newJeContents.add(debitContent);
+					}
+				} else {
+					newJeContents.add(item);
+				}
+			}
+			jeContents = newJeContents.where(c -> !Decimal.isZero(c.getAmount()));
+		}
 		// 创建分录
 		IJournalEntry journal = this.getBeAffected();
 		journal.setReferenced(emYesNo.YES);
@@ -341,7 +403,11 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			if (journal.isNew()) {
 				((BusinessObject<?>) journal).markNew();
 			} else {
-				((BusinessObject<?>) journal).undelete();
+				List<IJournalEntryLine> beDeleteds = journal.getJournalEntryLines().where(c -> c.isDeleted());
+				((BusinessObject<?>) journal).undelete();// 子项也会被撤销删除标记
+				for (IJournalEntryLine item : beDeleteds) {
+					item.delete();
+				}
 			}
 		}
 	}

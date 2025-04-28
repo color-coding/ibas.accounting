@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE ApplicationConfig>
+<ns:ApplicationConfig xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
+	<ConfigKey>mergeJournalEntryLineMethod</ConfigKey>
+	<ConfigDescription>合并分录行方式</ConfigDescription>
+	<ConfigGroup>ac70d488-d8fc-478a-af00-c70ef779a50b</ConfigGroup>
+	<ConfigValue>NONE</ConfigValue>
+	<Settings>[{"Key":"NONE","Text":"不合并"},{"Key":"ACCOUNT","Text":"科目合并"},{"Key":"BALANCE","Text":"余额合并"}]</Settings>
+	<Category>SERVER</Category>
+	<Activated>YES</Activated>
+</ns:ApplicationConfig>
