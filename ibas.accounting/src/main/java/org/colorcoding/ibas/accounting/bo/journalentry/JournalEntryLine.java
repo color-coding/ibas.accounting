@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.logic.IAccountBalanceContract;
+import org.colorcoding.ibas.accounting.logic.ICashFlowAssignmentContract;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
@@ -1081,6 +1082,37 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine>
 	}
 
 	/**
+	* 属性名称-现金流项目
+	*/
+	private static final String PROPERTY_CASHFLOW_NAME = "CashFlow";
+
+	/**
+	* 现金流项目 属性
+	*/
+	@DbField(name = "CashFlow", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<Integer> PROPERTY_CASHFLOW = registerProperty(PROPERTY_CASHFLOW_NAME,
+			Integer.class, MY_CLASS);
+
+	/**
+	* 获取-现金流项目
+	* 
+	* @return 值
+	*/
+	@XmlElement(name = PROPERTY_CASHFLOW_NAME)
+	public final Integer getCashFlow() {
+		return this.getProperty(PROPERTY_CASHFLOW);
+	}
+
+	/**
+	* 设置-现金流项目
+	* 
+	* @param value 值
+	*/
+	public final void setCashFlow(Integer value) {
+		this.setProperty(PROPERTY_CASHFLOW, value);
+	}
+
+	/**
 	 * 初始化数据
 	 */
 	@Override
@@ -1098,6 +1130,8 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine>
 				new BusinessRuleRequired(PROPERTY_SHORTNAME), // 要求有元素
 		};
 	}
+
+	IJournalEntry parent;
 
 	@Override
 	public IBusinessLogicContract[] getContracts() {
@@ -1130,6 +1164,59 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine>
 						return JournalEntryLine.this.getCurrency();
 					}
 
+				},
+				// 现金流分配逻辑
+				new ICashFlowAssignmentContract() {
+
+					@Override
+					public String getIdentifiers() {
+						return JournalEntryLine.this.getIdentifiers();
+					}
+
+					@Override
+					public String getDocumentType() {
+						return JournalEntryLine.this.getObjectCode();
+					}
+
+					@Override
+					public Integer getDocumentEntry() {
+						return JournalEntryLine.this.getDocEntry();
+					}
+
+					@Override
+					public Integer getDocumentLineId() {
+						return JournalEntryLine.this.getLineId();
+					}
+
+					@Override
+					public String getAccount() {
+						return JournalEntryLine.this.getAccount();
+					}
+
+					@Override
+					public BigDecimal getDebit() {
+						return JournalEntryLine.this.getDebit();
+					}
+
+					@Override
+					public BigDecimal getCredit() {
+						return JournalEntryLine.this.getCredit();
+					}
+
+					@Override
+					public String getCurrency() {
+						return JournalEntryLine.this.getCurrency();
+					}
+
+					@Override
+					public DateTime getPostingDate() {
+						return JournalEntryLine.this.parent.getPostingDate();
+					}
+
+					@Override
+					public Integer getCashFlow() {
+						return JournalEntryLine.this.getCashFlow();
+					}
 				}
 
 		};

@@ -92,15 +92,15 @@ namespace accounting {
                 this.setProperty(Account.PROPERTY_PROTECTED_NAME, value);
             }
 
-            /** 映射的属性名称-活动科目 */
-            static PROPERTY_ACTIVE_NAME: string = "Active";
-            /** 获取-活动科目 */
-            get active(): ibas.emYesNo {
-                return this.getProperty<ibas.emYesNo>(Account.PROPERTY_ACTIVE_NAME);
+            /** 映射的属性名称-传递类型 */
+            static PROPERTY_POSTABLE_NAME: string = "Postable";
+            /** 获取-传递类型 */
+            get postable(): emPostableType {
+                return this.getProperty<emPostableType>(Account.PROPERTY_POSTABLE_NAME);
             }
-            /** 设置-活动科目 */
-            set active(value: ibas.emYesNo) {
-                this.setProperty(Account.PROPERTY_ACTIVE_NAME, value);
+            /** 设置-传递类型 */
+            set postable(value: emPostableType) {
+                this.setProperty(Account.PROPERTY_POSTABLE_NAME, value);
             }
 
             /** 映射的属性名称-控制科目 */
@@ -345,12 +345,10 @@ namespace accounting {
                 this.setProperty(Account.PROPERTY_REMARKS_NAME, value);
             }
 
-
-
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(Account.BUSINESS_OBJECT_CODE);
-                this.active = ibas.emYesNo.YES;
+                this.postable = emPostableType.ACTIVE;
             }
         }
 

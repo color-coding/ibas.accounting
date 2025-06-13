@@ -10,6 +10,8 @@ import org.colorcoding.ibas.accounting.bo.account.Account;
 import org.colorcoding.ibas.accounting.bo.bank.Bank;
 import org.colorcoding.ibas.accounting.bo.bank.BankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
+import org.colorcoding.ibas.accounting.bo.cashflow.CashFlow;
+import org.colorcoding.ibas.accounting.bo.cashflowassignment.CashFlowAssignment;
 import org.colorcoding.ibas.accounting.bo.currency.Currency;
 import org.colorcoding.ibas.accounting.bo.currency.CurrencyRate;
 import org.colorcoding.ibas.accounting.bo.dimension.Dimension;
@@ -39,7 +41,8 @@ public class Resolver implements ContextResolver<JAXBContext> {
 				jaxbContext = JAXBContext.newInstance(Criteria.class, OperationResult.class, UserFieldProxy.class,
 						PeriodCategory.class, PostingPeriod.class, Project.class, Dimension.class, TaxGroup.class,
 						Currency.class, Account.class, Branch.class, JournalEntry.class, PeriodLedgerAccount.class,
-						LedgerConditionProperty.class, Bank.class, BankAccount.class, CurrencyRate.class);
+						LedgerConditionProperty.class, Bank.class, BankAccount.class, CurrencyRate.class,
+						CashFlowAssignment.class, CashFlow.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>24</Sign>
+    <Name>投资活动现金流入小计</Name>
+    <Postable>TITLE</Postable>
+    <Parent>18</Parent>
+    <Level>3</Level>
+</ns:CashFlow>

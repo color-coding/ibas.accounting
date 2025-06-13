@@ -46,6 +46,9 @@ namespace accounting {
                                 width: "12rem",
                             }),
                             new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_journalentryline_cashflow"),
+                            }),
+                            new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_journalentryline_distributionrule1"),
                                 visible: accounting.config.isEnableDimension(accounting.app.emDimensionType.DIMENSION_1),
                             }),
@@ -170,6 +173,18 @@ namespace accounting {
                                                 }
                                             ]
                                         }
+                                    }),
+                                    new sap.extension.m.RepositoryObjectAttribute("", {
+                                        repository: bo.BORepositoryAccounting,
+                                        dataInfo: {
+                                            type: bo.CashFlow,
+                                            key: bo.CashFlow.PROPERTY_SIGN_NAME,
+                                            text: bo.CashFlow.PROPERTY_NAME_NAME
+                                        },
+                                        bindingValue: {
+                                            path: "cashFlow",
+                                            type: new sap.extension.data.Numeric(),
+                                        },
                                     }),
                                     new sap.extension.m.ObjectAttribute("", {
                                         bindingValue: {

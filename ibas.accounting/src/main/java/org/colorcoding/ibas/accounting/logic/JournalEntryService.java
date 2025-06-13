@@ -202,6 +202,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 					jeContent = new JournalEntryContent();
 					jeContent.setAccount(journalLine.getAccount());
 					jeContent.setShortName(journalLine.getShortName());
+					jeContent.setCashFlow(journalLine.getCashFlow());
 					jeContent.setCurrency(journalEntry.getDocumentCurrency());
 					jeContent.setRate(Decimal.ONE);
 					if (!Decimal.isZero(journalLine.getDebit())) {
@@ -233,7 +234,8 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 				}
 				// 计算金额
 				if (item instanceof JournalEntrySmartContent) {
-					((JournalEntrySmartContent) item).setService(new IBusinessLogicServiceInformation() {
+					JournalEntrySmartContent smartItem = (JournalEntrySmartContent) item;
+					smartItem.setService(new IBusinessLogicServiceInformation() {
 
 						@Override
 						public Class<?> getType() {
@@ -251,7 +253,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 						}
 					});
 					try {
-						((JournalEntrySmartContent) item).caculate();
+						smartItem.caculate();
 					} catch (Exception e) {
 						throw new BusinessLogicException(
 								I18N.prop("msg_ac_business_logic_caculate_error", item.getSourceData(), e.getMessage()),
@@ -385,6 +387,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 					jeContent.getCategory() == Category.Credit ? jeContent.getCurrencyAmount(6) : Decimal.ZERO);
 			journalLine.setCurrency(localCurrency);
 			journalLine.setReferenced(emYesNo.YES);
+			journalLine.setCashFlow(jeContent.getCashFlow());
 		}
 		// 清理超过的，移到此处
 		if (journal.getJournalEntryLines().size() > jeContents.size()) {

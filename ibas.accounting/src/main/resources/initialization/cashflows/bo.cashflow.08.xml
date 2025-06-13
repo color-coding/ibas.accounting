@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>11</Sign>
+    <Name>支付给职工以及为职工支付的现金</Name>
+    <Postable>ACTIVE</Postable>
+    <Parent>2</Parent>
+    <Level>3</Level>
+</ns:CashFlow>

@@ -408,6 +408,24 @@ namespace accounting {
                                         }),
                                     }),
                                     new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_journalentryline_cashflow"),
+                                        template: new sap.extension.m.RepositorySelect("", {
+                                            repository: bo.BORepositoryAccounting,
+                                            dataInfo: {
+                                                type: bo.CashFlow,
+                                                key: bo.CashFlow.PROPERTY_SIGN_NAME,
+                                                text: bo.CashFlow.PROPERTY_NAME_NAME
+                                            },
+                                            criteria: [
+                                                new ibas.Condition(bo.CashFlow.PROPERTY_POSTABLE_NAME, ibas.emConditionOperation.EQUAL, bo.emPostableType.ACTIVE)
+                                            ],
+                                        }).bindProperty("bindingValue", {
+                                            path: "cashFlow",
+                                            type: new sap.extension.data.Numeric(),
+                                        }),
+                                        width: "14rem"
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_journalentryline_distributionrule1"),
                                         template: new sap.extension.m.Input("", {
                                             showValueHelp: true,

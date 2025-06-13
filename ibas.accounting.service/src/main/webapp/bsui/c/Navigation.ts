@@ -21,6 +21,7 @@
 /// <reference path="./ledgeraccount/index.ts" />
 /// <reference path="./bank/index.ts" />
 /// <reference path="./bankaccount/index.ts" />
+/// <reference path="./cashflow/index.ts" />
 namespace accounting {
     export namespace ui {
         /** 视图导航 */
@@ -181,6 +182,18 @@ namespace accounting {
                         break;
                     case app.CurrencyRateApp.APPLICATION_ID:
                         view = new c.CurrencyRateView();
+                        break;
+                    case app.CashFlowListApp.APPLICATION_ID:
+                        view = new c.CashFlowListView();
+                        break;
+                    case app.CashFlowChooseApp.APPLICATION_ID:
+                        view = new c.CashFlowChooseView();
+                        break;
+                    case app.CashFlowViewApp.APPLICATION_ID:
+                        view = new c.CashFlowViewView();
+                        break;
+                    case app.CashFlowEditApp.APPLICATION_ID:
+                        view = new c.CashFlowEditView();
                         break;
                     default:
                         break;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>20</Sign>
+    <Name>分得投资收益所收到的现金</Name>
+    <Postable>ACTIVE</Postable>
+    <Parent>18</Parent>
+    <Level>3</Level>
+</ns:CashFlow>

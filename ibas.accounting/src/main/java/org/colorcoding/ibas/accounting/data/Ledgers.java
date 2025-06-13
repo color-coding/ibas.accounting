@@ -78,6 +78,10 @@ public class Ledgers {
 	 */
 	public static final String CONDITION_PROPERTY_COST_ITEM = "CostItem";
 	/**
+	 * 现金流项目
+	 */
+	public static final String CONDITION_PROPERTY_CASH_FLOW = "CashFlow";
+	/**
 	 * 成本中心1
 	 */
 	public static final String CONDITION_PROPERTY_DISTRIBUTION_RULE_1 = "DistributionRule1";

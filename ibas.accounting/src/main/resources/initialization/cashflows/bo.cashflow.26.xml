@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>31</Sign>
+    <Name>三、筹资活动产生的现金流量：</Name>
+    <Postable>TITLE</Postable>
+    <Parent>1</Parent>
+    <Level>2</Level>
+</ns:CashFlow>

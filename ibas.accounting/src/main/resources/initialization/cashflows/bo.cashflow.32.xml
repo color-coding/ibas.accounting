@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>39</Sign>
+    <Name>分配股利、利润或偿付利息所支付的现金</Name>
+    <Postable>ACTIVE</Postable>
+    <Parent>31</Parent>
+    <Level>3</Level>
+</ns:CashFlow>

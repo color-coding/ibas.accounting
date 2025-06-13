@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>47</Sign>
+    <Name>五、现金及现金等价物净增加额</Name>
+    <Postable>TITLE</Postable>
+    <Parent>1</Parent>
+    <Level>2</Level>
+</ns:CashFlow>

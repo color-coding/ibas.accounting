@@ -158,6 +158,22 @@ public class JournalEntryContent {
 	}
 
 	/**
+	 * 现金流项目
+	 */
+	private Integer cashFlow;
+
+	public final Integer getCashFlow() {
+		if (this.cashFlow == null) {
+			return Integer.valueOf(0);
+		}
+		return cashFlow;
+	}
+
+	public final void setCashFlow(Integer cashFlow) {
+		this.cashFlow = cashFlow;
+	}
+
+	/**
 	 * 复制一个对象
 	 * 
 	 * @return 新对象实例
@@ -171,6 +187,7 @@ public class JournalEntryContent {
 		nContent.setRate(this.getRate());
 		nContent.setAccount(this.getAccount());
 		nContent.setShortName(this.getShortName());
+		nContent.setCashFlow(this.getCashFlow());
 		return nContent;
 	}
 
