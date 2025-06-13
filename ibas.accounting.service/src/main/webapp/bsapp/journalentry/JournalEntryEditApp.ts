@@ -338,9 +338,15 @@ namespace accounting {
                     let criteria: ibas.ICriteria = new ibas.Criteria();
                     // 激活的
                     let condition: ibas.ICondition = criteria.conditions.create();
-                    condition.alias = bo.Account.PROPERTY_ACTIVE_NAME;
-                    condition.value = ibas.emYesNo.YES.toString();
+                    condition.bracketOpen = 1;
+                    condition.alias = bo.Account.PROPERTY_POSTABLE_NAME;
                     condition.operation = ibas.emConditionOperation.EQUAL;
+                    condition.value = ibas.emYesNo.YES.toString();
+                    condition = criteria.conditions.create();
+                    condition.bracketClose = 1;
+                    condition.alias = bo.Account.PROPERTY_POSTABLE_NAME;
+                    condition.operation = ibas.emConditionOperation.IS_NULL;
+                    condition.relationship = ibas.emConditionRelationship.OR;
 
                     ibas.servicesManager.runChooseService<bo.Account>({
                         boCode: bo.Account.BUSINESS_OBJECT_CODE,

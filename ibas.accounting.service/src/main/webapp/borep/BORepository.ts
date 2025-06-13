@@ -313,6 +313,34 @@ namespace accounting {
                     fetcher.onCompleted(new ibas.OperationResult());
                 }
             }
+            /**
+             * 查询 现金流项目
+             * @param fetcher 查询者
+             */
+            fetchCashFlow(fetcher: ibas.IFetchCaller<bo.CashFlow>): void {
+                super.fetch(bo.CashFlow.name, fetcher);
+            }
+            /**
+             * 保存 现金流项目
+             * @param saver 保存者
+             */
+            saveCashFlow(saver: ibas.ISaveCaller<bo.CashFlow>): void {
+                super.save(bo.CashFlow.name, saver);
+            }
+            /**
+             * 查询 现金流分配
+             * @param fetcher 查询者
+             */
+            fetchCashFlowAssignment(fetcher: ibas.IFetchCaller<bo.CashFlowAssignment>): void {
+                super.fetch(bo.CashFlowAssignment.name, fetcher);
+            }
+            /**
+             * 保存 现金流分配
+             * @param saver 保存者
+             */
+            saveCashFlowAssignment(saver: ibas.ISaveCaller<bo.CashFlowAssignment>): void {
+                super.save(bo.CashFlowAssignment.name, saver);
+            }
         }
         /**
          * 费用结束者

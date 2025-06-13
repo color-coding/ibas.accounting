@@ -1081,6 +1081,37 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine>
 	}
 
 	/**
+	* 属性名称-现金流项目
+	*/
+	private static final String PROPERTY_CASHFLOW_NAME = "CashFlow";
+
+	/**
+	* 现金流项目 属性
+	*/
+	@DbField(name = "CashFlow", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<Integer> PROPERTY_CASHFLOW = registerProperty(PROPERTY_CASHFLOW_NAME,
+			Integer.class, MY_CLASS);
+
+	/**
+	* 获取-现金流项目
+	* 
+	* @return 值
+	*/
+	@XmlElement(name = PROPERTY_CASHFLOW_NAME)
+	public final Integer getCashFlow() {
+		return this.getProperty(PROPERTY_CASHFLOW);
+	}
+
+	/**
+	* 设置-现金流项目
+	* 
+	* @param value 值
+	*/
+	public final void setCashFlow(Integer value) {
+		this.setProperty(PROPERTY_CASHFLOW, value);
+	}
+
+	/**
 	 * 初始化数据
 	 */
 	@Override

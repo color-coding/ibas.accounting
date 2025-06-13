@@ -163,6 +163,9 @@ namespace accounting {
             reference2: string;
             /** 参考3 */
             reference3: string;
+            /** 现金流项目 */
+            cashFlow: number;
+
 
         }
 

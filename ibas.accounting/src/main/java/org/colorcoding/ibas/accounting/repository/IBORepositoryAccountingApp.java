@@ -4,6 +4,8 @@ import org.colorcoding.ibas.accounting.bo.account.IAccount;
 import org.colorcoding.ibas.accounting.bo.bank.IBank;
 import org.colorcoding.ibas.accounting.bo.bank.IBankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.IBranch;
+import org.colorcoding.ibas.accounting.bo.cashflow.ICashFlow;
+import org.colorcoding.ibas.accounting.bo.cashflowassignment.ICashFlowAssignment;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.ICostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.ICostStructure;
@@ -342,6 +344,36 @@ public interface IBORepositoryAccountingApp extends IBORepositoryApplication {
 	 * @return 操作结果
 	 */
 	IOperationResult<ICurrencyRate> saveCurrencyRate(ICurrencyRate bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-现金流分配
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ICashFlowAssignment> fetchCashFlowAssignment(ICriteria criteria);
+
+	/**
+	 * 保存-现金流分配
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ICashFlowAssignment> saveCashFlowAssignment(ICashFlowAssignment bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-现金流项目
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<ICashFlow> fetchCashFlow(ICriteria criteria);
+
+	/**
+	 * 保存-现金流项目
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<ICashFlow> saveCashFlow(ICashFlow bo);
 
 	// --------------------------------------------------------------------------------------------//
 

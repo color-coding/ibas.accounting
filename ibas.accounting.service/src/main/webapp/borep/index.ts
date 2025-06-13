@@ -23,6 +23,8 @@
 /// <reference path="./bo/Bank.ts" />
 /// <reference path="./bo/BankAccount.ts" />
 /// <reference path="./bo/CurrencyRate.ts" />
+/// <reference path="./bo/CashFlow.ts" />
+/// <reference path="./bo/CashFlowAssignment.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 namespace accounting {
@@ -48,6 +50,8 @@ namespace accounting {
         boFactory.register(Bank.BUSINESS_OBJECT_CODE, Bank);
         boFactory.register(BankAccount.BUSINESS_OBJECT_CODE, BankAccount);
         boFactory.register(CurrencyRate.BUSINESS_OBJECT_CODE, CurrencyRate);
+        boFactory.register(CashFlow.BUSINESS_OBJECT_CODE, CashFlow);
+        boFactory.register(CashFlowAssignment.BUSINESS_OBJECT_CODE, CashFlowAssignment);
 
     }
 }

@@ -9,7 +9,7 @@
     <Property Name="Level" Description="层级" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Level"/>
     <Property Name="External" Description="外部编码" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="External"/>
 	<Property Name="Protected" Description="机密" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Protected"/>
-    <Property Name="Active" Description="活动科目" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Active"/>
+    <Property Name="Postable" Description="传递类型" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emPostableType" Mapped="Postable"/>
 	<Property Name="Control" Description="控制科目" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Control"/>
 	<Property Name="Cash" Description="现金科目" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Cash"/>
 	<Property Name="CashFlowRelevant" Description="现金流相关" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="CfwRlvnt"/>

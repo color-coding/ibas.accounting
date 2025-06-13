@@ -19,6 +19,7 @@
 /// <reference path="./ledgeraccount/index.ts" />
 /// <reference path="./bank/index.ts" />
 /// <reference path="./bankaccount/index.ts" />
+/// <reference path="./cashflow/index.ts" />
 namespace accounting {
     export namespace app {
         /** 属性-导航 */
@@ -110,6 +111,7 @@ namespace accounting {
                 this.register(new PostingPeriodFunc());
                 this.register(new CostItemFunc());
                 this.register(new BankAccountFunc());
+                this.register(new CashFlowFunc());
                 this.register(new TaxGroupFunc());
                 this.register(new CurrencyFunc());
                 this.register(new DimensionFunc());
@@ -130,6 +132,8 @@ namespace accounting {
                 this.register(new BankLinkServiceMapping());
                 this.register(new BankAccountChooseServiceMapping());
                 this.register(new BankAccountLinkServiceMapping());
+                this.register(new CashFlowChooseServiceMapping());
+                this.register(new CashFlowLinkServiceMapping());
                 // 注册常驻应用
                 this.register(new CurrencyRateApplicationMapping());
             }

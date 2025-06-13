@@ -43,15 +43,15 @@ namespace accounting {
                                             type: new sap.extension.data.Alphanumeric(),
                                         },
                                         {
-                                            path: "active",
+                                            path: "postable",
                                             // type: new sap.extension.data.YesNo(),
                                         },
                                     ],
-                                    formatter(code: string, name: string, active: ibas.emYesNo): string {
+                                    formatter(code: string, name: string, postable: bo.emPostableType): string {
                                         let builder: ibas.StringBuilder = new ibas.StringBuilder();
                                         builder.map(null, "");
                                         builder.map(undefined, "");
-                                        if (active !== ibas.emYesNo.YES) {
+                                        if (postable !== bo.emPostableType.ACTIVE) {
                                             builder.append(name);
                                         } else {
                                             builder.append(code);
@@ -256,12 +256,12 @@ namespace accounting {
                                                 path: "level",
                                                 type: new sap.extension.data.Numeric(),
                                             }),
-                                            new sap.m.Label("", { text: ibas.i18n.prop("bo_account_active") }),
+                                            new sap.m.Label("", { text: ibas.i18n.prop("bo_account_postable") }),
                                             new sap.extension.m.EnumSelect("", {
-                                                enumType: ibas.emYesNo
+                                                enumType: bo.emPostableType
                                             }).bindProperty("bindingValue", {
-                                                path: "active",
-                                                type: new sap.extension.data.YesNo(),
+                                                path: "postable",
+                                                type: new sap.extension.data.Enum({ enumType: bo.emPostableType }),
                                             }),
                                         ]
                                     }),

@@ -834,6 +834,18 @@ namespace accounting {
             }
 
 
+            /** 映射的属性名称-现金流项目 */
+            static PROPERTY_CASHFLOW_NAME: string = "CashFlow";
+            /** 获取-现金流项目 */
+            get cashFlow(): number {
+                return this.getProperty<number>(JournalEntryLine.PROPERTY_CASHFLOW_NAME);
+            }
+            /** 设置-现金流项目 */
+            set cashFlow(value: number) {
+                this.setProperty(JournalEntryLine.PROPERTY_CASHFLOW_NAME, value);
+            }
+
+
             /** 初始化数据 */
             protected init(): void {
                 this.credit = 0;

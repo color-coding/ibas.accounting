@@ -81,12 +81,12 @@ namespace accounting {
                                 path: "level",
                                 type: new sap.extension.data.Numeric(),
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_account_active") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_account_postable") }),
                             new sap.extension.m.EnumSelect("", {
-                                enumType: ibas.emYesNo
+                                enumType: bo.emPostableType
                             }).bindProperty("bindingValue", {
-                                path: "active",
-                                type: new sap.extension.data.YesNo(),
+                                path: "postable",
+                                type: new sap.extension.data.Enum({ enumType: bo.emPostableType }),
                             }),
                         ]
                     });

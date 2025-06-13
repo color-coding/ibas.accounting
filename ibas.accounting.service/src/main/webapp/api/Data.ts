@@ -103,6 +103,10 @@ namespace accounting {
         export const BO_CODE_BANKACCOUNT: string = "${Company}_AC_BANKACONT";
         /** 业务对象编码-货币汇率 */
         export const BO_CODE_CURRENCYRATE: string = "${Company}_AC_CURRENCYRATE";
+        /** 业务对象编码-现金流项目 */
+        export const BO_CODE_CASHFLOW: string = "${Company}_AC_CASHFLOW";
+        /** 业务对象编码-现金流分配 */
+        export const BO_CODE_CASHFLOWASSIGNMENT: string = "${Company}_AC_CFWASSIGN";
         /**
          * 期间状态
          */
@@ -150,6 +154,15 @@ namespace accounting {
             ORGANIZATION,
             /** 项目 */
             PROJECT
+        }
+        /**
+         * 传递类型
+         */
+        export enum emPostableType {
+            /** 标题 */
+            TITLE,
+            /** 激活 */
+            ACTIVE
         }
     }
     export namespace app {
@@ -360,10 +373,16 @@ namespace accounting {
                     let conditions: ibas.IList<ibas.ICondition> = new ibas.ArrayList<ibas.ICondition>();
                     // 激活的
                     condition = new ibas.Condition();
-                    condition.bracketOpen = 1;
-                    condition.alias = bo.Account.PROPERTY_ACTIVE_NAME;
+                    condition.bracketOpen = 2;
+                    condition.alias = bo.Account.PROPERTY_POSTABLE_NAME;
                     condition.operation = ibas.emConditionOperation.EQUAL;
                     condition.value = ibas.emYesNo.YES.toString();
+                    conditions.add(condition);
+                    condition = new ibas.Condition();
+                    condition.bracketClose = 1;
+                    condition.alias = bo.Account.PROPERTY_POSTABLE_NAME;
+                    condition.operation = ibas.emConditionOperation.IS_NULL;
+                    condition.relationship = ibas.emConditionRelationship.OR;
                     conditions.add(condition);
                     // 有效日期
                     condition = new ibas.Condition();

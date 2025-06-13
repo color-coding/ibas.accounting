@@ -46,12 +46,12 @@ namespace accounting {
                 this.data.name = value;
                 this.firePropertyChanged("name");
             }
-            get active(): ibas.emYesNo {
-                return this.data.active;
+            get postable(): bo.emPostableType {
+                return this.data.postable;
             }
-            set active(value: ibas.emYesNo) {
-                this.data.active = value;
-                this.firePropertyChanged("active");
+            set postable(value: bo.emPostableType) {
+                this.data.postable = value;
+                this.firePropertyChanged("postable");
             }
             get nodes(): AccountNode[] {
                 return this[PROPERTY_NODES].filter(c => c.data.isDeleted === false);
@@ -199,7 +199,7 @@ namespace accounting {
                 if (node.data.level > 1 && ibas.numbers.isNumber(node.code)) {
                     account.code = node.code + ibas.strings.fill(node.nodes.length + 1, 2, "0");
                 }
-                account.active = type === "TEXT" ? ibas.emYesNo.NO : ibas.emYesNo.YES;
+                account.postable = type === "TEXT" ? bo.emPostableType.TITLE : bo.emPostableType.ACTIVE;
                 account.level = node.data.level + 1;
                 node[PROPERTY_NODES].add(new AccountNode(account));
                 this.view.showGroups(this.accounts);

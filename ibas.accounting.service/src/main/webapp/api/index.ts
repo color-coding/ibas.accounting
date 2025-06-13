@@ -23,4 +23,6 @@
 /// <reference path="./bo/Bank.ts" />
 /// <reference path="./bo/BankAccount.ts" />
 /// <reference path="./bo/CurrencyRate.ts" />
+/// <reference path="./bo/CashFlow.ts" />
+/// <reference path="./bo/CashFlowAssignment.ts" />
 /// <reference path="./BORepository.ts" />
