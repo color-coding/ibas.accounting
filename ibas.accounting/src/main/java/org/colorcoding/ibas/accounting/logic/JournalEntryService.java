@@ -220,7 +220,10 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 					contractContents[i] = jeContent;
 				}
 			}
-			contractContents = contract.reverseContents(contractContents);
+			// 没有获取到正向分录，则不生成反向
+			if (contractContents != null) {
+				contractContents = contract.reverseContents(contractContents);
+			}
 		} else {
 			// 正常分录
 			contractContents = contract.getContents();
