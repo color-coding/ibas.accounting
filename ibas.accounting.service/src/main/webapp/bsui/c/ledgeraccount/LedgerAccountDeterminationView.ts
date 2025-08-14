@@ -393,6 +393,7 @@ namespace accounting {
                                                                                     }),
                                                                                 ],
                                                                                 sortProperty: "visOrder",
+                                                                                sortIntervalStep: 1,
                                                                                 rowActionCount: 1,
                                                                                 rowActionTemplate: new sap.ui.table.RowAction("", {
                                                                                     items: [
