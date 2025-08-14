@@ -117,9 +117,9 @@ namespace accounting {
                     }
                 } else if (boName === bo.PeriodLedgerAccountCondition.name) {
                     if (property === bo.PeriodLedgerAccountCondition.PROPERTY_RELATIONSHIP_NAME) {
-                        return ibas.enums.toString(ibas.emConditionRelationship, value);
+                        return ibas.enums.toString(initialfantasy.bo.emConditionRelationship, value);
                     } else if (property === bo.PeriodLedgerAccountCondition.PROPERTY_OPERATION_NAME) {
-                        return ibas.enums.toString(ibas.emConditionOperation, value);
+                        return ibas.enums.toString(initialfantasy.bo.emConditionOperation, value);
                     }
                 } else if (boName === bo.CashFlow.name) {
                     if (property === bo.CashFlow.PROPERTY_POSTABLE_NAME) {
@@ -213,9 +213,9 @@ namespace accounting {
                     }
                 } else if (boName === bo.PeriodLedgerAccountCondition.name) {
                     if (property === bo.PeriodLedgerAccountCondition.PROPERTY_RELATIONSHIP_NAME) {
-                        return ibas.enums.valueOf(ibas.emConditionRelationship, value);
+                        return ibas.enums.valueOf(initialfantasy.bo.emConditionRelationship, value);
                     } else if (property === bo.PeriodLedgerAccountCondition.PROPERTY_OPERATION_NAME) {
-                        return ibas.enums.valueOf(ibas.emConditionOperation, value);
+                        return ibas.enums.valueOf(initialfantasy.bo.emConditionOperation, value);
                     }
                 } else if (boName === bo.CashFlow.name) {
                     if (property === bo.CashFlow.PROPERTY_POSTABLE_NAME) {

@@ -96,11 +96,11 @@ namespace accounting {
             /** 开括号 */
             bracketOpen: number;
             /** 关系 */
-            relationship: ibas.emConditionRelationship;
+            relationship: initialfantasy.bo.emConditionRelationship;
             /** 属性 */
             propertyName: string;
             /** 方法 */
-            operation: ibas.emConditionOperation;
+            operation: initialfantasy.bo.emConditionOperation;
             /** 值 */
             value: string;
             /** 闭括号 */

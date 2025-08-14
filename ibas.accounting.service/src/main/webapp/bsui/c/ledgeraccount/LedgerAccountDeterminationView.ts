@@ -320,11 +320,11 @@ namespace accounting {
                                                                                     new sap.extension.table.DataColumn("", {
                                                                                         label: ibas.i18n.prop("bo_periodledgeraccountcondition_relationship"),
                                                                                         template: new sap.extension.m.EnumSelect("", {
-                                                                                            enumType: ibas.emConditionRelationship
+                                                                                            enumType: initialfantasy.bo.emConditionRelationship
                                                                                         }).bindProperty("bindingValue", {
                                                                                             path: "relationship",
                                                                                             type: new sap.extension.data.Enum({
-                                                                                                enumType: ibas.emConditionRelationship
+                                                                                                enumType: initialfantasy.bo.emConditionRelationship
                                                                                             })
                                                                                         }),
                                                                                         width: "7rem",
@@ -352,11 +352,11 @@ namespace accounting {
                                                                                     new sap.extension.table.DataColumn("", {
                                                                                         label: ibas.i18n.prop("bo_periodledgeraccountcondition_operation"),
                                                                                         template: new sap.extension.m.EnumSelect("", {
-                                                                                            enumType: ibas.emConditionOperation
+                                                                                            enumType: initialfantasy.bo.emConditionOperation
                                                                                         }).bindProperty("bindingValue", {
                                                                                             path: "operation",
                                                                                             type: new sap.extension.data.Enum({
-                                                                                                enumType: ibas.emConditionOperation
+                                                                                                enumType: initialfantasy.bo.emConditionOperation
                                                                                             })
                                                                                         }),
                                                                                         width: "8rem",
@@ -393,6 +393,7 @@ namespace accounting {
                                                                                     }),
                                                                                 ],
                                                                                 sortProperty: "visOrder",
+                                                                                sortIntervalStep: 1,
                                                                                 rowActionCount: 1,
                                                                                 rowActionTemplate: new sap.ui.table.RowAction("", {
                                                                                     items: [
