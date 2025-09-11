@@ -29,6 +29,8 @@ namespace accounting {
                 // 其他事件
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.createDataEvent = this.createData;
+                this.view.chooseBankEvent = this.chooseBank;
+                this.view.chooseBankAccountEvent = this.chooseBankAccount;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -201,6 +203,83 @@ namespace accounting {
                     createData();
                 }
             }
+            private chooseBank(): void {
+                let that: this = this;
+                ibas.servicesManager.runChooseService<accounting.bo.Bank>({
+                    boCode: accounting.bo.Bank.BUSINESS_OBJECT_CODE,
+                    chooseType: ibas.emChooseType.SINGLE,
+                    criteria: [
+                        new ibas.Condition(accounting.bo.Branch.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
+                    onCompleted(selecteds: ibas.IList<accounting.bo.Bank>): void {
+                        that.editData.bank = selecteds.firstOrDefault().name;
+                    }
+                });
+            }
+            private chooseBankAccount(criteria: ibas.ICriteria): void {
+                if (criteria instanceof ibas.Criteria) {
+                    if (criteria.conditions.length > 1) {
+                        criteria.conditions.firstOrDefault().bracketOpen += 1;
+                        criteria.conditions.lastOrDefault().bracketClose += 1;
+                    }
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = accounting.bo.BankAccount.PROPERTY_ACTIVATED_NAME;
+                    condition.value = ibas.emYesNo.YES.toString();
+                    let that: this = this;
+                    ibas.servicesManager.runChooseService<accounting.bo.BankAccount>({
+                        boCode: accounting.bo.BankAccount.BUSINESS_OBJECT_CODE,
+                        chooseType: ibas.emChooseType.SINGLE,
+                        criteria: criteria,
+                        onCompleted(selecteds: ibas.IList<accounting.bo.BankAccount>): void {
+                            that.editData.bankAccount = selecteds.firstOrDefault().code;
+                            if (!ibas.strings.isEmpty(selecteds.firstOrDefault().bank)) {
+                                let criteria: ibas.Criteria = new ibas.Criteria();
+                                let condition: ibas.ICondition = criteria.conditions.create();
+                                condition.alias = accounting.bo.Branch.PROPERTY_CODE_NAME;
+                                condition.value = selecteds.firstOrDefault().bank;
+                                let boRepository: accounting.bo.BORepositoryAccounting = new accounting.bo.BORepositoryAccounting();
+                                boRepository.fetchBank({
+                                    criteria: criteria,
+                                    onCompleted: (opRslt) => {
+                                        for (let item of opRslt.resultObjects) {
+                                            that.editData.bank = item.name;
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    });
+                } else {
+                    if (!ibas.strings.isEmpty(this.editData.bank)) {
+                        let criteria: ibas.Criteria = new ibas.Criteria();
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = accounting.bo.Branch.PROPERTY_BANK_NAME;
+                        condition.value = this.editData.bank;
+                        let boRepository: accounting.bo.BORepositoryAccounting = new accounting.bo.BORepositoryAccounting();
+                        boRepository.fetchBank({
+                            criteria: criteria,
+                            onCompleted: (opRslt) => {
+                                if (opRslt.resultObjects.length > 0) {
+                                    criteria = new ibas.Criteria();
+                                    for (let item of opRslt.resultObjects) {
+                                        condition = criteria.conditions.create();
+                                        condition.alias = accounting.bo.BankAccount.PROPERTY_BRANCH_NAME;
+                                        condition.value = item.code;
+                                        if (criteria.conditions.length > 1) {
+                                            condition.relationship = ibas.emConditionRelationship.OR;
+                                        }
+                                    }
+                                    this.chooseBankAccount(criteria);
+                                } else {
+                                    this.chooseBankAccount(new ibas.Criteria());
+                                }
+                            }
+                        })
+                    } else {
+                        this.chooseBankAccount(new ibas.Criteria());
+                    }
+                }
+            }
         }
         /** 视图-分支 */
         export interface IBranchEditView extends ibas.IBOEditView {
@@ -210,6 +289,10 @@ namespace accounting {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
+            /** 选择银行事件 */
+            chooseBankEvent: Function;
+            /** 选择银行账号事件 */
+            chooseBankAccountEvent: Function;
         }
     }
 }

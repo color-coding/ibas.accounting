@@ -84,6 +84,7 @@
   "accounting_app_cashflow_tree": "现金流",
   "accounting_title_general": "常规信息",
   "accounting_title_others": "其他信息",
+  "accounting_title_invoices": "发票信息",
   "accounting_test_dimension_source": "测试源",
   "accounting_dimension_invaild": "维度[{0}]不可用",
   "accounting_postingperiod_12_months": "12月",

@@ -191,6 +191,73 @@ namespace accounting {
                 this.setProperty(Branch.PROPERTY_ZIPCODE_NAME, value);
             }
 
+            /** 映射的属性名称-国税编号 */
+            static PROPERTY_TAXID_NAME: string = "TaxId";
+            /** 获取-国税编号 */
+            get taxId(): string {
+                return this.getProperty<string>(Branch.PROPERTY_TAXID_NAME);
+            }
+            /** 设置-国税编号 */
+            set taxId(value: string) {
+                this.setProperty(Branch.PROPERTY_TAXID_NAME, value);
+            }
+
+            /** 映射的属性名称-开户银行 */
+            static PROPERTY_BANK_NAME: string = "Bank";
+            /** 获取-开户银行 */
+            get bank(): string {
+                return this.getProperty<string>(Branch.PROPERTY_BANK_NAME);
+            }
+            /** 设置-开户银行 */
+            set bank(value: string) {
+                this.setProperty(Branch.PROPERTY_BANK_NAME, value);
+            }
+
+            /** 映射的属性名称-银行账户 */
+            static PROPERTY_BANKACCOUNT_NAME: string = "BankAccount";
+            /** 获取-银行账户 */
+            get bankAccount(): string {
+                return this.getProperty<string>(Branch.PROPERTY_BANKACCOUNT_NAME);
+            }
+            /** 设置-银行账户 */
+            set bankAccount(value: string) {
+                this.setProperty(Branch.PROPERTY_BANKACCOUNT_NAME, value);
+            }
+
+            /** 映射的属性名称-发票抬头 */
+            static PROPERTY_INVOICETITLE_NAME: string = "InvoiceTitle";
+            /** 获取-发票抬头 */
+            get invoiceTitle(): string {
+                return this.getProperty<string>(Branch.PROPERTY_INVOICETITLE_NAME);
+            }
+            /** 设置-发票抬头 */
+            set invoiceTitle(value: string) {
+                this.setProperty(Branch.PROPERTY_INVOICETITLE_NAME, value);
+            }
+
+            /** 映射的属性名称-发票地址 */
+            static PROPERTY_INVOICEADDRESS_NAME: string = "InvoiceAddress";
+            /** 获取-发票地址 */
+            get invoiceAddress(): string {
+                return this.getProperty<string>(Branch.PROPERTY_INVOICEADDRESS_NAME);
+            }
+            /** 设置-发票地址 */
+            set invoiceAddress(value: string) {
+                this.setProperty(Branch.PROPERTY_INVOICEADDRESS_NAME, value);
+            }
+
+            /** 映射的属性名称-发票电话 */
+            static PROPERTY_INVOICETELEPHONE_NAME: string = "InvoiceTelephone";
+            /** 获取-发票电话 */
+            get invoiceTelephone(): string {
+                return this.getProperty<string>(Branch.PROPERTY_INVOICETELEPHONE_NAME);
+            }
+            /** 设置-发票电话 */
+            set invoiceTelephone(value: string) {
+                this.setProperty(Branch.PROPERTY_INVOICETELEPHONE_NAME, value);
+            }
+
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_DOCENTRY_NAME: string = "DocEntry";
             /** 获取-对象编号 */

@@ -149,6 +149,9 @@ namespace accounting {
                                         illustrationType: sap.m.IllustratedMessageType.NoData
                                     }),
                                     new sap.extension.m.List("", {
+                                        growing: true,
+                                        growingThreshold: 999,
+                                        growingScrollToLoad: true,
                                         visible: false,
                                         inset: false,
                                         items: {

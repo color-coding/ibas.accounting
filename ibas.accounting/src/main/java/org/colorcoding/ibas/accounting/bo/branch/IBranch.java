@@ -235,6 +235,90 @@ public interface IBranch extends IBOMasterData {
 	void setZipCode(String value);
 
 	/**
+	 * 获取-国税编号
+	 * 
+	 * @return 值
+	 */
+	String getTaxId();
+
+	/**
+	 * 设置-国税编号
+	 * 
+	 * @param value 值
+	 */
+	void setTaxId(String value);
+
+	/**
+	 * 获取-开户银行
+	 * 
+	 * @return 值
+	 */
+	String getBank();
+
+	/**
+	 * 设置-开户银行
+	 * 
+	 * @param value 值
+	 */
+	void setBank(String value);
+
+	/**
+	 * 获取-银行账户
+	 * 
+	 * @return 值
+	 */
+	String getBankAccount();
+
+	/**
+	 * 设置-银行账户
+	 * 
+	 * @param value 值
+	 */
+	void setBankAccount(String value);
+
+	/**
+	 * 获取-发票抬头
+	 * 
+	 * @return 值
+	 */
+	String getInvoiceTitle();
+
+	/**
+	 * 设置-发票抬头
+	 * 
+	 * @param value 值
+	 */
+	void setInvoiceTitle(String value);
+
+	/**
+	 * 获取-发票地址
+	 * 
+	 * @return 值
+	 */
+	String getInvoiceAddress();
+
+	/**
+	 * 设置-发票地址
+	 * 
+	 * @param value 值
+	 */
+	void setInvoiceAddress(String value);
+
+	/**
+	 * 获取-发票电话
+	 * 
+	 * @return 值
+	 */
+	String getInvoiceTelephone();
+
+	/**
+	 * 设置-发票电话
+	 * 
+	 * @param value 值
+	 */
+	void setInvoiceTelephone(String value);
+
+	/**
 	 * 获取-对象编号
 	 * 
 	 * @return 值

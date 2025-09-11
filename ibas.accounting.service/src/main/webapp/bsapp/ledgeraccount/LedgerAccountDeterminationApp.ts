@@ -122,6 +122,7 @@ namespace accounting {
                         ibas.i18n.prop("bo_periodledgeraccount_period")
                     )); return;
                 }
+                this.busy(true);
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = bo.PeriodLedgerAccount.PROPERTY_PERIOD_NAME;
@@ -137,6 +138,7 @@ namespace accounting {
                     criteria: criteria,
                     onCompleted: (opRslt) => {
                         try {
+                            this.busy(false);
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
@@ -166,6 +168,7 @@ namespace accounting {
                         }
                     }
                 });
+                this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
             }
             /** 保存过账期间总账科目事件 */
             protected savePostingPeriodAccount(callback?: () => void): void {
