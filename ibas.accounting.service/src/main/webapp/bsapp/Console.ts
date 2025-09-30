@@ -115,9 +115,7 @@ namespace accounting {
                 this.register(new TaxGroupFunc());
                 this.register(new CurrencyFunc());
                 this.register(new DimensionFunc());
-                if (config.isEnableBranch()) {
-                    this.register(new BranchFunc());
-                }
+                this.register(new BranchFunc());
                 // 注册服务应用
                 this.register(new CostItemChooseServiceMapping());
                 this.register(new CurrencyChooseServiceMapping());
