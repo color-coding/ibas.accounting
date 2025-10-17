@@ -109,4 +109,8 @@ public class Ledgers {
 	 * 参考2
 	 */
 	public static final String CONDITION_PROPERTY_REFERENCE_2 = "Reference2";
+	/**
+	 * 税率
+	 */
+	public static final String CONDITION_PROPERTY_TAX_RATE = "TaxRate";
 }
