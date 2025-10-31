@@ -92,10 +92,10 @@ namespace accounting {
                             }),
                             actions: [
                                 new sap.extension.m.ObjectYesNoStatus("", {
-                                    title: ibas.i18n.prop("bo_account_active"),
+                                    title: ibas.i18n.prop("bo_account_postable"),
                                     enumValue: {
-                                        path: "active",
-                                        type: new sap.extension.data.YesNo(),
+                                        path: "postable",
+                                        type: new sap.extension.data.Enum({ enumType: bo.emPostableType }),
                                     },
                                     negative: true,
                                 }),

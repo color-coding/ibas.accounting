@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
+import org.colorcoding.ibas.accounting.data.emPostableType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
@@ -271,34 +272,34 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	}
 
 	/**
-	 * 属性名称-活动科目
-	 */
-	private static final String PROPERTY_ACTIVE_NAME = "Active";
+	* 属性名称-传递类型
+	*/
+	private static final String PROPERTY_POSTABLE_NAME = "Postable";
 
 	/**
-	 * 活动科目 属性
-	 */
-	@DbField(name = "Active", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<emYesNo> PROPERTY_ACTIVE = registerProperty(PROPERTY_ACTIVE_NAME, emYesNo.class,
-			MY_CLASS);
+	* 传递类型 属性
+	*/
+	@DbField(name = "Postable", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<emPostableType> PROPERTY_POSTABLE = registerProperty(PROPERTY_POSTABLE_NAME,
+			emPostableType.class, MY_CLASS);
 
 	/**
-	 * 获取-活动科目
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_ACTIVE_NAME)
-	public final emYesNo getActive() {
-		return this.getProperty(PROPERTY_ACTIVE);
+	* 获取-传递类型
+	* 
+	* @return 值
+	*/
+	@XmlElement(name = PROPERTY_POSTABLE_NAME)
+	public final emPostableType getPostable() {
+		return this.getProperty(PROPERTY_POSTABLE);
 	}
 
 	/**
-	 * 设置-活动科目
-	 * 
-	 * @param value 值
-	 */
-	public final void setActive(emYesNo value) {
-		this.setProperty(PROPERTY_ACTIVE, value);
+	* 设置-传递类型
+	* 
+	* @param value 值
+	*/
+	public final void setPostable(emPostableType value) {
+		this.setProperty(PROPERTY_POSTABLE, value);
 	}
 
 	/**
@@ -990,7 +991,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-		this.setActive(emYesNo.YES);
+		this.setPostable(emPostableType.ACTIVE);
 	}
 
 }

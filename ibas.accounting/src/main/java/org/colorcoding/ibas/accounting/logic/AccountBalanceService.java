@@ -2,24 +2,15 @@ package org.colorcoding.ibas.accounting.logic;
 
 import java.math.BigDecimal;
 
-import org.colorcoding.ibas.accounting.bo.account.Account;
 import org.colorcoding.ibas.accounting.bo.account.IAccount;
-import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
-import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.Decimals;
-import org.colorcoding.ibas.bobas.common.ICondition;
-import org.colorcoding.ibas.bobas.common.ICriteria;
-import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.Strings;
-import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.logic.LogicContract;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.message.MessageLevel;
-import org.colorcoding.ibas.bobas.logic.BusinessLogic;
-import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
-import org.colorcoding.ibas.bobas.logic.LogicContract;
 
 @LogicContract(IAccountBalanceContract.class)
-public class AccountBalanceService extends BusinessLogic<IAccountBalanceContract, IAccount> {
+public class AccountBalanceService extends AccountService<IAccountBalanceContract, IAccount> {
 	@Override
 	protected boolean checkDataStatus(Object data) {
 		if (data instanceof IAccountBalanceContract) {
@@ -30,32 +21,12 @@ public class AccountBalanceService extends BusinessLogic<IAccountBalanceContract
 				return false;
 			}
 		}
-		// return false;
 		return super.checkDataStatus(data);
 	}
 
 	@Override
 	protected IAccount fetchBeAffected(IAccountBalanceContract contract) {
-		ICriteria criteria = new Criteria();
-		ICondition condition = criteria.getConditions().create();
-		condition.setAlias(Account.PROPERTY_CODE.getName());
-		condition.setValue(contract.getAccount());
-
-		IAccount account = this.fetchBeAffected(IAccount.class, criteria);
-		if (account == null) {
-			try (BORepositoryAccounting boRepository = new BORepositoryAccounting()) {
-				boRepository.setTransaction(this.getTransaction());
-				IOperationResult<IAccount> operationResult = boRepository.fetchAccount(criteria);
-				if (operationResult.getError() != null) {
-					throw new BusinessLogicException(operationResult.getError());
-				}
-				account = operationResult.getResultObjects().firstOrDefault();
-			}
-		}
-		if (account == null) {
-			throw new BusinessLogicException(I18N.prop("msg_ac_not_found_account", contract.getAccount()));
-		}
-		return account;
+		return this.checkAccount(contract.getAccount());
 	}
 
 	@Override

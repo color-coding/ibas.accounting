@@ -23,8 +23,8 @@ namespace accounting {
             external: string;
             /** 机密 */
             protected: ibas.emYesNo;
-            /** 活动科目 */
-            active: ibas.emYesNo;
+            /** 传递类型 */
+            postable: emPostableType;
             /** 控制科目 */
             control: ibas.emYesNo;
             /** 现金科目 */

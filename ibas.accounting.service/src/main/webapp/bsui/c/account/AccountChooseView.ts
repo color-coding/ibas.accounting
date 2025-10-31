@@ -65,11 +65,11 @@ namespace accounting {
                             }),
                             */
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_account_active"),
+                                label: ibas.i18n.prop("bo_account_postable"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
-                                    path: "active",
-                                    type: new sap.extension.data.YesNo(true),
+                                    path: "postable",
+                                    type: new sap.extension.data.Enum({ enumType: bo.emPostableType, describe: true }),
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {

@@ -41,6 +41,18 @@ namespace accounting {
             country: string;
             /** 邮编 */
             zipCode: string;
+            /** 国税编号 */
+            taxId: string;
+            /** 开户银行 */
+            bank: string;
+            /** 银行账户 */
+            bankAccount: string;
+            /** 发票抬头 */
+            invoiceTitle: string;
+            /** 发票地址 */
+            invoiceAddress: string;
+            /** 发票电话 */
+            invoiceTelephone: string;
             /** 对象编号 */
             docEntry: number;
             /** 对象类型 */

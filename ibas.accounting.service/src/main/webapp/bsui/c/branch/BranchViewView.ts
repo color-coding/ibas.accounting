@@ -195,6 +195,54 @@ namespace accounting {
                                     }),]
                             }),
                             new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("accounting_title_invoices"),
+                                subSections: [
+                                    new sap.uxap.ObjectPageSubSection("", {
+                                        blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_branch_invoicetitle"),
+                                                bindingValue: {
+                                                    path: "invoiceTitle",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_branch_taxid"),
+                                                bindingValue: {
+                                                    path: "taxId",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                        ],
+                                    }),
+                                    new sap.uxap.ObjectPageSubSection("", {
+                                        blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_branch_invoiceaddress"),
+                                                bindingValue: {
+                                                    path: "invoiceAddress",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_branch_bank"),
+                                                bindingValue: {
+                                                    path: "bank",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_branch_bankaccount"),
+                                                bindingValue: {
+                                                    path: "bankAccount",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                        ],
+                                    })
+                                ]
+                            }),
+                            new sap.uxap.ObjectPageSection("", {
                                 title: ibas.i18n.prop("accounting_title_others"),
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {

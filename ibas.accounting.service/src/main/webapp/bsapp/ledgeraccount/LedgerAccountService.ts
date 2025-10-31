@@ -119,10 +119,10 @@ namespace accounting {
                                             let condition: bo.PeriodLedgerAccountCondition = oItem.periodLedgerAccountConditions.create();
                                             condition.bracketOpen = item.bracketOpen;
                                             condition.propertyName = item.alias;
-                                            condition.operation = item.operation;
+                                            condition.operation = initialfantasy.bo.emums.conditions.operation.valueOf(item.operation);
                                             condition.value = item.value;
                                             condition.bracketClose = item.bracketClose;
-                                            condition.relationship = item.relationship;
+                                            condition.relationship = initialfantasy.bo.emums.conditions.relationship.valueOf(item.relationship);
                                         }
                                     }
                                     this.settings.add(oItem);

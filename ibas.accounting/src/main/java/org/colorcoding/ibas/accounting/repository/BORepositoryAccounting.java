@@ -11,6 +11,10 @@ import org.colorcoding.ibas.accounting.bo.bank.IBank;
 import org.colorcoding.ibas.accounting.bo.bank.IBankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
 import org.colorcoding.ibas.accounting.bo.branch.IBranch;
+import org.colorcoding.ibas.accounting.bo.cashflow.CashFlow;
+import org.colorcoding.ibas.accounting.bo.cashflow.ICashFlow;
+import org.colorcoding.ibas.accounting.bo.cashflowassignment.CashFlowAssignment;
+import org.colorcoding.ibas.accounting.bo.cashflowassignment.ICashFlowAssignment;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.CostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costiemjournal.ICostItemJournal;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
@@ -45,12 +49,12 @@ import org.colorcoding.ibas.accounting.bo.taxgroup.TaxGroup;
 import org.colorcoding.ibas.accounting.data.emCostStatus;
 import org.colorcoding.ibas.accounting.data.emJournalCategory;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.data.ArrayList;
-import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
@@ -1045,6 +1049,93 @@ public class BORepositoryAccounting extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<ICurrencyRate> saveCurrencyRate(ICurrencyRate bo) {
 		return new OperationResult<ICurrencyRate>(this.saveCurrencyRate((CurrencyRate) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-现金流项目
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CashFlow> fetchCashFlow(ICriteria criteria, String token) {
+		return super.fetch(CashFlow.class, criteria, token);
+	}
+
+	/**
+	 * 查询-现金流项目（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICashFlow> fetchCashFlow(ICriteria criteria) {
+		return new OperationResult<ICashFlow>(this.fetchCashFlow(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-现金流项目
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CashFlow> saveCashFlow(CashFlow bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-现金流项目（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICashFlow> saveCashFlow(ICashFlow bo) {
+		return new OperationResult<ICashFlow>(this.saveCashFlow((CashFlow) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-现金流分配
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CashFlowAssignment> fetchCashFlowAssignment(ICriteria criteria, String token) {
+		return super.fetch(CashFlowAssignment.class, criteria, token);
+	}
+
+	/**
+	 * 查询-现金流分配（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICashFlowAssignment> fetchCashFlowAssignment(ICriteria criteria) {
+		return new OperationResult<ICashFlowAssignment>(this.fetchCashFlowAssignment(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-现金流分配
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<CashFlowAssignment> saveCashFlowAssignment(CashFlowAssignment bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-现金流分配（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<ICashFlowAssignment> saveCashFlowAssignment(ICashFlowAssignment bo) {
+		return new OperationResult<ICashFlowAssignment>(
+				this.saveCashFlowAssignment((CashFlowAssignment) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

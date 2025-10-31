@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>9</Sign>
+    <Name>购买商品、接受劳务支付的现金</Name>
+    <Postable>ACTIVE</Postable>
+    <Parent>2</Parent>
+    <Level>3</Level>
+</ns:CashFlow>

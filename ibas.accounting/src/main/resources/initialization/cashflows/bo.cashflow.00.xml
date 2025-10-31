@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>0</Sign>
+    <Name>无</Name>
+    <Postable>ACTIVE</Postable>
+    <Parent>-1</Parent>
+    <Level>0</Level>
+</ns:CashFlow>

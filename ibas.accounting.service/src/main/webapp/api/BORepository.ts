@@ -170,6 +170,26 @@ namespace accounting {
              */
             saveCurrencyRate(saver: ibas.ISaveCaller<bo.ICurrencyRate>): void;
 
+            /**
+             * 查询 现金流项目
+             * @param fetcher 查询者
+             */
+            fetchCashFlow(fetcher: ibas.IFetchCaller<bo.ICashFlow>): void;
+            /**
+             * 保存 现金流项目
+             * @param saver 保存者
+             */
+            saveCashFlow(saver: ibas.ISaveCaller<bo.ICashFlow>): void;
+            /**
+             * 查询 现金流分配
+             * @param fetcher 查询者
+             */
+            fetchCashFlowAssignment(fetcher: ibas.IFetchCaller<bo.ICashFlowAssignment>): void;
+            /**
+             * 保存 现金流分配
+             * @param saver 保存者
+             */
+            saveCashFlowAssignment(saver: ibas.ISaveCaller<bo.ICashFlowAssignment>): void;
         }
     }
 }

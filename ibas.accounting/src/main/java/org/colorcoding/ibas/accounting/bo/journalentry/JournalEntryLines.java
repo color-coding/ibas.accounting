@@ -65,6 +65,9 @@ public class JournalEntryLines extends BusinessObjects<IJournalEntryLine, IJourn
 	@Override
 	protected void afterAddItem(IJournalEntryLine item) {
 		super.afterAddItem(item);
+		if (item instanceof JournalEntryLine) {
+			((JournalEntryLine) item).parent = this.getParent();
+		}
 	}
 
 	@Override

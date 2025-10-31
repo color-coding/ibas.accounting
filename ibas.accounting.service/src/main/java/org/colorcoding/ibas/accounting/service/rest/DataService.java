@@ -13,6 +13,8 @@ import org.colorcoding.ibas.accounting.bo.account.Account;
 import org.colorcoding.ibas.accounting.bo.bank.Bank;
 import org.colorcoding.ibas.accounting.bo.bank.BankAccount;
 import org.colorcoding.ibas.accounting.bo.branch.Branch;
+import org.colorcoding.ibas.accounting.bo.cashflow.CashFlow;
+import org.colorcoding.ibas.accounting.bo.cashflowassignment.CashFlowAssignment;
 import org.colorcoding.ibas.accounting.bo.costitem.CostItem;
 import org.colorcoding.ibas.accounting.bo.coststructure.CostStructure;
 import org.colorcoding.ibas.accounting.bo.currency.Currency;
@@ -586,6 +588,68 @@ public class DataService extends BORepositoryAccounting {
 	public OperationResult<CurrencyRate> saveCurrencyRate(CurrencyRate bo,
 			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
 		return super.saveCurrencyRate(bo, MyConfiguration.optToken(authorization, token));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-现金流项目
+	 * @param criteria 查询
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchCashFlow")
+	public OperationResult<CashFlow> fetchCashFlow(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchCashFlow(criteria, MyConfiguration.optToken(authorization, token));
+	}
+
+	/**
+	 * 保存-现金流项目
+	 * @param bo 对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveCashFlow")
+	public OperationResult<CashFlow> saveCashFlow(CashFlow bo, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.saveCashFlow(bo, MyConfiguration.optToken(authorization, token));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-现金流分配
+	 * @param criteria 查询
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchCashFlowAssignment")
+	public OperationResult<CashFlowAssignment> fetchCashFlowAssignment(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchCashFlowAssignment(criteria, MyConfiguration.optToken(authorization, token));
+	}
+
+	/**
+	 * 保存-现金流分配
+	 * @param bo 对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveCashFlowAssignment")
+	public OperationResult<CashFlowAssignment> saveCashFlowAssignment(CashFlowAssignment bo,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveCashFlowAssignment(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//

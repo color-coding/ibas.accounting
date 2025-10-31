@@ -19,6 +19,7 @@
 /// <reference path="./ledgeraccount/index.ts" />
 /// <reference path="./bank/index.ts" />
 /// <reference path="./bankaccount/index.ts" />
+/// <reference path="./cashflow/index.ts" />
 namespace accounting {
     export namespace app {
         /** 属性-导航 */
@@ -63,9 +64,9 @@ namespace accounting {
             /** 运行 */
             run(): void {
                 // 加载语言-框架默认
-                ibas.i18n.load([
-                    this.rootUrl + "resources/languages/accounting.json",
-                    this.rootUrl + "resources/languages/bos.json",
+                this.loadResources([
+                    "resources/languages/accounting.json",
+                    "resources/languages/bos.json",
                 ], () => {
                     // 设置资源属性
                     this.description = ibas.i18n.prop(this.name.toLowerCase());
@@ -110,12 +111,11 @@ namespace accounting {
                 this.register(new PostingPeriodFunc());
                 this.register(new CostItemFunc());
                 this.register(new BankAccountFunc());
+                this.register(new CashFlowFunc());
                 this.register(new TaxGroupFunc());
                 this.register(new CurrencyFunc());
                 this.register(new DimensionFunc());
-                if (config.isEnableBranch()) {
-                    this.register(new BranchFunc());
-                }
+                this.register(new BranchFunc());
                 // 注册服务应用
                 this.register(new CostItemChooseServiceMapping());
                 this.register(new CurrencyChooseServiceMapping());
@@ -130,6 +130,8 @@ namespace accounting {
                 this.register(new BankLinkServiceMapping());
                 this.register(new BankAccountChooseServiceMapping());
                 this.register(new BankAccountLinkServiceMapping());
+                this.register(new CashFlowChooseServiceMapping());
+                this.register(new CashFlowLinkServiceMapping());
                 // 注册常驻应用
                 this.register(new CurrencyRateApplicationMapping());
             }

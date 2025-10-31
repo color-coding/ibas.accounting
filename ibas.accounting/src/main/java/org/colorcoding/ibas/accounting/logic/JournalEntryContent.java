@@ -3,6 +3,7 @@ package org.colorcoding.ibas.accounting.logic;
 import java.math.BigDecimal;
 
 import org.colorcoding.ibas.bobas.common.Decimals;
+import org.colorcoding.ibas.bobas.common.Strings;
 
 /**
  * 日记账分录内容
@@ -60,6 +61,9 @@ public class JournalEntryContent {
 	private String ledger;
 
 	public final String getLedger() {
+		if (this.ledger == null) {
+			return Strings.VALUE_EMPTY;
+		}
 		return ledger;
 	}
 
@@ -127,6 +131,9 @@ public class JournalEntryContent {
 	private String account;
 
 	public final String getAccount() {
+		if (this.account == null) {
+			return Strings.VALUE_EMPTY;
+		}
 		return account;
 	}
 
@@ -140,11 +147,30 @@ public class JournalEntryContent {
 	private String shortName;
 
 	public final String getShortName() {
+		if (this.shortName == null) {
+			return Strings.VALUE_EMPTY;
+		}
 		return shortName;
 	}
 
 	public final void setShortName(String shortName) {
 		this.shortName = shortName;
+	}
+
+	/**
+	 * 现金流项目
+	 */
+	private Integer cashFlow;
+
+	public final Integer getCashFlow() {
+		if (this.cashFlow == null) {
+			return Integer.valueOf(0);
+		}
+		return cashFlow;
+	}
+
+	public final void setCashFlow(Integer cashFlow) {
+		this.cashFlow = cashFlow;
 	}
 
 	/**
@@ -161,6 +187,7 @@ public class JournalEntryContent {
 		nContent.setRate(this.getRate());
 		nContent.setAccount(this.getAccount());
 		nContent.setShortName(this.getShortName());
+		nContent.setCashFlow(this.getCashFlow());
 		return nContent;
 	}
 

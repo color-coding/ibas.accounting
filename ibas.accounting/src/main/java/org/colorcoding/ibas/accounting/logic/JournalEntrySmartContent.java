@@ -49,7 +49,7 @@ public class JournalEntrySmartContent extends JournalEntryContent {
 	}
 
 	/**
-	 * 计算金额（可重装）
+	 * 计算金额（可重载）
 	 */
 	public void caculate() throws Exception {
 	}

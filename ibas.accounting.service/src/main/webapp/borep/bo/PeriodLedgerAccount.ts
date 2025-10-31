@@ -459,11 +459,11 @@ namespace accounting {
             /** 映射的属性名称-关系 */
             static PROPERTY_RELATIONSHIP_NAME: string = "Relationship";
             /** 获取-关系 */
-            get relationship(): ibas.emConditionRelationship {
-                return this.getProperty<ibas.emConditionRelationship>(PeriodLedgerAccountCondition.PROPERTY_RELATIONSHIP_NAME);
+            get relationship(): initialfantasy.bo.emConditionRelationship {
+                return this.getProperty<initialfantasy.bo.emConditionRelationship>(PeriodLedgerAccountCondition.PROPERTY_RELATIONSHIP_NAME);
             }
             /** 设置-关系 */
-            set relationship(value: ibas.emConditionRelationship) {
+            set relationship(value: initialfantasy.bo.emConditionRelationship) {
                 this.setProperty(PeriodLedgerAccountCondition.PROPERTY_RELATIONSHIP_NAME, value);
             }
 
@@ -481,11 +481,11 @@ namespace accounting {
             /** 映射的属性名称-方法 */
             static PROPERTY_OPERATION_NAME: string = "Operation";
             /** 获取-方法 */
-            get operation(): ibas.emConditionOperation {
-                return this.getProperty<ibas.emConditionOperation>(PeriodLedgerAccountCondition.PROPERTY_OPERATION_NAME);
+            get operation(): initialfantasy.bo.emConditionOperation {
+                return this.getProperty<initialfantasy.bo.emConditionOperation>(PeriodLedgerAccountCondition.PROPERTY_OPERATION_NAME);
             }
             /** 设置-方法 */
-            set operation(value: ibas.emConditionOperation) {
+            set operation(value: initialfantasy.bo.emConditionOperation) {
                 this.setProperty(PeriodLedgerAccountCondition.PROPERTY_OPERATION_NAME, value);
             }
 
@@ -525,8 +525,8 @@ namespace accounting {
 
             /** 初始化数据 */
             protected init(): void {
-                this.relationship = ibas.emConditionRelationship.AND;
-                this.operation = ibas.emConditionOperation.EQUAL;
+                this.relationship = initialfantasy.bo.emConditionRelationship.AND;
+                this.operation = initialfantasy.bo.emConditionOperation.EQUAL;
             }
         }
 

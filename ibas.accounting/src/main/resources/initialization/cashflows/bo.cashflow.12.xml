@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE CashFlow>
+<ns:CashFlow xmlns:ns="http://colorcoding.org/ibas/accounting/bo">
+    <Sign>17</Sign>
+    <Name>经营活动产生的现金流量净额</Name>
+    <Postable>TITLE</Postable>
+    <Parent>2</Parent>
+    <Level>3</Level>
+</ns:CashFlow>

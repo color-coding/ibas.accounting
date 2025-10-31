@@ -14,6 +14,10 @@ namespace accounting {
                 deleteDataEvent: Function;
                 /** 新建数据事件，参数1：是否克隆 */
                 createDataEvent: Function;
+                /** 选择银行事件 */
+                chooseBankEvent: Function;
+                /** 选择银行账号事件 */
+                chooseBankAccountEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -149,6 +153,118 @@ namespace accounting {
                                                         path: "street",
                                                     }).bindProperty("zipCode", {
                                                         path: "zipCode",
+                                                    }),
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("accounting_title_invoices"),
+                                        content: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: true,
+                                                content: [
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_taxid") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "taxId",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 30
+                                                        })
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_invoicetitle") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "invoiceTitle",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 100
+                                                        }),
+                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_bank") }),
+                                                    new sap.extension.m.Input("", {
+                                                        showValueHelp: true,
+                                                        valueHelpRequest(): void {
+                                                            that.fireViewEvents(that.chooseBankEvent);
+                                                        },
+                                                        valueHelpOnly: false,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "bank",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 60
+                                                        }),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_bankaccount") }),
+                                                    new sap.extension.m.Input("", {
+                                                        showValueHelp: true,
+                                                        valueHelpRequest(): void {
+                                                            that.fireViewEvents(that.chooseBankAccountEvent);
+                                                        },
+                                                        valueHelpOnly: false,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "bankAccount",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 60
+                                                        }),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_invoiceaddress") }),
+                                                    new sap.m.FlexBox("", {
+                                                        width: "100%",
+                                                        justifyContent: sap.m.FlexJustifyContent.Start,
+                                                        renderType: sap.m.FlexRendertype.Bare,
+                                                        items: [
+                                                            new sap.extension.m.Input("", {
+                                                            }).bindProperty("bindingValue", {
+                                                                path: "invoiceAddress",
+                                                                type: new sap.extension.data.Alphanumeric({
+                                                                    maxLength: 200
+                                                                }),
+                                                            }),
+                                                            new sap.m.Button("", {
+                                                                type: sap.m.ButtonType.Default,
+                                                                icon: "sap-icon://create",
+                                                                press: function (event: any): void {
+                                                                    let source: sap.m.Button = <sap.m.Button>event.getSource();
+                                                                    if (source instanceof sap.m.Button) {
+                                                                        let popover: sap.m.Popover = new sap.m.Popover("", {
+                                                                            showHeader: false,
+                                                                            placement: sap.m.PlacementType.Left,
+                                                                            enableScrolling: false,
+                                                                            horizontalScrolling: false,
+                                                                            contentWidth: "auto",
+                                                                            contentHeight: "auto",
+                                                                            content: [
+                                                                                new sap.ui.layout.form.SimpleForm("", {
+                                                                                    content: [
+                                                                                        new sap.extension.m.AddressArea("", {
+                                                                                            countryVisible: false,
+                                                                                            zipCodeVisible: false,
+                                                                                            addressChange: function (event: sap.ui.base.Event): void {
+                                                                                                let address: string = event.getParameter("address");
+                                                                                                if (!ibas.strings.isEmpty(address)) {
+                                                                                                    (<any>source.getParent()).getItems()[0].setBindingValue(address);
+                                                                                                }
+                                                                                            }
+                                                                                        }),
+                                                                                    ]
+                                                                                })
+                                                                            ]
+                                                                        });
+                                                                        popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                                                        popover.openBy(event.getSource(), true);
+                                                                    }
+                                                                },
+                                                            }).addStyleClass("sapUiTinyMarginBegin"),
+                                                        ]
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_invoicetelephone") }),
+                                                    new sap.extension.m.Input("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "invoiceTelephone",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 20
+                                                        }),
                                                     }),
                                                 ]
                                             })
