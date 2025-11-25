@@ -1294,10 +1294,10 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		}
 		// 2位以上的小数位不比较
 		if (debit.scale() > 2) {
-			debit = Decimal.round(debit, 2, RoundingMode.DOWN);
+			debit = Decimal.round(debit, 2, RoundingMode.HALF_EVEN);
 		}
 		if (credit.scale() > 2) {
-			credit = Decimal.round(credit, 2, RoundingMode.DOWN);
+			credit = Decimal.round(credit, 2, RoundingMode.HALF_EVEN);
 		}
 		if (debit.subtract(credit).abs().compareTo(PERMITTED_DIFFERENCES) >= 0) {
 			// 分支的借贷方不平
