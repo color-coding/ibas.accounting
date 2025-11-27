@@ -1,6 +1,7 @@
 package org.colorcoding.ibas.accounting.logic;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.common.Strings;
@@ -82,7 +83,7 @@ public class JournalEntryContent {
 
 	public final BigDecimal getAmount(int decimalPlaces) {
 		if (decimalPlaces > 0) {
-			return Decimals.round(this.amount, decimalPlaces);
+			return Decimals.round(this.amount, decimalPlaces, RoundingMode.HALF_EVEN);
 		}
 		return amount;
 	}
@@ -90,7 +91,7 @@ public class JournalEntryContent {
 	public final BigDecimal getCurrencyAmount(int decimalPlaces) {
 		BigDecimal amount = Decimals.multiply(this.amount, this.rate);
 		if (decimalPlaces > 0) {
-			return Decimals.round(amount, decimalPlaces);
+			return Decimals.round(amount, decimalPlaces, RoundingMode.HALF_EVEN);
 		}
 		return amount;
 	}

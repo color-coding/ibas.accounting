@@ -1266,7 +1266,7 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 	}
 
 	@Override
-	public void reset() {
+	protected void reset() {
 		super.reset();
 		this.setDocumentStatus(emDocumentStatus.RELEASED);
 		this.getJournalEntryLines().forEach(c -> c.setLineStatus(emDocumentStatus.RELEASED));
@@ -1295,10 +1295,10 @@ public class JournalEntry extends BusinessObject<JournalEntry>
 		}
 		// 2位以上的小数位不比较
 		if (debit.scale() > 2) {
-			debit = Decimals.round(debit, 2, RoundingMode.DOWN);
+			debit = Decimals.round(debit, 2, RoundingMode.HALF_EVEN);
 		}
 		if (credit.scale() > 2) {
-			credit = Decimals.round(credit, 2, RoundingMode.DOWN);
+			credit = Decimals.round(credit, 2, RoundingMode.HALF_EVEN);
 		}
 		if (debit.subtract(credit).abs().compareTo(PERMITTED_DIFFERENCES) >= 0) {
 			// 分支的借贷方不平
