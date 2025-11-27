@@ -789,7 +789,7 @@ public class CostStructureNodeItem extends BusinessObject<CostStructureNodeItem>
 	}
 
 	@Override
-	public void reset() {
+	protected void reset() {
 		super.reset();
 		this.setBudget(Decimals.VALUE_ZERO);
 		this.setIncurred(Decimals.VALUE_ZERO);

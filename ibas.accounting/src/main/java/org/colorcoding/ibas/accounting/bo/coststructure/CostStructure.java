@@ -996,7 +996,7 @@ public class CostStructure extends BusinessObject<CostStructure>
 	}
 
 	@Override
-	public void reset() {
+	protected void reset() {
 		super.reset();
 		this.setStatus(emCostStatus.OPEN);
 		this.setBudget(Decimals.VALUE_ZERO);

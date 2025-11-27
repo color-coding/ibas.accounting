@@ -1119,7 +1119,7 @@ public class CostStructureNode extends BusinessObject<CostStructureNode> impleme
 	}
 
 	@Override
-	public void reset() {
+	protected void reset() {
 		super.reset();
 		this.setStatus(emCostStatus.OPEN);
 		this.setBudget(Decimals.VALUE_ZERO);
