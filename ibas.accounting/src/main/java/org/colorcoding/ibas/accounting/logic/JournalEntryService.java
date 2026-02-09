@@ -229,6 +229,11 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			contractContents = contract.getContents();
 		}
 		// 处理分录内容
+		String mergingMethod = contract.getMergingMethod();
+		if (DataConvert.isNullOrEmpty(mergingMethod) || "DEFAULT".equalsIgnoreCase(mergingMethod)) {
+			mergingMethod = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_MERGE_JOURNAL_ENTRY_LINE_METHOD,
+					LINE_MERGE_METHOD_NONE);
+		}
 		List<JournalEntryContent> jeContents = new ArrayList<>();
 		if (contractContents != null) {
 			for (JournalEntryContent item : contractContents) {
@@ -299,7 +304,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 										&& item.getShortName().equalsIgnoreCase(c.getShortName()))
 										|| DataConvert.isNullOrEmpty(item.getShortName()))
 								&& (String.valueOf(c.getLedger()).equalsIgnoreCase(String.valueOf(item.getLedger()))));
-				if (jeContent == null) {
+				if (jeContent == null || LINE_MERGE_METHOD_NONE.equalsIgnoreCase(mergingMethod)) {
 					jeContent = item.duplicate();
 					jeContents.add(jeContent);
 					continue;
@@ -307,11 +312,9 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 				jeContent.setAmount(jeContent.getAmount().add(item.getAmount()));
 			}
 		}
-		// 合并分录内容
-		String method = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_MERGE_JOURNAL_ENTRY_LINE_METHOD,
-				LINE_MERGE_METHOD_NONE);
 		// 科目合并
-		if (LINE_MERGE_METHOD_ACCOUNT.equalsIgnoreCase(method) || LINE_MERGE_METHOD_BALANCE.equalsIgnoreCase(method)) {
+		if (LINE_MERGE_METHOD_ACCOUNT.equalsIgnoreCase(mergingMethod)
+				|| LINE_MERGE_METHOD_BALANCE.equalsIgnoreCase(mergingMethod)) {
 			List<JournalEntryContent> newJeContents = new ArrayList<>(jeContents.size());
 			for (JournalEntryContent item : jeContents) {
 				jeContent = newJeContents.firstOrDefault(
@@ -327,7 +330,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			jeContents = newJeContents;
 		}
 		// 接科目合并，仅保留余额
-		if (LINE_MERGE_METHOD_BALANCE.equalsIgnoreCase(method)) {
+		if (LINE_MERGE_METHOD_BALANCE.equalsIgnoreCase(mergingMethod)) {
 			List<JournalEntryContent> tmpContents;
 			List<JournalEntryContent> newJeContents = new ArrayList<>(jeContents.size());
 			for (JournalEntryContent item : jeContents) {
