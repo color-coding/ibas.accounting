@@ -75,6 +75,15 @@ public interface IJournalEntryCreationContract extends IBusinessLogicContract {
 	}
 
 	/**
+	 * 合并内容方法
+	 * 
+	 * @return 值
+	 */
+	default String getMergingMethod() {
+		return null;
+	}
+
+	/**
 	 * 分录内容
 	 * 
 	 * @return
