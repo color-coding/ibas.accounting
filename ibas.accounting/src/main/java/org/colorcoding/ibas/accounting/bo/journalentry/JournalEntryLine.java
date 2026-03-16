@@ -17,10 +17,10 @@ import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emBOStatus;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
-import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.db.DbField;
 import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 
@@ -407,7 +407,7 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine>
 	/**
 	 * 已引用 属性
 	 */
-	@DbField(name = "Refed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Refed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_REFERENCED = registerProperty(PROPERTY_REFERENCED_NAME,
 			emYesNo.class, MY_CLASS);
 
@@ -1082,34 +1082,65 @@ public class JournalEntryLine extends BusinessObject<JournalEntryLine>
 	}
 
 	/**
-	* 属性名称-现金流项目
-	*/
+	 * 属性名称-现金流项目
+	 */
 	private static final String PROPERTY_CASHFLOW_NAME = "CashFlow";
 
 	/**
-	* 现金流项目 属性
-	*/
+	 * 现金流项目 属性
+	 */
 	@DbField(name = "CashFlow", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_CASHFLOW = registerProperty(PROPERTY_CASHFLOW_NAME,
 			Integer.class, MY_CLASS);
 
 	/**
-	* 获取-现金流项目
-	* 
-	* @return 值
-	*/
+	 * 获取-现金流项目
+	 * 
+	 * @return 值
+	 */
 	@XmlElement(name = PROPERTY_CASHFLOW_NAME)
 	public final Integer getCashFlow() {
 		return this.getProperty(PROPERTY_CASHFLOW);
 	}
 
 	/**
-	* 设置-现金流项目
-	* 
-	* @param value 值
-	*/
+	 * 设置-现金流项目
+	 * 
+	 * @param value 值
+	 */
 	public final void setCashFlow(Integer value) {
 		this.setProperty(PROPERTY_CASHFLOW, value);
+	}
+
+	/**
+	 * 属性名称-基于行号
+	 */
+	private static final String PROPERTY_BASELINEIDS_NAME = "BaseLineIds";
+
+	/**
+	 * 基于行号 属性
+	 */
+	@DbField(name = "BaseLines", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_BASELINEIDS = registerProperty(PROPERTY_BASELINEIDS_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	 * 获取-基于行号
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_BASELINEIDS_NAME)
+	public final String getBaseLineIds() {
+		return this.getProperty(PROPERTY_BASELINEIDS);
+	}
+
+	/**
+	 * 设置-基于行号
+	 * 
+	 * @param value 值
+	 */
+	public final void setBaseLineIds(String value) {
+		this.setProperty(PROPERTY_BASELINEIDS, value);
 	}
 
 	/**

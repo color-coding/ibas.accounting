@@ -306,11 +306,12 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 										|| Strings.isNullOrEmpty(item.getShortName()))
 								&& (String.valueOf(c.getLedger()).equalsIgnoreCase(String.valueOf(item.getLedger()))));
 				if (jeContent == null || LINE_MERGE_METHOD_NONE.equalsIgnoreCase(mergingMethod)) {
-					jeContent = item.duplicate();
+					jeContent = item.clone();
 					jeContents.add(jeContent);
 					continue;
 				}
-				jeContent.setAmount(jeContent.getAmount().add(item.getAmount()));
+				jeContent.addAmount(item.getAmount());
+				jeContent.addBaseLineIds(item.getBaseLineIds());
 			}
 		}
 		// 科目合并
@@ -322,10 +323,11 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 						c -> c.getCategory() == item.getCategory() && c.getAccount().equalsIgnoreCase(item.getAccount())
 								&& c.getShortName().equalsIgnoreCase(item.getShortName()));
 				if (jeContent == null) {
-					jeContent = item.duplicate();
+					jeContent = item.clone();
 					newJeContents.add(jeContent);
 				} else {
-					jeContent.setAmount(Decimals.add(jeContent.getAmount(), item.getAmount()));
+					jeContent.addAmount(item.getAmount());
+					jeContent.addBaseLineIds(item.getBaseLineIds());
 				}
 			}
 			jeContents = newJeContents;
@@ -395,6 +397,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			journalLine.setCurrency(localCurrency);
 			journalLine.setReferenced(emYesNo.YES);
 			journalLine.setCashFlow(jeContent.getCashFlow());
+			journalLine.setBaseLineIds(jeContent.getBaseLineIds());
 		}
 		// 清理超过的，移到此处
 		if (journal.getJournalEntryLines().size() > jeContents.size()) {
