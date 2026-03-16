@@ -555,7 +555,7 @@ public class Branch extends BusinessObject<Branch> implements IBranch, IBOUserFi
 	/**
 	 * 国税编号 属性
 	 */
-	@DbField(name = "TaxId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "TaxId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_TAXID = registerProperty(PROPERTY_TAXID_NAME, String.class,
 			MY_CLASS);
 
@@ -586,7 +586,7 @@ public class Branch extends BusinessObject<Branch> implements IBranch, IBOUserFi
 	/**
 	 * 开户银行 属性
 	 */
-	@DbField(name = "Bank", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Bank", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_BANK = registerProperty(PROPERTY_BANK_NAME, String.class,
 			MY_CLASS);
 
@@ -617,7 +617,7 @@ public class Branch extends BusinessObject<Branch> implements IBranch, IBOUserFi
 	/**
 	 * 银行账户 属性
 	 */
-	@DbField(name = "BankAcnt", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "BankAcnt", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_BANKACCOUNT = registerProperty(PROPERTY_BANKACCOUNT_NAME,
 			String.class, MY_CLASS);
 
@@ -679,7 +679,7 @@ public class Branch extends BusinessObject<Branch> implements IBranch, IBOUserFi
 	/**
 	 * 发票地址 属性
 	 */
-	@DbField(name = "InvAddress", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "InvAddress", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_INVOICEADDRESS = registerProperty(PROPERTY_INVOICEADDRESS_NAME,
 			String.class, MY_CLASS);
 
@@ -710,7 +710,7 @@ public class Branch extends BusinessObject<Branch> implements IBranch, IBOUserFi
 	/**
 	 * 发票电话 属性
 	 */
-	@DbField(name = "InvPhone", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "InvPhone", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_INVOICETELEPHONE = registerProperty(
 			PROPERTY_INVOICETELEPHONE_NAME, String.class, MY_CLASS);
 
@@ -1144,7 +1144,7 @@ public class Branch extends BusinessObject<Branch> implements IBranch, IBOUserFi
 	/**
 	 * 已引用 属性
 	 */
-	@DbField(name = "Refed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Refed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_REFERENCED = registerProperty(PROPERTY_REFERENCED_NAME,
 			emYesNo.class, MY_CLASS);
 
@@ -1175,7 +1175,7 @@ public class Branch extends BusinessObject<Branch> implements IBranch, IBOUserFi
 	/**
 	 * 删除的 属性
 	 */
-	@DbField(name = "Deleted", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Deleted", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_DELETED = registerProperty(PROPERTY_DELETED_NAME, emYesNo.class,
 			MY_CLASS);
 

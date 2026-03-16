@@ -3,13 +3,14 @@ package org.colorcoding.ibas.accounting.logic;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.colorcoding.ibas.bobas.bo.IBOLine;
 import org.colorcoding.ibas.bobas.common.Decimals;
 import org.colorcoding.ibas.bobas.common.Strings;
 
 /**
  * 日记账分录内容
  */
-public class JournalEntryContent {
+public class JournalEntryContent implements Cloneable {
 	/**
 	 * 种类
 	 */
@@ -44,6 +45,11 @@ public class JournalEntryContent {
 
 	private final void setSourceData(Object sourceData) {
 		this.sourceData = sourceData;
+		if (this.sourceData instanceof IBOLine) {
+			this.setBaseLineIds(Strings.valueOf(((IBOLine) sourceData).getLineId()));
+		} else {
+			this.setBaseLineIds(null);
+		}
 	}
 
 	private Category category;
@@ -98,6 +104,10 @@ public class JournalEntryContent {
 
 	public final void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public final void addAmount(BigDecimal amount) {
+		this.amount = Decimals.add(this.amount, amount);
 	}
 
 	/**
@@ -175,21 +185,35 @@ public class JournalEntryContent {
 	}
 
 	/**
+	 * 基于行号
+	 */
+	private String baseLineIds;
+
+	public String getBaseLineIds() {
+		return baseLineIds;
+	}
+
+	public void setBaseLineIds(String baseLineIds) {
+		this.baseLineIds = baseLineIds;
+	}
+
+	public void addBaseLineIds(String baseLineIds) {
+		this.baseLineIds = Strings.concat(this.getBaseLineIds(),
+				Strings.isNullOrEmpty(this.getBaseLineIds()) ? null : Strings.VALUE_COMMA, baseLineIds);
+	}
+
+	/**
 	 * 复制一个对象
 	 * 
 	 * @return 新对象实例
 	 */
-	public JournalEntryContent duplicate() {
-		JournalEntryContent nContent = new JournalEntryContent(this.getSourceData());
-		nContent.setCategory(this.getCategory());
-		nContent.setLedger(this.getLedger());
-		nContent.setAmount(this.getAmount());
-		nContent.setCurrency(this.getCurrency());
-		nContent.setRate(this.getRate());
-		nContent.setAccount(this.getAccount());
-		nContent.setShortName(this.getShortName());
-		nContent.setCashFlow(this.getCashFlow());
-		return nContent;
+	@Override
+	public JournalEntryContent clone() {
+		try {
+			return (JournalEntryContent) super.clone();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

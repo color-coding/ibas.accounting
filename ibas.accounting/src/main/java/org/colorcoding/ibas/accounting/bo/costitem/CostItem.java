@@ -158,7 +158,7 @@ public class CostItem extends BusinessObject<CostItem>
 	/**
 	 * 虚拟的 属性
 	 */
-	@DbField(name = "Phantom", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Phantom", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_PHANTOM = registerProperty(PROPERTY_PHANTOM_NAME, emYesNo.class,
 			MY_CLASS);
 
@@ -189,7 +189,7 @@ public class CostItem extends BusinessObject<CostItem>
 	/**
 	 * 父项 属性
 	 */
-	@DbField(name = "Parents", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Parents", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_PARENTS = registerProperty(PROPERTY_PARENTS_NAME, String.class,
 			MY_CLASS);
 
