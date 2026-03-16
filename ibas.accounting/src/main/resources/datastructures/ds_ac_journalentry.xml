@@ -75,6 +75,7 @@
     <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref2"/>
     <Property Name="Reference3" Description="参考3" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Ref3"/>
     <Property Name="CashFlow" Description="现金流项目" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="CashFlow"/>
+    <Property Name="BaseLineIds" Description="基于行号" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="BaseLines"/>
   </Model>
   <BusinessObject MappedModel="JournalEntry" ShortName="${Company}_AC_JOURNALENTRY">
     <RelatedBO Relation="OneToMany" MappedModel="JournalEntryLine"/>

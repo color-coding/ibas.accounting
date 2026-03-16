@@ -477,17 +477,30 @@ public interface IJournalEntryLine extends IBODocumentLine {
 	void setReference3(String value);
 
 	/**
-	* 获取-现金流项目
-	* 
-	* @return 值
-	*/
+	 * 获取-现金流项目
+	 * 
+	 * @return 值
+	 */
 	Integer getCashFlow();
 
 	/**
-	* 设置-现金流项目
-	* 
-	* @param value 值
-	*/
+	 * 设置-现金流项目
+	 * 
+	 * @param value 值
+	 */
 	void setCashFlow(Integer value);
 
+	/**
+	 * 获取-基于行号
+	 * 
+	 * @return 值
+	 */
+	String getBaseLineIds();
+
+	/**
+	 * 设置-基于行号
+	 * 
+	 * @param value 值
+	 */
+	void setBaseLineIds(String value);
 }

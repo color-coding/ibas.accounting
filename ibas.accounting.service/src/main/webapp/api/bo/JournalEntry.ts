@@ -165,6 +165,8 @@ namespace accounting {
             reference3: string;
             /** 现金流项目 */
             cashFlow: number;
+            /** 基于行号 */
+            baseLineIds: string;
 
 
         }
