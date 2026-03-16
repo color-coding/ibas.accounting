@@ -452,6 +452,7 @@
         "bo_journalentryline_reference2": "参考2",
         "bo_journalentryline_reference3": "参考3",
         "bo_journalentryline_cashflow": "现金流项目",
+        "bo_journalentryline_baselineids": "基于行号",
         "bo_journalentry_closing_delimiter": "----结束----"
     },
     {

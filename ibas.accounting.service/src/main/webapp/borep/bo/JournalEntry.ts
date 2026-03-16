@@ -843,6 +843,16 @@ namespace accounting {
                 this.setProperty(JournalEntryLine.PROPERTY_CASHFLOW_NAME, value);
             }
 
+            /** 映射的属性名称-基于行号 */
+            static PROPERTY_BASELINEIDS_NAME: string = "BaseLineIds";
+            /** 获取-基于行号 */
+            get baseLineIds(): string {
+                return this.getProperty<string>(JournalEntryLine.PROPERTY_BASELINEIDS_NAME);
+            }
+            /** 设置-基于行号 */
+            set baseLineIds(value: string) {
+                this.setProperty(JournalEntryLine.PROPERTY_BASELINEIDS_NAME, value);
+            }
 
             /** 初始化数据 */
             protected init(): void {

@@ -452,6 +452,7 @@
         "bo_journalentryline_reference2": "Reference 2",
         "bo_journalentryline_reference3": "Reference 3",
         "bo_journalentryline_cashflow": "Cash Flow",
+        "bo_journalentryline_baselineids": "Based on Lines",
         "bo_journalentry_closing_delimiter": "---- End ----"
     },
     {
