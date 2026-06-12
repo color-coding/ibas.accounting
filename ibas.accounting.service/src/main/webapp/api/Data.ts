@@ -358,7 +358,7 @@ namespace accounting {
                         condition = new ibas.Condition();
                         condition.bracketClose = 2;
                         condition.alias = bo.CostStructure.PROPERTY_ENDDATE_NAME;
-                        condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                        condition.operation = ibas.emConditionOperation.GREATER_EQUAL;
                         condition.value = today;
                         conditions.add(condition);
                     }
@@ -417,7 +417,7 @@ namespace accounting {
                     condition = new ibas.Condition();
                     condition.bracketClose = 3;
                     condition.alias = bo.Account.PROPERTY_INVALIDDATE_NAME;
-                    condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                    condition.operation = ibas.emConditionOperation.GREATER_EQUAL;
                     condition.value = today;
                     conditions.add(condition);
                     return conditions;
@@ -597,7 +597,7 @@ namespace accounting {
                             results[sources.indexOf(source)] = target;
                         }
                         if (results.length === 0) {
-                            throw new Error(ibas.i18n.prop("accounting_currency_exchange_faild"));
+                            throw new Error(ibas.i18n.prop("accounting_currency_exchange_failed"));
                         }
                         if (arguments[0] instanceof Array) {
                             onCompeleted(results);

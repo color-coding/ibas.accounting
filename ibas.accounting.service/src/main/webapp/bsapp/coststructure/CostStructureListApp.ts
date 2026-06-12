@@ -192,7 +192,7 @@ namespace accounting {
                             if (opRslt.resultObjects.length === 0) {
                                 // 删除成功，释放当前对象
                                 that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_successful"));
                                 that.currentBudget = undefined;
                                 that.view.showCostStructure(undefined);
                                 that.view.showCostStructureNodes(undefined);
@@ -202,7 +202,7 @@ namespace accounting {
                                 that.view.showCostStructure(that.currentBudget);
                                 that.view.showCostStructureNodes(that.currentBudget.costStructureNodes);
                                 that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                             }
                         } catch (error) {
                             that.messages(error);
@@ -255,7 +255,7 @@ namespace accounting {
                                 that.messages(ibas.emMessageType.ERROR, error.message);
                             } else {
                                 that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_successful"));
                             }
                             that.busy(false);
                         });
@@ -496,7 +496,7 @@ namespace accounting {
                                         this.view.showCostStructureNodes(this.currentBudget.costStructureNodes);
                                     }
                                     this.messages(ibas.emMessageType.SUCCESS,
-                                        ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.CLOSED) + ibas.i18n.prop("shell_sucessful"));
+                                        ibas.enums.describe(bo.emCostStatus, bo.emCostStatus.CLOSED) + ibas.i18n.prop("shell_successful"));
                                 } catch (error) {
                                     this.messages(error);
                                 }

@@ -17,7 +17,8 @@ import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
+import org.colorcoding.ibas.bobas.db.EditType;
 
 /**
  * 科目
@@ -62,7 +63,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 编码 属性
 	 */
-	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
+	@DbField(name = "Code", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
@@ -93,7 +94,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 名称 属性
 	 */
-	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Name", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
 			MY_CLASS);
 
@@ -124,7 +125,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 外文名称 属性
 	 */
-	@DbField(name = "FrgnName", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "FrgnName", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_FOREIGNNAME = registerProperty(PROPERTY_FOREIGNNAME_NAME,
 			String.class, MY_CLASS);
 
@@ -155,7 +156,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 上级科目 属性
 	 */
-	@DbField(name = "Parent", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Parent", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_PARENT = registerProperty(PROPERTY_PARENT_NAME, String.class,
 			MY_CLASS);
 
@@ -186,7 +187,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 层级 属性
 	 */
-	@DbField(name = "Level", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Level", type = DataType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_LEVEL = registerProperty(PROPERTY_LEVEL_NAME, Integer.class,
 			MY_CLASS);
 
@@ -217,7 +218,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 外部编码 属性
 	 */
-	@DbField(name = "External", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "External", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_EXTERNAL = registerProperty(PROPERTY_EXTERNAL_NAME, String.class,
 			MY_CLASS);
 
@@ -248,7 +249,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 机密 属性
 	 */
-	@DbField(name = "Protected", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Protected", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_PROTECTED = registerProperty(PROPERTY_PROTECTED_NAME,
 			emYesNo.class, MY_CLASS);
 
@@ -279,7 +280,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	* 传递类型 属性
 	*/
-	@DbField(name = "Postable", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Postable", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emPostableType> PROPERTY_POSTABLE = registerProperty(PROPERTY_POSTABLE_NAME,
 			emPostableType.class, MY_CLASS);
 
@@ -310,7 +311,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 控制科目 属性
 	 */
-	@DbField(name = "Control", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Control", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_CONTROL = registerProperty(PROPERTY_CONTROL_NAME, emYesNo.class,
 			MY_CLASS);
 
@@ -341,7 +342,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 现金科目 属性
 	 */
-	@DbField(name = "Cash", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Cash", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_CASH = registerProperty(PROPERTY_CASH_NAME, emYesNo.class,
 			MY_CLASS);
 
@@ -372,7 +373,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 现金流相关 属性
 	 */
-	@DbField(name = "CfwRlvnt", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "CfwRlvnt", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_CASHFLOWRELEVANT = registerProperty(
 			PROPERTY_CASHFLOWRELEVANT_NAME, emYesNo.class, MY_CLASS);
 
@@ -403,7 +404,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 生效日期 属性
 	 */
-	@DbField(name = "ValidDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	@DbField(name = "ValidDate", type = DataType.DATE, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<DateTime> PROPERTY_VALIDDATE = registerProperty(PROPERTY_VALIDDATE_NAME,
 			DateTime.class, MY_CLASS);
 
@@ -434,7 +435,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 失效日期 属性
 	 */
-	@DbField(name = "InvalidDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	@DbField(name = "InvalidDate", type = DataType.DATE, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<DateTime> PROPERTY_INVALIDDATE = registerProperty(PROPERTY_INVALIDDATE_NAME,
 			DateTime.class, MY_CLASS);
 
@@ -465,7 +466,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 余额 属性
 	 */
-	@DbField(name = "Balance", type = DbFieldType.DECIMAL, table = DB_TABLE_NAME)
+	@DbField(name = "Balance", type = DataType.DECIMAL, editType = EditType.SUM, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<BigDecimal> PROPERTY_BALANCE = registerProperty(PROPERTY_BALANCE_NAME,
 			BigDecimal.class, MY_CLASS);
 
@@ -496,7 +497,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 币种 属性
 	 */
-	@DbField(name = "Currency", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Currency", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_CURRENCY = registerProperty(PROPERTY_CURRENCY_NAME, String.class,
 			MY_CLASS);
 
@@ -527,7 +528,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 分支 属性
 	 */
-	@DbField(name = "Branch", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Branch", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_BRANCH = registerProperty(PROPERTY_BRANCH_NAME, String.class,
 			MY_CLASS);
 
@@ -558,7 +559,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 对象编号 属性
 	 */
-	@DbField(name = "DocEntry", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "DocEntry", type = DataType.NUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<Integer> PROPERTY_DOCENTRY = registerProperty(PROPERTY_DOCENTRY_NAME,
 			Integer.class, MY_CLASS);
 
@@ -589,7 +590,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 对象类型 属性
 	 */
-	@DbField(name = "ObjectCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "ObjectCode", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_OBJECTCODE = registerProperty(PROPERTY_OBJECTCODE_NAME,
 			String.class, MY_CLASS);
 
@@ -620,7 +621,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 创建日期 属性
 	 */
-	@DbField(name = "CreateDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	@DbField(name = "CreateDate", type = DataType.DATE, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<DateTime> PROPERTY_CREATEDATE = registerProperty(PROPERTY_CREATEDATE_NAME,
 			DateTime.class, MY_CLASS);
 
@@ -651,7 +652,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 创建时间 属性
 	 */
-	@DbField(name = "CreateTime", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "CreateTime", type = DataType.NUMERIC, editType = EditType.TIME, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Short> PROPERTY_CREATETIME = registerProperty(PROPERTY_CREATETIME_NAME,
 			Short.class, MY_CLASS);
 
@@ -682,7 +683,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 修改日期 属性
 	 */
-	@DbField(name = "UpdateDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	@DbField(name = "UpdateDate", type = DataType.DATE, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<DateTime> PROPERTY_UPDATEDATE = registerProperty(PROPERTY_UPDATEDATE_NAME,
 			DateTime.class, MY_CLASS);
 
@@ -713,7 +714,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 修改时间 属性
 	 */
-	@DbField(name = "UpdateTime", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "UpdateTime", type = DataType.NUMERIC, editType = EditType.TIME, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Short> PROPERTY_UPDATETIME = registerProperty(PROPERTY_UPDATETIME_NAME,
 			Short.class, MY_CLASS);
 
@@ -744,7 +745,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 数据源 属性
 	 */
-	@DbField(name = "DataSource", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "DataSource", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DATASOURCE = registerProperty(PROPERTY_DATASOURCE_NAME,
 			String.class, MY_CLASS);
 
@@ -775,7 +776,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 实例号（版本） 属性
 	 */
-	@DbField(name = "LogInst", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "LogInst", type = DataType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_LOGINST = registerProperty(PROPERTY_LOGINST_NAME, Integer.class,
 			MY_CLASS);
 
@@ -806,7 +807,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 服务系列 属性
 	 */
-	@DbField(name = "Series", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Series", type = DataType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_SERIES = registerProperty(PROPERTY_SERIES_NAME, Integer.class,
 			MY_CLASS);
 
@@ -837,7 +838,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 创建用户 属性
 	 */
-	@DbField(name = "Creator", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Creator", type = DataType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_CREATEUSERSIGN = registerProperty(PROPERTY_CREATEUSERSIGN_NAME,
 			Integer.class, MY_CLASS);
 
@@ -868,7 +869,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 修改用户 属性
 	 */
-	@DbField(name = "Updator", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Updator", type = DataType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_UPDATEUSERSIGN = registerProperty(PROPERTY_UPDATEUSERSIGN_NAME,
 			Integer.class, MY_CLASS);
 
@@ -899,7 +900,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 创建动作标识 属性
 	 */
-	@DbField(name = "CreateActId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "CreateActId", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_CREATEACTIONID = registerProperty(PROPERTY_CREATEACTIONID_NAME,
 			String.class, MY_CLASS);
 
@@ -930,7 +931,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 更新动作标识 属性
 	 */
-	@DbField(name = "UpdateActId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "UpdateActId", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_UPDATEACTIONID = registerProperty(PROPERTY_UPDATEACTIONID_NAME,
 			String.class, MY_CLASS);
 
@@ -961,7 +962,7 @@ public class Account extends BusinessObject<Account> implements IAccount, IBOUse
 	/**
 	 * 备注 属性
 	 */
-	@DbField(name = "Remarks", type = DbFieldType.MEMO, table = DB_TABLE_NAME)
+	@DbField(name = "Remarks", type = DataType.MEMO, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_REMARKS = registerProperty(PROPERTY_REMARKS_NAME, String.class,
 			MY_CLASS);
 

@@ -189,10 +189,10 @@ namespace accounting {
                                     } else {
                                         if (ibas.objects.isNull(that.editData)) {
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_successful"));
                                         } else {
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                                         }
                                         // 刷新当前视图
                                         that.viewShowed();

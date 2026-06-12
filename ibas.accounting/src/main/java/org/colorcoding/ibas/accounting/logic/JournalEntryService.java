@@ -29,7 +29,7 @@ import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.expression.JudmentOperationException;
+import org.colorcoding.ibas.bobas.expression.JudgmentOperationException;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.BusinessLogic;
 import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
@@ -265,7 +265,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 						smartItem.caculate();
 					} catch (Exception e) {
 						throw new BusinessLogicException(
-								I18N.prop("msg_ac_business_logic_caculate_error", item.getSourceData(), e.getMessage()),
+								I18N.prop("msg_ac_business_logic_calculate_error", item.getSourceData(), e.getMessage()),
 								e);
 					}
 				}
@@ -470,7 +470,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			condition = criteria.getConditions().create();
 			condition.setAlias(PeriodCategory.PROPERTY_ENDDATE.getName());
 			condition.setValue(this.getBeAffected().getDocumentDate());
-			condition.setOperation(ConditionOperation.GRATER_EQUAL);
+			condition.setOperation(ConditionOperation.GREATER_EQUAL);
 			sort = criteria.getSorts().create();
 			sort.setAlias(PeriodCategory.PROPERTY_OBJECTKEY.getName());
 			sort.setSortType(SortType.DESCENDING);
@@ -526,7 +526,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 				if (judgmentLink.judge(jeContent)) {
 					return plAccount.getAccount();
 				}
-			} catch (JudmentOperationException e) {
+			} catch (JudgmentOperationException e) {
 				if (MyConfiguration.isDebugMode()) {
 					Logger.log(MessageLevel.WARN, e);
 				}

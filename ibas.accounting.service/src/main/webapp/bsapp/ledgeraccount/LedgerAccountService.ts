@@ -45,7 +45,7 @@ namespace accounting {
                 condition = criteria.conditions.create();
                 condition.alias = bo.PeriodCategory.PROPERTY_ENDDATE_NAME;
                 condition.value = ibas.dates.toString(ibas.dates.today());
-                condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                condition.operation = ibas.emConditionOperation.GREATER_EQUAL;
                 let sort: ibas.ISort = criteria.sorts.create();
                 sort.alias = bo.PeriodCategory.PROPERTY_OBJECTKEY_NAME;
                 sort.sortType = ibas.emSortType.DESCENDING;
@@ -238,7 +238,7 @@ namespace accounting {
                                 that.messages(ibas.emMessageType.ERROR, error.message);
                             } else {
                                 that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                             }
                             that.view.showLedgerAccounts(that.settings.filter(c => c.isDeleted === false));
                             that.busy(false);

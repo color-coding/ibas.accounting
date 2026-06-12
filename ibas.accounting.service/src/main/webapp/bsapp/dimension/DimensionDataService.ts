@@ -54,10 +54,10 @@ namespace accounting {
                             }
                             let dimension: bo.IDimension = opRslt.resultObjects.firstOrDefault();
                             if (ibas.objects.isNull(dimension)) {
-                                throw new Error(ibas.i18n.prop("accounting_dimension_invaild", condition.value));
+                                throw new Error(ibas.i18n.prop("accounting_dimension_invalid", condition.value));
                             }
                             if (ibas.strings.isEmpty(dimension.source)) {
-                                throw new Error(ibas.i18n.prop("accounting_dimension_invaild", dimension.name));
+                                throw new Error(ibas.i18n.prop("accounting_dimension_invalid", dimension.name));
                             }
                             if (dimension.sourceType === bo.emDimensionSource.CHOOSE_LIST) {
                                 let criteria: ibas.ICriteria;

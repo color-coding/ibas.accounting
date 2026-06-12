@@ -10,7 +10,7 @@ import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.expression.IPropertyValueOperator;
 import org.colorcoding.ibas.bobas.expression.IValueOperator;
 import org.colorcoding.ibas.bobas.expression.JudgmentLinkItem;
-import org.colorcoding.ibas.bobas.expression.JudmentOperation;
+import org.colorcoding.ibas.bobas.expression.JudgmentOperation;
 
 class JudgmentLink extends org.colorcoding.ibas.bobas.expression.JudgmentLink {
 
@@ -25,20 +25,20 @@ class JudgmentLink extends org.colorcoding.ibas.bobas.expression.JudgmentLink {
 			jItem.setOpenBracket(0);
 			jItem.setCloseBracket(0);
 			if (item.getRelationship() == emConditionRelationship.NONE || item.getRelationship() == null) {
-				jItem.setRelationship(JudmentOperation.AND);
+				jItem.setRelationship(JudgmentOperation.AND);
 			} else {
-				jItem.setRelationship(JudmentOperation.valueOf(item.getRelationship()));
+				jItem.setRelationship(JudgmentOperation.valueOf(item.getRelationship()));
 			}
-			jItem.setOperation(JudmentOperation.valueOf(item.getOperation()));
+			jItem.setOperation(JudgmentOperation.valueOf(item.getOperation()));
 			// 左边取值
 			IPropertyValueOperator propertyValueOperator = this.createPropertyValueOperator();
 			propertyValueOperator.setPropertyName(item.getPropertyName());
-			jItem.setLeftOperter(propertyValueOperator);
+			jItem.setLeftOperator(propertyValueOperator);
 			// 右边取值
 			// 与值比较
 			IValueOperator valueOperator = this.createValueOperator();
 			valueOperator.setValue(item.getValue());
-			jItem.setRightOperter(valueOperator);
+			jItem.setRightOperator(valueOperator);
 			// 设置括号
 			jItem.setOpenBracket(item.getBracketOpen());
 			jItem.setCloseBracket(item.getBracketClose());

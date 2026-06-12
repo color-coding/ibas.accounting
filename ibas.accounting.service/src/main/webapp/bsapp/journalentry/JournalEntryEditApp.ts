@@ -112,13 +112,13 @@ namespace accounting {
                             if (opRslt.resultObjects.length === 0) {
                                 // 删除成功，释放当前对象
                                 that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_successful"));
                                 that.editData = undefined;
                             } else {
                                 // 替换编辑对象
                                 that.editData = opRslt.resultObjects.firstOrDefault();
                                 that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                             }
                             // 刷新当前视图
                             that.viewShowed();
@@ -384,7 +384,7 @@ namespace accounting {
             }
             protected chooseJournalEntryLineDistributionRule(type: emDimensionType, caller: bo.JournalEntryLine): void {
                 if (ibas.objects.isNull(type)) {
-                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_dimension_invaild", ""));
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("accounting_dimension_invalid", ""));
                     return;
                 }
                 ibas.servicesManager.runApplicationService<app.IDimensionDataServiceContract, String>({
@@ -413,7 +413,7 @@ namespace accounting {
                     return;
                 }
                 if (!ibas.strings.isEmpty(this.editData.baseDocumentType) && this.editData.baseDocumentEntry > 0) {
-                    throw new Error(ibas.i18n.prop("accounting_invaild_status_not_support_turn_to_operation"));
+                    throw new Error(ibas.i18n.prop("accounting_invalid_status_not_support_turn_to_operation"));
                 }
                 let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
                 boRepository.fetchJournalEntry({
@@ -433,7 +433,7 @@ namespace accounting {
                                 || this.editData.canceled === ibas.emYesNo.YES
                                 || this.editData.documentStatus === ibas.emDocumentStatus.PLANNED
                             ) {
-                                throw new Error(ibas.i18n.prop("accounting_invaild_status_not_support_turn_to_operation"));
+                                throw new Error(ibas.i18n.prop("accounting_invalid_status_not_support_turn_to_operation"));
                             }
                             let target: bo.JournalEntry = this.editData.clone();
                             target.referenced = ibas.emYesNo.YES;

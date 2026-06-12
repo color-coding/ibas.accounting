@@ -122,7 +122,7 @@ namespace accounting {
                             this.messages(error);
                         } else {
                             this.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                         }
                     }
                 );
@@ -150,7 +150,7 @@ namespace accounting {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = bo.CurrencyRate.PROPERTY_DATE_NAME;
-                condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                condition.operation = ibas.emConditionOperation.GREATER_EQUAL;
                 condition.value = ibas.dates.toString(startDate, "yyyy-MM-dd");
                 condition = criteria.conditions.create();
                 condition.alias = bo.CurrencyRate.PROPERTY_DATE_NAME;
