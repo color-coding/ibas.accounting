@@ -2,6 +2,7 @@ package org.colorcoding.ibas.accounting.logic;
 
 import org.colorcoding.ibas.bobas.core.fields.IFieldData;
 import org.colorcoding.ibas.bobas.core.fields.IManagedFields;
+import org.colorcoding.ibas.bobas.repository.ITransaction;
 
 /**
  * 日记账分录内容，待计算
@@ -12,14 +13,14 @@ public class JournalEntrySmartContent extends JournalEntryContent {
 		super(sourceData);
 	}
 
-	private IBusinessLogicServiceInformation service;
+	private ITransaction transaction;
 
-	protected final IBusinessLogicServiceInformation getService() {
-		return service;
+	public final ITransaction getTransaction() {
+		return transaction;
 	}
 
-	final void setService(IBusinessLogicServiceInformation service) {
-		this.service = service;
+	public void setTransaction(ITransaction transaction) {
+		this.transaction = transaction;
 	}
 
 	public final static String VALUE_NULL = "$NULL$";

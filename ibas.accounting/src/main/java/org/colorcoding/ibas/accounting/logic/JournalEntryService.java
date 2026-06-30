@@ -36,7 +36,6 @@ import org.colorcoding.ibas.bobas.logic.BusinessLogicException;
 import org.colorcoding.ibas.bobas.logic.LogicContract;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.message.MessageLevel;
-import org.colorcoding.ibas.bobas.repository.ITransaction;
 
 @LogicContract(IJournalEntryCreationContract.class)
 public class JournalEntryService extends BusinessLogic<IJournalEntryCreationContract, IJournalEntry> {
@@ -235,6 +234,7 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 			mergingMethod = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_MERGE_JOURNAL_ENTRY_LINE_METHOD,
 					LINE_MERGE_METHOD_NONE);
 		}
+		JournalEntrySmartContent smartItem;
 		List<JournalEntryContent> jeContents = new ArrayList<>();
 		if (contractContents != null) {
 			for (JournalEntryContent item : contractContents) {
@@ -243,31 +243,15 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 				}
 				// 计算金额
 				if (item instanceof JournalEntrySmartContent) {
-					JournalEntrySmartContent smartItem = (JournalEntrySmartContent) item;
-					smartItem.setService(new IBusinessLogicServiceInformation() {
-
-						@Override
-						public Class<?> getType() {
-							return JournalEntryService.this.getClass();
-						}
-
-						@Override
-						public BusinessLogic<?, ?> getInstance() {
-							return JournalEntryService.this;
-						}
-
-						@Override
-						public ITransaction getTransaction() {
-							return JournalEntryService.this.getTransaction();
-						}
-					});
+					smartItem = (JournalEntrySmartContent) item;
+					smartItem.setTransaction(this.getTransaction());
 					try {
 						smartItem.caculate();
 					} catch (Exception e) {
-						throw new BusinessLogicException(
-								I18N.prop("msg_ac_business_logic_calculate_error", item.getSourceData(), e.getMessage()),
-								e);
+						throw new BusinessLogicException(I18N.prop("msg_ac_business_logic_calculate_error",
+								item.getSourceData(), e.getMessage()), e);
 					}
+					smartItem = null;
 				}
 				// 调试模式，0金额过滤
 				if (Decimals.isZero(item.getAmount()) && !MyConfiguration.isDebugMode()) {

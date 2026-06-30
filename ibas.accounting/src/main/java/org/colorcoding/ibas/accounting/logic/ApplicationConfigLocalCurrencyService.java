@@ -49,6 +49,10 @@ public class ApplicationConfigLocalCurrencyService
 			appConfig.setConfigGroup(MyConfiguration.MODULE_ID);
 			appConfig.setConfigKey(MyConfiguration.CONFIG_ITEM_LOCAL_CURRENCY);
 			appConfig.setConfigDescription(I18N.prop("msg_ac_local_currency"));
+		} else {
+			if (Strings.isWith(appConfig.getConfigDescription(), "[", "]")) {
+				appConfig.setConfigDescription(I18N.prop("msg_ac_local_currency"));
+			}
 		}
 		return appConfig;
 	}
