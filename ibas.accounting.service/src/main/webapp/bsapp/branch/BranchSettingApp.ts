@@ -10,7 +10,7 @@ namespace accounting {
         /** 应用-默认分支设置 */
         export class BranchSettingApp extends ibas.ResidentApplication<IBranchSettingView> {
             /** 应用标识 */
-            static APPLICATION_ID: string = "83027f70-f457-45b6-bcec-ad4b8bc65a5d";
+            static APPLICATION_ID: string = "16d74e83-dc94-4d4f-8ae2-8b827e022a43";
             /** 应用名称 */
             static APPLICATION_NAME: string = "accounting_app_branchsetting";
             /** 构造函数 */
