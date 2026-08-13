@@ -1,9 +1,9 @@
 package org.colorcoding.ibas.accounting.bo.postingperiod;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.accounting.MyConfiguration;
 import org.colorcoding.ibas.accounting.data.emPeriodStatus;
