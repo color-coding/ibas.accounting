@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-费用结构 */
-        export class CostStructureEditApp extends ibas.BOEditApplication<ICostStructureEditView, bo.CostStructure> {
+        export class CostStructureEditApp extends ibas.BOEditService<ICostStructureEditView, bo.CostStructure> {
             /** 应用标识 */
             static APPLICATION_ID: string = "26fbb9be-6c4f-4a8c-b514-fc8af2f6de4d";
             /** 应用名称 */
@@ -42,12 +42,40 @@ namespace accounting {
                 }
                 this.view.showCostStructure(this.editData);
             }
-            run(data?: bo.CostStructure, onCompleted?: (data: bo.CostStructure) => void): void {
-                this.editData = data;
-                this.onCompleted = onCompleted;
+            run(): void;
+            run(data: bo.CostStructure): void;
+            run(): void {
+                let data: bo.CostStructure = arguments[0];
+                if (ibas.objects.instanceOf(data, bo.CostStructure) || ibas.objects.isNull(data)) {
+                    this.editData = data;
+                    if (ibas.objects.instanceOf(data, bo.CostStructure) && data.isNew === false) {
+                        let criteria: ibas.ICriteria = data.criteria();
+                        if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
+                            let that: this = this;
+                            let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
+                            boRepository.fetchCostStructure({
+                                criteria: criteria,
+                                onCompleted(opRslt: ibas.IOperationResult<bo.CostStructure>): void {
+                                    try {
+                                        if (opRslt.resultCode !== 0) {
+                                            throw new Error(opRslt.message);
+                                        }
+                                        if (opRslt.resultObjects.length === 0) {
+                                            throw new Error(ibas.i18n.prop("shell_data_fetched_none"));
+                                        }
+                                        that.editData = opRslt.resultObjects.firstOrDefault();
+                                        that.show();
+                                    } catch (error) {
+                                        that.messages(error);
+                                    }
+                                }
+                            });
+                            return;
+                        }
+                    }
+                }
                 super.run.apply(this, arguments);
             }
-            private onCompleted: (data: bo.CostStructure) => void;
             /** 保存数据 */
             protected saveData(): void {
                 this.busy(true);
@@ -166,12 +194,6 @@ namespace accounting {
                     }
                 });
             }
-            public close(): void {
-                super.close();
-                if (this.onCompleted instanceof Function) {
-                    this.onCompleted(this.editData);
-                }
-            }
         }
         /** 视图-费用结构 */
         export interface ICostStructureEditView extends ibas.IBOEditView {
@@ -183,6 +205,19 @@ namespace accounting {
             chooseEntityEvent: Function;
             /** 结算费用 */
             closeCostStructureEvent: Function;
+        }
+        /** 费用结构编辑服务映射 */
+        export class CostStructureEditServiceMapping extends ibas.BOEditServiceMapping {
+            constructor() {
+                super();
+                this.id = CostStructureEditApp.APPLICATION_ID;
+                this.name = CostStructureEditApp.APPLICATION_NAME;
+                this.boCode = CostStructureEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.CostStructure>> {
+                return new CostStructureEditApp();
+            }
         }
     }
 }

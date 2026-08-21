@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-费用项目 */
-        export class CostItemEditApp extends ibas.BOEditApplication<ICostItemEditView, bo.CostItem> {
+        export class CostItemEditApp extends ibas.BOEditService<ICostItemEditView, bo.CostItem> {
             /** 应用标识 */
             static APPLICATION_ID: string = "812773c8-953e-4374-aed7-ca788c606278";
             /** 应用名称 */
@@ -176,6 +176,21 @@ namespace accounting {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
+        }
+        /** CostItem编辑服务映射 */
+        export class CostItemEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = CostItemEditApp.APPLICATION_ID;
+                this.name = CostItemEditApp.APPLICATION_NAME;
+                this.boCode = CostItemEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.CostItem>> {
+                return new CostItemEditApp();
+            }
         }
     }
 }

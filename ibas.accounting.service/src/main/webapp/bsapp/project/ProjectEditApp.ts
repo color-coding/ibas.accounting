@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-项目 */
-        export class ProjectEditApp extends ibas.BOEditApplication<IProjectEditView, bo.Project> {
+        export class ProjectEditApp extends ibas.BOEditService<IProjectEditView, bo.Project> {
             /** 应用标识 */
             static APPLICATION_ID: string = "81962092-76be-4f9e-9c0d-3dbdfb12319f";
             /** 应用名称 */
@@ -210,6 +210,21 @@ namespace accounting {
             chooseOrganizationEvent: Function;
             /** 选择项目经理 */
             chooseManagerEvent: Function;
+        }
+        /** Project编辑服务映射 */
+        export class ProjectEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = ProjectEditApp.APPLICATION_ID;
+                this.name = ProjectEditApp.APPLICATION_NAME;
+                this.boCode = ProjectEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.Project>> {
+                return new ProjectEditApp();
+            }
         }
     }
 }
