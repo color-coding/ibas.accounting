@@ -72,10 +72,10 @@ namespace accounting {
                 // 关闭自身
                 this.destroy();
                 // 调用编辑应用
-                let app: CostStructureEditApp = new CostStructureEditApp();
-                app.navigation = this.navigation;
-                app.viewShower = this.viewShower;
-                app.run();
+                ibas.servicesManager.runEditService<bo.CostStructure>({
+                    boCode: CostStructureEditApp.BUSINESS_OBJECT_CODE,
+                    onCompleted: () => { }
+                });
             }
         }
         /** 视图-费用结构节点 */

@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-期间类型 */
-        export class PeriodCategoryEditApp extends ibas.BOEditApplication<IPeriodCategoryEditView, bo.PeriodCategory> {
+        export class PeriodCategoryEditApp extends ibas.BOEditService<IPeriodCategoryEditView, bo.PeriodCategory> {
             /** 应用标识 */
             static APPLICATION_ID: string = "881a6e57-7c0e-4d72-8f90-32ae68393df9";
             /** 应用名称 */
@@ -415,6 +415,21 @@ namespace accounting {
             removePostingPeriodItemEvent: Function;
             /** 显示过账期间项目 */
             showPostingPeriodItems(data: bo.PostingPeriod): void;
+        }
+        /** PeriodCategory编辑服务映射 */
+        export class PeriodCategoryEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = PeriodCategoryEditApp.APPLICATION_ID;
+                this.name = PeriodCategoryEditApp.APPLICATION_NAME;
+                this.boCode = PeriodCategoryEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.PeriodCategory>> {
+                return new PeriodCategoryEditApp();
+            }
         }
     }
 }

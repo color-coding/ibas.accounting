@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-银行账户 */
-        export class BankAccountEditApp extends ibas.BOEditApplication<IBankAccountEditView, bo.BankAccount> {
+        export class BankAccountEditApp extends ibas.BOEditService<IBankAccountEditView, bo.BankAccount> {
             /** 应用标识 */
             static APPLICATION_ID: string = "c1cf7944-2a5b-4491-b4a1-65412638d5d1";
             /** 应用名称 */
@@ -177,6 +177,21 @@ namespace accounting {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
+        }
+        /** BankAccount编辑服务映射 */
+        export class BankAccountEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = BankAccountEditApp.APPLICATION_ID;
+                this.name = BankAccountEditApp.APPLICATION_NAME;
+                this.boCode = BankAccountEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.BankAccount>> {
+                return new BankAccountEditApp();
+            }
         }
     }
 }

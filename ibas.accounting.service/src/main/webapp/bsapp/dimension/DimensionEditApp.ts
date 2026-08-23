@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-维度 */
-        export class DimensionEditApp extends ibas.BOEditApplication<IDimensionEditView, bo.Dimension> {
+        export class DimensionEditApp extends ibas.BOEditService<IDimensionEditView, bo.Dimension> {
             /** 应用标识 */
             static APPLICATION_ID: string = "162c4049-d65f-4ee0-9f45-31ef8e9ea3f9";
             /** 应用名称 */
@@ -204,6 +204,21 @@ namespace accounting {
             testSourceEvent: Function;
             /** 编辑源事件 */
             editSourceEvent: Function;
+        }
+        /** Dimension编辑服务映射 */
+        export class DimensionEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = DimensionEditApp.APPLICATION_ID;
+                this.name = DimensionEditApp.APPLICATION_NAME;
+                this.boCode = DimensionEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.Dimension>> {
+                return new DimensionEditApp();
+            }
         }
     }
 }

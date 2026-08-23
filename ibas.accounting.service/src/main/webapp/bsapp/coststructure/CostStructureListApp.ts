@@ -80,10 +80,17 @@ namespace accounting {
             }
             /** 新建数据 */
             protected newData(): void {
-                let app: CostStructureEditApp = new CostStructureEditApp();
-                app.navigation = this.navigation;
-                app.viewShower = this.viewShower;
-                app.run();
+                ibas.servicesManager.runEditService<bo.CostStructure>({
+                    boCode: CostStructureEditApp.BUSINESS_OBJECT_CODE,
+                    when: "SAVED",
+                    onCompleted: (data) => {
+                        if (data instanceof bo.CostStructure && !data.isNew) {
+                            this.currentBudget = data;
+                            this.view.showCostStructure(data);
+                            this.view.showCostStructureNodes(data.costStructureNodes);
+                        }
+                    }
+                });
             }
             private currentBudget: bo.CostStructure;
             /** 查看数据，参数：目标数据 */
@@ -159,20 +166,22 @@ namespace accounting {
                 if (ibas.objects.isNull(data)) {
                     data = new bo.CostStructure();
                 }
-                let app: CostStructureEditApp = new CostStructureEditApp();
-                app.navigation = this.navigation;
-                app.viewShower = this.viewShower;
-                app.run(data, (newData) => {
-                    if (newData instanceof bo.CostStructure) {
-                        if (data !== newData) {
-                            this.currentBudget = newData;
-                            this.view.showCostStructure(this.currentBudget);
-                            this.view.showCostStructureNodes(this.currentBudget.costStructureNodes);
+                ibas.servicesManager.runEditService<bo.CostStructure>({
+                    boCode: CostStructureEditApp.BUSINESS_OBJECT_CODE,
+                    editData: data,
+                    when: "CLOSED",
+                    onCompleted: (newData) => {
+                        if (newData instanceof bo.CostStructure) {
+                            if (data !== newData) {
+                                this.currentBudget = newData;
+                                this.view.showCostStructure(this.currentBudget);
+                                this.view.showCostStructureNodes(this.currentBudget.costStructureNodes);
+                            }
+                        } else {
+                            this.currentBudget = undefined;
+                            this.view.showCostStructure(undefined);
+                            this.view.showCostStructureNodes(undefined);
                         }
-                    } else {
-                        this.currentBudget = undefined;
-                        this.view.showCostStructure(undefined);
-                        this.view.showCostStructureNodes(undefined);
                     }
                 });
             }

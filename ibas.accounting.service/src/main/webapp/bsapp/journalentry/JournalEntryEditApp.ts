@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-日记账分录 */
-        export class JournalEntryEditApp extends ibas.BOEditApplication<IJournalEntryEditView, bo.JournalEntry> {
+        export class JournalEntryEditApp extends ibas.BOEditService<IJournalEntryEditView, bo.JournalEntry> {
             /** 应用标识 */
             static APPLICATION_ID: string = "55394d69-cff2-4e48-9b03-999c1a2ed433";
             /** 应用名称 */
@@ -482,6 +482,21 @@ namespace accounting {
             chooseJournalEntryLineDistributionRuleEvent: Function;
             /** 冲销分录事件 */
             reverseJournalEntryEvent: Function;
+        }
+        /** JournalEntry编辑服务映射 */
+        export class JournalEntryEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = JournalEntryEditApp.APPLICATION_ID;
+                this.name = JournalEntryEditApp.APPLICATION_NAME;
+                this.boCode = JournalEntryEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.JournalEntry>> {
+                return new JournalEntryEditApp();
+            }
         }
     }
 }

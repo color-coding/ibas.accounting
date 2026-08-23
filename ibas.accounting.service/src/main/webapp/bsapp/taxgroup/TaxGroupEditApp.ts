@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-税收组 */
-        export class TaxGroupEditApp extends ibas.BOEditApplication<ITaxGroupEditView, bo.TaxGroup> {
+        export class TaxGroupEditApp extends ibas.BOEditService<ITaxGroupEditView, bo.TaxGroup> {
             /** 应用标识 */
             static APPLICATION_ID: string = "5baba666-09d9-47e5-ba4b-d2d37de5d35c";
             /** 应用名称 */
@@ -222,6 +222,21 @@ namespace accounting {
             createDataEvent: Function;
             /** 选择总账科目事件 */
             chooseLedgerAccountEvent: Function;
+        }
+        /** TaxGroup编辑服务映射 */
+        export class TaxGroupEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = TaxGroupEditApp.APPLICATION_ID;
+                this.name = TaxGroupEditApp.APPLICATION_NAME;
+                this.boCode = TaxGroupEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.TaxGroup>> {
+                return new TaxGroupEditApp();
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-货币 */
-        export class CurrencyEditApp extends ibas.BOEditApplication<ICurrencyEditView, bo.Currency> {
+        export class CurrencyEditApp extends ibas.BOEditService<ICurrencyEditView, bo.Currency> {
             /** 应用标识 */
             static APPLICATION_ID: string = "3673f169-7f82-4452-b7c8-0b443605b0d4";
             /** 应用名称 */
@@ -240,6 +240,21 @@ namespace accounting {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
+        }
+        /** Currency编辑服务映射 */
+        export class CurrencyEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = CurrencyEditApp.APPLICATION_ID;
+                this.name = CurrencyEditApp.APPLICATION_NAME;
+                this.boCode = CurrencyEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.Currency>> {
+                return new CurrencyEditApp();
+            }
         }
     }
 }

@@ -40,6 +40,19 @@ namespace accounting {
                 this.register(new CostStructureFunc());
                 this.register(new JournalEntryFunc());
                 // 注册服务应用
+                this.register(new CostItemEditServiceMapping());
+                this.register(new BranchEditServiceMapping());
+                this.register(new JournalEntryEditServiceMapping());
+                this.register(new TaxGroupEditServiceMapping());
+                this.register(new BankEditServiceMapping());
+                this.register(new PeriodCategoryEditServiceMapping());
+                this.register(new CashFlowEditServiceMapping());
+                this.register(new ProjectEditServiceMapping());
+                this.register(new BankAccountEditServiceMapping());
+                this.register(new AccountEditServiceMapping());
+                this.register(new CurrencyEditServiceMapping());
+                this.register(new DimensionEditServiceMapping());
+                this.register(new CostStructureEditServiceMapping());
                 this.register(new ProjectChooseServiceMapping());
                 this.register(new ProjectLinkServiceMapping());
                 this.register(new CostStructureChooseServiceMapping());

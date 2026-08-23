@@ -95,17 +95,17 @@ namespace accounting {
                 }
             }
             /** 查询数据 */
-            protected fetchData(criteria: ibas.ICriteria | string): void {
+            protected fetchData(criteria: ibas.ICriteria | string | number): void {
                 this.busy(true);
                 let that: this = this;
-                if (typeof criteria === "string") {
+                if (typeof criteria === "string" || typeof criteria === "number") {
                     let condition: ibas.ICondition;
-                    let value: string = criteria;
+                    let value: string | number = criteria;
                     criteria = new ibas.Criteria();
                     criteria.result = 1;
                     condition = criteria.conditions.create();
                     condition.alias = bo.JournalEntry.PROPERTY_DOCENTRY_NAME;
-                    condition.value = value;
+                    condition.value = String(value);
                 }
                 let boRepository: bo.BORepositoryAccounting = new bo.BORepositoryAccounting();
                 boRepository.fetchJournalEntry({

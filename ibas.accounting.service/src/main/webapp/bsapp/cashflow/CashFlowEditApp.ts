@@ -8,7 +8,7 @@
 namespace accounting {
     export namespace app {
         /** 编辑应用-现金流项目 */
-        export class CashFlowEditApp extends ibas.BOEditApplication<ICashFlowEditView, bo.CashFlow> {
+        export class CashFlowEditApp extends ibas.BOEditService<ICashFlowEditView, bo.CashFlow> {
             /** 应用标识 */
             static APPLICATION_ID: string = "2c430cc8-9901-472b-a5c7-8d09a4ab9b32";
             /** 应用名称 */
@@ -201,6 +201,21 @@ namespace accounting {
             createDataEvent: Function;
             /** 选择父项事件 */
             chooseParentEvent: Function;
+        }
+        /** CashFlow编辑服务映射 */
+        export class CashFlowEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = CashFlowEditApp.APPLICATION_ID;
+                this.name = CashFlowEditApp.APPLICATION_NAME;
+                this.boCode = CashFlowEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.CashFlow>> {
+                return new CashFlowEditApp();
+            }
         }
     }
 }
