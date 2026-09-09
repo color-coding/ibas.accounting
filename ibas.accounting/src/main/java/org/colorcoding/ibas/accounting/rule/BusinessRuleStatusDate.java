@@ -4,13 +4,11 @@ import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
-import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.rule.BusinessRuleCommon;
 
 public class BusinessRuleStatusDate extends BusinessRuleCommon {
 
 	protected BusinessRuleStatusDate() {
-		this.setName(I18N.prop("msg_ac_business_rule_status_date"));
 	}
 
 	/**
