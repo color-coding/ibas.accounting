@@ -10,7 +10,6 @@ import org.colorcoding.ibas.bobas.rule.BusinessRuleCommon;
 public class BusinessRulePreventOver extends BusinessRuleCommon {
 
 	protected BusinessRulePreventOver() {
-		this.setName(I18N.prop("msg_ac_business_rule_prevent_over"));
 	}
 
 	/**

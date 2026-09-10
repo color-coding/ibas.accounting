@@ -13,6 +13,7 @@ import org.colorcoding.ibas.accounting.bo.postingperiod.IPeriodCategory;
 import org.colorcoding.ibas.accounting.bo.postingperiod.PeriodCategory;
 import org.colorcoding.ibas.accounting.logic.JournalEntryContent.Category;
 import org.colorcoding.ibas.accounting.repository.BORepositoryAccounting;
+import org.colorcoding.ibas.bobas.bo.BOIdentifierBuilder;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOTagCanceled;
 import org.colorcoding.ibas.bobas.bo.IBOTagDeleted;
@@ -426,11 +427,8 @@ public class JournalEntryService extends BusinessLogic<IJournalEntryCreationCont
 		if (journal != null && journal.isDirty() == false) {
 			if (this.checkDataStatus(this.getTrigger()) == false) {
 				throw new BusinessLogicException(I18N.prop("msg_ac_document_has_journalentry_not_allowed_change_status",
-						String.format("{[%s].[DocEntry = %s]%s}", journal.getBaseDocumentType(),
-								journal.getBaseDocumentEntry(),
-								journal.getBaseDocumentLineId() > 0
-										? String.format("&&[LineId = %s]", journal.getBaseDocumentLineId())
-										: "")));
+						BOIdentifierBuilder.document(journal.getBaseDocumentType(), journal.getBaseDocumentEntry(),
+								journal.getBaseDocumentLineId()).build()));
 			}
 		}
 	}
