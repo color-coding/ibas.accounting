@@ -18,6 +18,10 @@ namespace accounting {
                 chooseBankEvent: Function;
                 /** 选择银行账号事件 */
                 chooseBankAccountEvent: Function;
+                /** 选择客户事件 */
+                chooseCustomerEvent: Function;
+                /** 选择供应商事件 */
+                chooseSupplierEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -111,7 +115,24 @@ namespace accounting {
                                                         type: new sap.extension.data.YesNo(),
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_customer") }),
-                                                    new sap.extension.m.Input("", {
+                                                    new sap.extension.m.RepositoryInput("", {
+                                                        showValueHelp: true,
+                                                        valueHelpRequest: function (): void {
+                                                            that.fireViewEvents(that.chooseCustomerEvent);
+                                                        },
+                                                        showValueLink: true,
+                                                        valueLinkRequest: function (event: sap.ui.base.Event): void {
+                                                            ibas.servicesManager.runLinkService({
+                                                                boCode: businesspartner.bo.Customer.BUSINESS_OBJECT_CODE,
+                                                                linkValue: event.getParameter("value")
+                                                            });
+                                                        },
+                                                        repository: businesspartner.bo.BORepositoryBusinessPartner,
+                                                        dataInfo: {
+                                                            type: businesspartner.bo.Customer,
+                                                            key: businesspartner.bo.Customer.PROPERTY_CODE_NAME,
+                                                            text: businesspartner.bo.Customer.PROPERTY_NAME_NAME
+                                                        },
                                                     }).bindProperty("bindingValue", {
                                                         path: "customer",
                                                         type: new sap.extension.data.Alphanumeric({
@@ -119,7 +140,24 @@ namespace accounting {
                                                         }),
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_branch_supplier") }),
-                                                    new sap.extension.m.Input("", {
+                                                    new sap.extension.m.RepositoryInput("", {
+                                                        showValueHelp: true,
+                                                        valueHelpRequest: function (): void {
+                                                            that.fireViewEvents(that.chooseSupplierEvent);
+                                                        },
+                                                        showValueLink: true,
+                                                        valueLinkRequest: function (event: sap.ui.base.Event): void {
+                                                            ibas.servicesManager.runLinkService({
+                                                                boCode: businesspartner.bo.Supplier.BUSINESS_OBJECT_CODE,
+                                                                linkValue: event.getParameter("value")
+                                                            });
+                                                        },
+                                                        repository: businesspartner.bo.BORepositoryBusinessPartner,
+                                                        dataInfo: {
+                                                            type: businesspartner.bo.Supplier,
+                                                            key: businesspartner.bo.Supplier.PROPERTY_CODE_NAME,
+                                                            text: businesspartner.bo.Supplier.PROPERTY_NAME_NAME
+                                                        },
                                                     }).bindProperty("bindingValue", {
                                                         path: "supplier",
                                                         type: new sap.extension.data.Alphanumeric({

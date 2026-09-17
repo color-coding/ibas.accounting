@@ -136,19 +136,31 @@ namespace accounting {
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
-                                            new sap.extension.m.ObjectAttribute("", {
+                                            new sap.extension.m.RepositoryObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_branch_customer"),
                                                 bindingValue: {
                                                     path: "customer",
                                                     type: new sap.extension.data.Alphanumeric(),
-                                                }
+                                                },
+                                                repository: businesspartner.bo.BORepositoryBusinessPartner,
+                                                dataInfo: {
+                                                    type: businesspartner.bo.Customer,
+                                                    key: businesspartner.bo.Customer.PROPERTY_CODE_NAME,
+                                                    text: businesspartner.bo.Customer.PROPERTY_NAME_NAME
+                                                },
                                             }),
-                                            new sap.extension.m.ObjectAttribute("", {
+                                            new sap.extension.m.RepositoryObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_branch_supplier"),
                                                 bindingValue: {
                                                     path: "supplier",
                                                     type: new sap.extension.data.Alphanumeric(),
-                                                }
+                                                },
+                                                repository: businesspartner.bo.BORepositoryBusinessPartner,
+                                                dataInfo: {
+                                                    type: businesspartner.bo.Supplier,
+                                                    key: businesspartner.bo.Supplier.PROPERTY_CODE_NAME,
+                                                    text: businesspartner.bo.Supplier.PROPERTY_NAME_NAME
+                                                },
                                             }),
                                             new sap.extension.m.ObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_branch_warehouse"),

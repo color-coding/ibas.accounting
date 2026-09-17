@@ -31,6 +31,8 @@ namespace accounting {
                 this.view.createDataEvent = this.createData;
                 this.view.chooseBankEvent = this.chooseBank;
                 this.view.chooseBankAccountEvent = this.chooseBankAccount;
+                this.view.chooseCustomerEvent = this.chooseCustomer;
+                this.view.chooseSupplierEvent = this.chooseSupplier;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -216,6 +218,30 @@ namespace accounting {
                     }
                 });
             }
+            private chooseCustomer(): void {
+                let that: this = this;
+                ibas.servicesManager.runChooseService<businesspartner.bo.ICustomer>({
+                    boCode: businesspartner.bo.BO_CODE_CUSTOMER,
+                    chooseType: ibas.emChooseType.SINGLE,
+                    criteria: businesspartner.app.conditions.customer.create(),
+                    onCompleted(selecteds: ibas.IList<businesspartner.bo.ICustomer>): void {
+                        let selected: businesspartner.bo.ICustomer = selecteds.firstOrDefault();
+                        that.editData.customer = selected.code;
+                    }
+                });
+            }
+            private chooseSupplier(): void {
+                let that: this = this;
+                ibas.servicesManager.runChooseService<businesspartner.bo.ISupplier>({
+                    boCode: businesspartner.bo.BO_CODE_SUPPLIER,
+                    chooseType: ibas.emChooseType.SINGLE,
+                    criteria: businesspartner.app.conditions.supplier.create(),
+                    onCompleted(selecteds: ibas.IList<businesspartner.bo.ISupplier>): void {
+                        let selected: businesspartner.bo.ISupplier = selecteds.firstOrDefault();
+                        that.editData.supplier = selected.code;
+                    }
+                });
+            }
             private chooseBankAccount(criteria: ibas.ICriteria): void {
                 if (criteria instanceof ibas.Criteria) {
                     if (criteria.conditions.length > 1) {
@@ -293,6 +319,10 @@ namespace accounting {
             chooseBankEvent: Function;
             /** 选择银行账号事件 */
             chooseBankAccountEvent: Function;
+            /** 选择客户事件 */
+            chooseCustomerEvent: Function;
+            /** 选择供应商事件 */
+            chooseSupplierEvent: Function;
         }
         /** Branch编辑服务映射 */
         export class BranchEditServiceMapping extends ibas.BOEditServiceMapping {
